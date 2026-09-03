@@ -1,0 +1,24 @@
+{
+ "name": "Orto",
+ "short_name": "Orto",
+ "description": "L'orto di Pievebovigliana, tutto l'anno",
+ "start_url": "./index.html",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#EEF0E6",
+ "theme_color": "#2F5233",
+ "lang": "it",
+ "icons": [
+  {
+   "src": "img/icona-192.jpg",
+   "sizes": "192x192",
+   "type": "image/jpeg"
+  },
+  {
+   "src": "img/icona-512.jpg",
+   "sizes": "512x512",
+   "type": "image/jpeg",
+   "purpose": "any"
+  }
+ ]
+}
