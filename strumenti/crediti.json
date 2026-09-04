@@ -152,5 +152,75 @@
   "autore": "Evan-Amos",
   "licenza": "Public domain",
   "q": "w:Carrot"
+ },
+ "piante/pastinaca": {
+  "file": "File:Pastinaca_sativa_MHNT.BOT.2004.0.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pastinaca_sativa_MHNT.BOT.2004.0.jpg",
+  "autore": "Didier Descouens",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Parsnip"
+ },
+ "piante/scorzonera": {
+  "file": "File:Schorseneer_plant_Scorzonera_hispanica.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Schorseneer_plant_Scorzonera_hispanica.jpg",
+  "autore": "Rasbak",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Scorzonera hispanica"
+ },
+ "piante/sedano": {
+  "file": "File:Celery_1.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Celery_1.jpg",
+  "autore": "Lombroso",
+  "licenza": "Public domain",
+  "q": "w:Celery"
+ },
+ "piante/finocchio": {
+  "file": "File:Foeniculum_July_2011-1a.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Foeniculum_July_2011-1a.jpg",
+  "autore": "Alvesgaspar",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Fennel"
+ },
+ "piante/cipolla": {
+  "file": "File:Mixed_onions.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mixed_onions.jpg",
+  "autore": "Colin",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Onion"
+ },
+ "piante/porro": {
+  "file": "File:Leek_on_white_background_-_0947.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Leek_on_white_background_-_0947.jpg",
+  "autore": "Amada44",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Leek"
+ },
+ "piante/mais": {
+  "file": "File:VegCorn.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:VegCorn.jpg",
+  "autore": "The original Uploader was wstoakLL at English Wikipedia",
+  "licenza": "Public domain",
+  "q": "w:Sweet corn"
+ },
+ "piante/girasole": {
+  "file": "File:Sunflower_sky_backdrop.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Sunflower_sky_backdrop.jpg",
+  "autore": "Fir0002",
+  "licenza": "GFDL 1.2",
+  "q": "w:Common sunflower"
+ },
+ "piante/basilico": {
+  "file": "File:Ocimum_basilicum_8zz.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ocimum_basilicum_8zz.jpg",
+  "autore": "Photo by David J. Stang",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Basil"
+ },
+ "piante/prezzemolo": {
+  "file": "File:Petroselinum.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Petroselinum.jpg",
+  "autore": "Jonathunder",
+  "licenza": "GFDL 1.2",
+  "q": "w:Parsley"
  }
 }
