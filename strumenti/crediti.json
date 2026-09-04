@@ -292,5 +292,40 @@
   "autore": "George Chernilevsky",
   "licenza": "Public domain",
   "q": "w:Tropaeolum majus"
+ },
+ "piante/funghi": {
+  "file": "File:Shiitakegrowing.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Shiitakegrowing.jpg",
+  "autore": "frankenstoen from Portland, Oregon",
+  "licenza": "CC BY 2.0",
+  "q": "w:Shiitake"
+ },
+ "piante/luppolo": {
+  "file": "File:Humulus_Lupulus_Hopfendolde-mit-hopfengarten.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Humulus_Lupulus_Hopfendolde-mit-hopfengarten.jpg",
+  "autore": "LuckyStarr",
+  "licenza": "CC BY 2.5",
+  "q": "w:Hops"
+ },
+ "piante/liquirizia": {
+  "file": "File:Illustration_Glycyrrhiza_glabra0.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Illustration_Glycyrrhiza_glabra0.jpg",
+  "autore": "",
+  "licenza": "Public domain",
+  "q": "w:Liquorice"
+ },
+ "piante/germogli": {
+  "file": "File:Liping_Kou_observes_microgreens.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Liping_Kou_observes_microgreens.jpg",
+  "autore": "Peggy Greb",
+  "licenza": "Public domain",
+  "q": "w:Microgreen"
+ },
+ "piante/forzature": {
+  "file": "File:Illustration_Cichorium_intybus0_clean.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Illustration_Cichorium_intybus0_clean.jpg",
+  "autore": "Original book source: Prof. Dr. Otto Wilhelm Thomé Flora von Deutschland, Österr",
+  "licenza": "Public domain",
+  "q": "w:Chicory"
  }
 }
