@@ -64,7 +64,10 @@ h3{font-size:1.2rem}
 .filtro[aria-pressed="true"]{background:var(--scheda);color:var(--inchiostro);border-color:var(--muto)}
 
 .piante{list-style:none;margin:0;padding:0;border-top:1px solid var(--riga)}
-.piante li{display:grid;grid-template-columns:1fr auto;gap:.2rem .75rem;padding:.7rem 0;border-bottom:1px solid var(--riga)}
+.piante li{display:grid;grid-template-columns:auto 1fr auto;grid-template-areas:"foto nome tag" "foto come come";gap:.2rem .75rem;padding:.7rem 0;border-bottom:1px solid var(--riga);align-items:start}
+.piante li .mini{grid-area:foto;width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--scheda);display:block}
+.piante li .mini.manca{background:var(--scheda);opacity:.5}
+.piante li b{grid-area:nome}.piante li .tag{grid-area:tag}.piante li .come{grid-area:come}
 .piante li.nascosta{display:none}
 .piante b{font-weight:600}
 .piante b .ins{display:inline-block;margin-left:.4rem;font-size:.72rem;font-weight:500;color:var(--viola);border:1px solid var(--viola);border-radius:4px;padding:0 .35rem;vertical-align:middle}
@@ -97,7 +100,15 @@ h3{font-size:1.2rem}
 .ricette{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;padding-top:1rem}
 .ricetta{background:var(--scheda);border:1px solid var(--riga);border-radius:10px;overflow:hidden}
 .ricetta.nascosta{display:none}
-.ricetta summary{list-style:none;cursor:pointer;padding:1rem 1.1rem;display:grid;gap:.2rem}
+.ricetta summary{list-style:none;cursor:pointer;padding:0 0 1rem;display:grid;gap:.2rem}
+.ricetta summary h3,.ricetta summary .stag,.ricetta summary .tempo{padding:0 1.1rem}
+.ricetta summary h3{padding-top:.8rem}
+.ricetta summary .foto-ric{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;background:var(--scheda)}
+.ricetta summary .foto-ric.manca{display:none}
+.mp-foto .foto-pianta{width:100%;max-height:220px;object-fit:cover;border-radius:10px;margin:.6rem 0 .2rem;display:block}
+.mp-foto .foto-pianta.manca{display:none}
+.crediti{font-size:.8rem;color:var(--muto);text-align:center;padding:1.5rem 1rem 2.5rem}
+.crediti a{color:var(--muto)}
 .ricetta summary::-webkit-details-marker{display:none}
 .ricetta summary h3{font-size:1.15rem}
 .ricetta summary .stag{color:var(--zucca);font-size:.85rem;font-weight:500}

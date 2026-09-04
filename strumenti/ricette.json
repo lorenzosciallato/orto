@@ -1,0 +1,613 @@
+{
+"cartella": "ricette",
+"voci": {
+"zuppa-di-cavolo-nero-fagioli-e-pane": [
+"w:Ribollita",
+"ribollita soup bowl",
+"Tuscan bean soup"
+],
+"pure-di-topinambur-e-patate": [
+"w:Mashed potato",
+"Jerusalem artichoke puree",
+"mashed potatoes bowl"
+],
+"porri-gratinati-al-forno": [
+"w:Gratin",
+"leek gratin",
+"leeks baked cheese"
+],
+"crema-di-sedano-rapa-e-mela": [
+"w:Celeriac",
+"celeriac soup",
+"celery root soup bowl"
+],
+"pastinaca-arrosto-al-miele": [
+"w:Parsnip",
+"roasted parsnips",
+"honey roasted parsnips"
+],
+"frittata-di-germogli-di-luppolo-o-di-asparagi": [
+"asparagus frittata",
+"frittata eggs vegetables"
+],
+"pesto-di-aglio-orsino": [
+"w:Allium ursinum",
+"wild garlic pesto",
+"Bärlauchpesto"
+],
+"risotto-ai-porri-e-zafferano": [
+"w:Risotto alla milanese",
+"risotto alla milanese saffron",
+"saffron risotto plate"
+],
+"rabarbaro-in-composta-per-lo-yogurt": [
+"w:Compote",
+"rhubarb compote",
+"stewed rhubarb bowl"
+],
+"agretti-saltati-con-limone": [
+"agretti cooked",
+"barba di frate dish"
+],
+"vignarola-fave-piselli-e-carciofi": [
+"w:Vignarola",
+"vignarola",
+"fave piselli carciofi dish"
+],
+"frittata-di-erbe-di-primavera": [
+"w:Frittata",
+"frittata di erbe",
+"herb frittata"
+],
+"fave-e-pecorino-con-il-pane": [
+"w:Vicia faba",
+"fave e pecorino",
+"broad beans pecorino"
+],
+"pasta-con-asparagi-piselli-e-guanciale": [
+"pasta asparagus peas",
+"pasta with asparagus"
+],
+"fragole-e-rabarbaro-al-forno-crumble": [
+"w:Crumble",
+"strawberry rhubarb crumble",
+"rhubarb crumble"
+],
+"fiori-di-zucchina-ripieni-al-forno": [
+"w:Squash blossom",
+"stuffed zucchini flowers baked",
+"fiori di zucca ripieni"
+],
+"zucchine-alla-scapece-con-menta-e-aceto": [
+"zucchine alla scapece",
+"fried zucchini mint"
+],
+"ciambellone-con-le-ciliegie": [
+"w:Bundt cake",
+"ciambellone",
+"cherry bundt cake"
+],
+"panzanella-con-i-primi-pomodori": [
+"w:Panzanella",
+"panzanella",
+"panzanella toscana"
+],
+"fagiolini-in-umido-con-pomodoro": [
+"green beans tomato sauce",
+"fagiolini al pomodoro"
+],
+"sciroppo-di-lamponi": [
+"w:Raspberry",
+"raspberry syrup",
+"raspberry syrup bottle"
+],
+"passata-di-pomodoro-da-conserva": [
+"w:Tomato purée",
+"passata di pomodoro bottles",
+"tomato sauce jars homemade"
+],
+"peperonata": [
+"w:Peperonata",
+"peperonata",
+"peperonata dish"
+],
+"salsa-verde-di-tomatillo": [
+"w:Salsa verde",
+"salsa verde tomatillo",
+"tomatillo salsa bowl"
+],
+"frittata-di-spinaci-e-pecorino": [
+"w:Frittata",
+"spinach frittata",
+"frittata di spinaci"
+],
+"minestra-di-bietole-e-ceci": [
+"chickpea chard soup",
+"zuppa ceci bietole"
+],
+"marmellata-di-fichi-e-noci": [
+"w:Fig",
+"fig jam jar",
+"marmellata di fichi"
+],
+"vellutata-di-zucca-e-rosmarino": [
+"w:Squash soup",
+"pumpkin soup bowl",
+"vellutata di zucca"
+],
+"finocchi-gratinati": [
+"fennel gratin",
+"finocchi gratinati"
+],
+"orecchiette-con-cime-di-rapa": [
+"w:Orecchiette",
+"orecchiette cime di rapa",
+"orecchiette con le cime di rapa"
+],
+"risotto-al-radicchio": [
+"w:Radicchio",
+"risotto al radicchio",
+"radicchio risotto"
+],
+"verza-ripassata-con-salsiccia": [
+"savoy cabbage sausage dish",
+"verza e salsiccia"
+],
+"cardo-alla-parmigiana-in-umido": [
+"w:Cardoon",
+"cardi cooked dish",
+"cardoon gratin"
+],
+"bruschetta-con-aglio-olio-nuovo-e-cavolo-nero": [
+"bruschetta cavolo nero",
+"fettunta olio nuovo"
+],
+"pure-di-navone-e-patate-con-burro-nocciola": [
+"mashed swede turnip",
+"neeps and tatties"
+],
+"insalata-di-witloof-noci-mela-e-gorgonzola": [
+"w:Chicory",
+"endive salad walnuts",
+"witloof salad"
+],
+"cavolini-di-bruxelles-arrosto-con-pancetta": [
+"w:Brussels sprout",
+"roasted brussels sprouts bacon",
+"roasted brussels sprouts"
+],
+"minestra-di-verza-patate-e-cotenna": [
+"cabbage potato soup",
+"zuppa di verza"
+],
+"vellutata-di-pastinaca-e-patate": [
+"parsnip soup",
+"cream of parsnip soup"
+],
+"spinaci-del-tunnel-saltati-con-uvetta-e-pinoli": [
+"spinach raisins pine nuts",
+"espinacas con pasas y piñones"
+],
+"radicchio-alla-piastra-con-pecorino": [
+"grilled radicchio",
+"radicchio alla griglia"
+],
+"crostata-di-mele-da-conservazione-e-noci": [
+"apple crostata",
+"apple tart rustic"
+],
+"insalata-di-cavolo-cappuccio-carote-e-semi": [
+"w:Coleslaw",
+"coleslaw bowl",
+"cabbage carrot salad"
+],
+"zuppa-di-cipolle-gratinata": [
+"w:French onion soup",
+"French onion soup",
+"soupe à l'oignon gratinée"
+],
+"scorzonera-in-padella-con-burro-e-prezzemolo": [
+"scorzonera cooked",
+"Schwarzwurzeln gekocht"
+],
+"pasta-e-broccoli-con-i-cavolfiori-d-inverno": [
+"w:Broccoli",
+"pasta e broccoli",
+"pasta with broccoli"
+],
+"frittelle-di-cavolo-nero-come-pakora": [
+"w:Pakora",
+"pakora",
+"vegetable pakora plate"
+],
+"porri-in-agrodolce": [
+"leeks vinaigrette",
+"poireaux vinaigrette"
+],
+"crema-di-topinambur-con-nocciole-tostate": [
+"Jerusalem artichoke soup",
+"topinambur soup"
+],
+"cavolo-rapa-crudo-in-insalata-con-mela": [
+"kohlrabi salad",
+"Kohlrabisalat"
+],
+"frittata-di-patate-e-cipolla-tortilla": [
+"w:Spanish omelette",
+"tortilla de patatas",
+"tortilla española"
+],
+"strudel-di-mele-e-uvetta": [
+"w:Apple strudel",
+"apple strudel",
+"Apfelstrudel"
+],
+"risotto-con-i-germogli-di-luppolo": [
+"risotto ai bruscandoli",
+"hop shoots risotto"
+],
+"ravanelli-e-burro-alla-francese": [
+"radishes butter salt",
+"radis beurre"
+],
+"zuppa-di-ortiche-e-patate": [
+"w:Nettle soup",
+"nettle soup",
+"zuppa di ortiche"
+],
+"frittata-di-cicoria-e-aglio-orsino": [
+"frittata verdure",
+"frittata greens"
+],
+"vellutata-di-porri-e-patate": [
+"w:Leek soup",
+"leek potato soup",
+"potage parmentier"
+],
+"insalata-di-spinaci-novelli-uova-sode-e-pancetta": [
+"spinach salad bacon egg",
+"spinach salad"
+],
+"torta-salata-di-bietole-e-ricotta": [
+"w:Torta pasqualina",
+"torta pasqualina",
+"erbazzone"
+],
+"gnocchi-di-ortica": [
+"w:Gnocchi",
+"nettle gnocchi",
+"gnocchi verdi"
+],
+"risotto-agli-asparagi": [
+"w:Risotto",
+"asparagus risotto",
+"risotto agli asparagi"
+],
+"piselli-alla-fiorentina": [
+"peas pancetta dish",
+"piselli con pancetta"
+],
+"insalata-di-rucola-pere-e-pecorino": [
+"w:Arugula",
+"arugula pear salad",
+"rocket pear salad"
+],
+"crespelle-agli-spinaci-e-ricotta": [
+"w:Crêpe",
+"crespelle ricotta spinaci",
+"crepes spinach ricotta"
+],
+"cipollotti-alla-brace-con-salsa-verde": [
+"w:Calçot",
+"calçots grilled",
+"grilled spring onions"
+],
+"pasta-con-le-fave-fresche-pecorino-e-menta": [
+"pasta fave pecorino",
+"pasta with broad beans"
+],
+"torta-di-rabarbaro-e-mandorle": [
+"rhubarb cake",
+"rhubarb almond cake"
+],
+"uova-in-purgatorio-con-bietoline": [
+"w:Shakshouka",
+"shakshuka",
+"eggs in tomato sauce pan"
+],
+"fragole-con-aceto-balsamico-e-pepe": [
+"strawberries balsamic",
+"fragole aceto balsamico"
+],
+"taccole-saltate-con-aglio-e-limone": [
+"snow peas stir fry",
+"sugar snap peas cooked"
+],
+"risotto-con-piselli-e-lattuga": [
+"w:Risi e bisi",
+"risi e bisi",
+"pea risotto"
+],
+"agretti-con-uova-strapazzate": [
+"scrambled eggs greens",
+"agretti eggs"
+],
+"focaccia-con-cipollotti-e-rosmarino": [
+"w:Focaccia",
+"focaccia onion rosemary",
+"focaccia con cipolle"
+],
+"insalata-di-fave-pecorino-e-cicoria": [
+"broad bean salad pecorino",
+"fave pecorino salad"
+],
+"sciroppo-di-fiori-di-sambuco": [
+"w:Elderflower cordial",
+"elderflower cordial",
+"Holunderblütensirup"
+],
+"pasta-con-asparagi-selvatici-e-uova": [
+"wild asparagus eggs",
+"asparagi selvatici uova"
+],
+"zucchine-ripiene-al-forno": [
+"stuffed zucchini baked",
+"zucchine ripiene"
+],
+"insalata-di-patate-novelle-fagiolini-e-cipollotto": [
+"potato green bean salad",
+"new potato salad"
+],
+"pesto-di-basilico": [
+"w:Pesto",
+"pesto alla genovese",
+"basil pesto mortar"
+],
+"cetrioli-in-insalata-con-yogurt-e-menta": [
+"w:Tzatziki",
+"tzatziki",
+"cucumber yogurt salad"
+],
+"carote-novelle-glassate": [
+"glazed carrots",
+"honey glazed carrots"
+],
+"frittata-di-zucchine-e-fiori": [
+"zucchini frittata",
+"frittata di zucchine"
+],
+"marmellata-di-fragole": [
+"w:Fruit preserves",
+"strawberry jam jar",
+"marmellata di fragole"
+],
+"vellutata-fredda-di-piselli-e-menta": [
+"pea mint soup",
+"chilled pea soup"
+],
+"pomodori-ripieni-di-riso": [
+"w:Stuffed tomato",
+"pomodori ripieni di riso",
+"stuffed tomatoes rice"
+],
+"ratatouille": [
+"w:Ratatouille",
+"ratatouille dish",
+"ratatouille"
+],
+"gazpacho": [
+"w:Gazpacho",
+"gazpacho bowl",
+"gazpacho andaluz"
+],
+"fagiolini-in-insalata-con-patate-e-pesto": [
+"w:Trofie",
+"trofie pesto patate fagiolini",
+"green beans potatoes pesto"
+],
+"melanzane-a-funghetto": [
+"w:Eggplant",
+"melanzane a funghetto",
+"sauteed eggplant tomato"
+],
+"pasta-alla-norma": [
+"w:Pasta alla Norma",
+"pasta alla Norma",
+"pasta alla norma plate"
+],
+"crostata-di-albicocche": [
+"w:Crostata",
+"apricot tart",
+"crostata di albicocche"
+],
+"cetrioli-sottaceto-in-barattolo": [
+"w:Pickled cucumber",
+"pickled cucumbers jar",
+"gherkins jar"
+],
+"caponata": [
+"w:Caponata",
+"caponata siciliana",
+"caponata"
+],
+"peperoni-arrostiti-sott-olio": [
+"w:Roasted peppers",
+"roasted peppers jar",
+"peperoni arrostiti"
+],
+"melanzane-alla-parmigiana": [
+"w:Parmigiana",
+"parmigiana di melanzane",
+"eggplant parmigiana"
+],
+"insalata-di-pomodori-cipolla-di-tropea-e-origano": [
+"tomato onion salad",
+"insalata di pomodori"
+],
+"fiori-di-zucca-fritti-in-pastella": [
+"w:Squash blossom",
+"fried zucchini flowers",
+"fiori di zucca fritti"
+],
+"marmellata-di-prugne": [
+"w:Plum",
+"plum jam jar",
+"Pflaumenmus"
+],
+"pannocchie-alla-brace-con-burro-e-sale": [
+"w:Corn on the cob",
+"grilled corn on the cob",
+"corn on the cob butter"
+],
+"salsa-di-physalis-e-peperoncino": [
+"physalis sauce",
+"cape gooseberry chutney"
+],
+"zuppa-di-fagioli-freschi-e-cotiche": [
+"bean soup pork rind",
+"fagioli con le cotiche"
+],
+"peperoni-ripieni-di-pane-e-acciughe": [
+"w:Stuffed peppers",
+"stuffed peppers",
+"peperoni ripieni"
+],
+"sugo-di-pomodoro-e-zucca-per-la-pasta": [
+"pumpkin pasta sauce",
+"pasta with pumpkin"
+],
+"torta-di-mele-con-la-mela-rosa": [
+"w:Apple cake",
+"apple cake",
+"torta di mele"
+],
+"uva-e-salsiccia-in-padella": [
+"salsiccia e uva",
+"sausages with grapes"
+],
+"insalata-di-orientali-mizuna-tatsoi-con-sesamo": [
+"mizuna salad",
+"asian greens salad sesame"
+],
+"crema-di-zucca-e-ceci-con-rosmarino": [
+"pumpkin chickpea soup",
+"butternut squash soup"
+],
+"noci-fresche-pecorino-e-miele": [
+"pecorino honey walnuts",
+"cheese walnuts honey"
+],
+"risotto-alla-zucca": [
+"w:Risotto",
+"risotto alla zucca",
+"pumpkin risotto"
+],
+"broccoli-ripassati-con-aglio-e-peperoncino": [
+"broccoli garlic chili",
+"broccoli ripassati"
+],
+"gnocchi-di-zucca-con-burro-e-salvia": [
+"w:Gnocchi",
+"gnocchi di zucca",
+"pumpkin gnocchi sage"
+],
+"cavolfiore-gratinato": [
+"w:Cauliflower cheese",
+"cauliflower gratin",
+"cauliflower cheese"
+],
+"marmellata-di-cachi-e-zenzero": [
+"w:Persimmon",
+"persimmon jam",
+"kaki jam"
+],
+"chips-di-daikon-e-ravanello-nero": [
+"radish chips",
+"vegetable chips homemade"
+],
+"castagne-al-forno-e-vino-nuovo": [
+"w:Roasted chestnut",
+"roasted chestnuts",
+"caldarroste"
+],
+"zuppa-di-porri-patate-e-cavolo-nero": [
+"w:Caldo verde",
+"kale potato soup",
+"caldo verde"
+],
+"cavolo-nero-e-polenta": [
+"w:Polenta",
+"polenta cavolo nero",
+"polenta with kale"
+],
+"pasta-e-ceci": [
+"w:Pasta e ceci",
+"pasta e ceci",
+"pasta with chickpeas"
+],
+"finocchi-e-arance-in-insalata": [
+"w:Fennel",
+"fennel orange salad",
+"insalata finocchi arance"
+],
+"cavolini-di-bruxelles-con-castagne": [
+"w:Brussels sprout",
+"brussels sprouts chestnuts",
+"Rosenkohl Maronen"
+],
+"scorzonera-fritta-in-pastella": [
+"fried salsify",
+"battered vegetables fried"
+],
+"crema-di-sedano-rapa-con-olio-al-tartufo-o-alle-noci": [
+"celeriac soup cream",
+"celeriac velouté"
+],
+"radicchio-tardivo-alla-griglia-con-salsiccia": [
+"grilled radicchio sausage",
+"radicchio tardivo grigliato"
+],
+"torta-di-zucca-e-cioccolato": [
+"w:Chocolate cake",
+"pumpkin chocolate cake",
+"chocolate cake slice"
+],
+"pasta-con-cavolo-nero-e-salsiccia": [
+"pasta kale sausage",
+"orecchiette salsiccia"
+],
+"porri-e-patate-al-forno-con-formaggio": [
+"w:Gratin dauphinois",
+"potato leek gratin",
+"potato gratin"
+],
+"vellutata-di-castagne-e-porri": [
+"w:Chestnut",
+"chestnut soup",
+"chestnut soup bowl"
+],
+"cavolo-cappuccio-stufato-con-mele-e-cumino": [
+"w:Braised red cabbage",
+"braised cabbage apples",
+"Rotkohl mit Äpfeln"
+],
+"pastinaca-e-carote-arrosto-con-miele-e-timo": [
+"roasted root vegetables",
+"roasted carrots parsnips"
+],
+"crostini-con-topinambur-e-pecorino-di-fossa": [
+"crostini cheese",
+"crostini toscani"
+],
+"spinaci-alla-panna-gratinati": [
+"w:Creamed spinach",
+"creamed spinach",
+"spinach gratin"
+],
+"biscotti-alle-noci-e-miele": [
+"w:Walnut",
+"walnut cookies",
+"honey walnut biscuits"
+]
+}
+}

@@ -7,6 +7,11 @@ const tipoLabel = {semina:"semina diretta",semenzaio:"semenzaio",trapianto:"trap
 const LAT=43.06, LON=13.09;   // Pievebovigliana
 const GIORNI=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 const norm = s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+const slug = s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
+/* foto: piante in img/piante/<chiave>.jpg, ricette in img/ricette/<nome-in-minuscolo>.jpg; se manca, il tag si nasconde da solo */
+const fotoPianta = k=>`img/piante/${k}.jpg`;
+const fotoRicetta = r=>`img/ricette/${slug(r.nome)}.jpg`;
+const imgTag = (src,alt,cls)=>`<img class="${cls}" src="${src}" alt="${esc(alt)}" loading="lazy" onerror="this.classList.add('manca')">`;
 
 let stato = {};
 try{ stato = JSON.parse(localStorage.getItem("orto-pb-anno")||"{}"); }catch(e){ stato={}; }
@@ -35,7 +40,7 @@ function pannelloMese(m){
   <div class="due">
     <div><h2>Cosa piantare <span>${m.piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
       <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button></div>
-      <ul class="piante">${m.piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-pianta="${esc(p[0])}"><b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${esc(p[2])}</span></li>`).join("")}</ul>
+      <ul class="piante">${m.piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${esc(p[2])}</span></li>`).join("")}</ul>
     </div>
     <div>
       <div class="raccolta"><b>Cosa si raccoglie</b>${esc(m.raccolta)}</div>
@@ -50,7 +55,7 @@ function pannelloMese(m){
 }
 
 function cardRicetta(r,i){
-  return `<details class="ricetta" data-mese="${r.mese}" id="r-${i}"><summary><h3>${esc(r.nome)}</h3><span class="stag">${MESI.find(m=>m.id===r.mese).nome}</span><span class="tempo">${esc(r.tempo)}</span></summary>
+  return `<details class="ricetta" data-mese="${r.mese}" id="r-${i}"><summary>${imgTag(fotoRicetta(r),r.nome,"foto-ric")}<h3>${esc(r.nome)}</h3><span class="stag">${MESI.find(m=>m.id===r.mese).nome}</span><span class="tempo">${esc(r.tempo)}</span></summary>
     <div class="corpo"><h4>Ingredienti</h4><ul>${r.ing.map(x=>`<li>${esc(x)}</li>`).join("")}</ul>
     <h4>Preparazione</h4><ol>${r.passi.map(p=>`<li>${esc(p)}</li>`).join("")}</ol>
     ${r.nota?`<p class="nota">${esc(r.nota)}</p>`:""}
@@ -162,6 +167,7 @@ function apriPianta(nome){
   mpNome=nome; mpChiavi=chiaviPer(nome);
   const mod=$("#modale-pianta");
   $("#mp-titolo").textContent=nome;
+  const fk=mpChiavi[0]; $("#mp-foto").innerHTML = fk ? imgTag(fotoPianta(fk),nome,"foto-pianta") : "";
   const sub=$("#mp-sub");
   if(mpChiavi.length>1){ sub.hidden=false; sub.innerHTML=mpChiavi.map((k,i)=>`<button data-chiave="${k}" aria-pressed="${i===0}">${esc(SCHEDE[k].nome.split(" (")[0])}</button>`).join(""); }
   else { sub.hidden=true; sub.innerHTML=""; }
@@ -173,8 +179,9 @@ function apriPianta(nome){
 function chiudiPianta(){ $("#modale-pianta").hidden=true; document.body.style.overflow=""; }
 $("#mp-chiudi").onclick=chiudiPianta;
 $("#modale-pianta").addEventListener("click",e=>{ if(e.target===$("#modale-pianta")) chiudiPianta(); });
-$("#mp-sub").addEventListener("click",e=>{ const b=e.target.closest("[data-chiave]"); if(!b) return; mpChiave=b.dataset.chiave; document.querySelectorAll("#mp-sub button").forEach(x=>x.setAttribute("aria-pressed",x===b)); if(mpSez) mostraSez(mpSez); });
+$("#mp-sub").addEventListener("click",e=>{ const b=e.target.closest("[data-chiave]"); if(!b) return; mpChiave=b.dataset.chiave; aggiornaFoto(); document.querySelectorAll("#mp-sub button").forEach(x=>x.setAttribute("aria-pressed",x===b)); if(mpSez) mostraSez(mpSez); });
 $("#mp-bottoni").addEventListener("click",e=>{ const b=e.target.closest("[data-sez]"); if(!b) return; mostraSez(b.dataset.sez); });
+function aggiornaFoto(){ if(mpChiave) $("#mp-foto").innerHTML=imgTag(fotoPianta(mpChiave),mpNome,"foto-pianta"); }
 function mostraSez(s){
   mpSez=s;
   document.querySelectorAll("#mp-bottoni button").forEach(b=>b.setAttribute("aria-pressed", b.dataset.sez===s));

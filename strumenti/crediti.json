@@ -1,0 +1,86 @@
+{
+ "piante/pomodoro": {
+  "file": "File:Several green unripe and red ripe tomatoes growing on the vine. (086c449c-117b-44f6-a7c4-e2acbf284092).JPG",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Several_green_unripe_and_red_ripe_tomatoes_growing_on_the_vine._(086c449c-117b-44f6-a7c4-e2acbf284092).JPG",
+  "autore": "NPS",
+  "licenza": "Public domain",
+  "q": "ripe tomatoes on vine garden"
+ },
+ "piante/patata": {
+  "file": "File:Annual report of the Secretary of the State Board of Agriculture of the State of Michigan .. (1862-) (18744482754).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Annual_report_of_the_Secretary_of_the_State_Board_of_Agriculture_of_the_State_of_Michigan_.._(1862-)_(18744482754).jpg",
+  "autore": "Internet Archive Book Images",
+  "licenza": "No restrictions",
+  "q": "potato harvest tubers soil"
+ },
+ "piante/peperone": {
+  "file": "File:Bell Peppers From The Garden (120856609).jpeg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Bell_Peppers_From_The_Garden_(120856609).jpeg",
+  "autore": "Rob Bertholf",
+  "licenza": "CC BY 3.0",
+  "q": "bell peppers plant garden red"
+ },
+ "piante/melanzana": {
+  "file": "File:Plant d'aubergine africaine à Bouaké 2.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Plant_d%27aubergine_africaine_%C3%A0_Bouak%C3%A9_2.jpg",
+  "autore": "BorisAhonon",
+  "licenza": "CC BY-SA 4.0",
+  "q": "eggplant fruit plant garden"
+ },
+ "piante/zucchina": {
+  "file": "File:Zucchini plant, Gurgaon, India.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Zucchini_plant,_Gurgaon,_India.jpg",
+  "autore": "Tarunpant",
+  "licenza": "CC BY-SA 3.0",
+  "q": "zucchini plant garden"
+ },
+ "piante/zucca": {
+  "file": "File:Pie Pumpkins ready for harvest near Princeville, Illinois USA.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pie_Pumpkins_ready_for_harvest_near_Princeville,_Illinois_USA.jpg",
+  "autore": "Robert Haugland",
+  "licenza": "CC BY-SA 4.0",
+  "q": "pumpkins harvest field"
+ },
+ "piante/cetriolo": {
+  "file": "File:ARS_cucumber.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:ARS_cucumber.jpg",
+  "autore": "Stephen Ausmus, USDA ARS",
+  "licenza": "Public domain",
+  "q": "w:Cucumber"
+ },
+ "piante/melone": {
+  "file": "File:Meloen_vrucht_met_bloem.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Meloen_vrucht_met_bloem.jpg",
+  "autore": "Rasbak at Dutch Wikipedia",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Cantaloupe"
+ },
+ "piante/fagiolo": {
+  "file": "File:Heaps_of_beans.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Heaps_of_beans.jpg",
+  "autore": "",
+  "licenza": "GFDL 1.2",
+  "q": "w:Green bean"
+ },
+ "piante/pisello": {
+  "file": "File:Peas_in_pods_-_Studio.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Peas_in_pods_-_Studio.jpg",
+  "autore": "Bill Ebbesen",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Pea"
+ },
+ "piante/valerianella": {
+  "file": "File:Ackersalat02.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ackersalat02.jpg",
+  "autore": "Schwäbin",
+  "licenza": "CC BY-SA 3.0 de",
+  "q": "w:Valerianella locusta"
+ },
+ "piante/radicchio": {
+  "file": "File:RadicchioNL.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:RadicchioNL.jpg",
+  "autore": "Kasteelhoeve Puth at English Wikipedia",
+  "licenza": "Public domain",
+  "q": "w:Radicchio"
+ }
+}
