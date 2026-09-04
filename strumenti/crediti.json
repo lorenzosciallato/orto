@@ -817,5 +817,75 @@
   "autore": "Ivonatk",
   "licenza": "CC BY-SA 4.0",
   "q": "stuffed zucchini baked"
+ },
+ "ricette/insalata-di-patate-novelle-fagiolini-e-cipollotto": {
+  "file": "File:Fried potato salad.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Fried_potato_salad.jpg",
+  "autore": "FikriyeRıza",
+  "licenza": "CC BY-SA 4.0",
+  "q": "potato green bean salad"
+ },
+ "ricette/pesto-di-basilico": {
+  "file": "File:BasilPesto.JPG",
+  "pagina": "https://commons.wikimedia.org/wiki/File:BasilPesto.JPG",
+  "autore": "Ɱ",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Pesto"
+ },
+ "ricette/cetrioli-in-insalata-con-yogurt-e-menta": {
+  "file": "File:Cacik-1.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Cacik-1.jpg",
+  "autore": "Rainer Zenz",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Tzatziki"
+ },
+ "ricette/carote-novelle-glassate": {
+  "file": "File:Spicy orange glazed tofu w Israeli couscous and ginger glazed carrots (4260850655).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Spicy_orange_glazed_tofu_w_Israeli_couscous_and_ginger_glazed_carrots_(4260850655).jpg",
+  "autore": "Karen and Brad Emerson",
+  "licenza": "CC BY 2.0",
+  "q": "glazed carrots"
+ },
+ "ricette/marmellata-di-fragole": {
+  "file": "File:Fruits_jam_variants.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Fruits_jam_variants.jpg",
+  "autore": "毒島みるく",
+  "licenza": "CC0",
+  "q": "w:Fruit preserves"
+ },
+ "ricette/vellutata-fredda-di-piselli-e-menta": {
+  "file": "File:Courgette, Pea & Mint Soup - Brooklands Cafe 2026-05-15.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Courgette,_Pea_%26_Mint_Soup_-_Brooklands_Cafe_2026-05-15.jpg",
+  "autore": "Andy Li",
+  "licenza": "CC0",
+  "q": "pea mint soup"
+ },
+ "ricette/pomodori-ripieni-di-riso": {
+  "file": "File:EgyptianMahshyStuffedAubergineTomatoWithRice PhotoByWaelNawara.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:EgyptianMahshyStuffedAubergineTomatoWithRice_PhotoByWaelNawara.jpg",
+  "autore": "Wael Nawara",
+  "licenza": "CC BY-SA 4.0",
+  "q": "stuffed tomatoes rice"
+ },
+ "ricette/ratatouille": {
+  "file": "File:Ratatouille_home_cooked.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ratatouille_home_cooked.jpg",
+  "autore": "Jack145945",
+  "licenza": "CC0",
+  "q": "w:Ratatouille"
+ },
+ "ricette/gazpacho": {
+  "file": "File:Gazpacho_Malagueño_con_su_“picaíto”_-_Moreno,_Playa_Burriana_(cropped).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Gazpacho_Malague%C3%B1o_con_su_%E2%80%9Cpica%C3%ADto%E2%80%9D_-_Moreno,_Playa_Burriana_(cropped).jpg",
+  "autore": "Haydn Blackey",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Gazpacho"
+ },
+ "ricette/fagiolini-in-insalata-con-patate-e-pesto": {
+  "file": "File:Trofie_pasta_macro.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Trofie_pasta_macro.jpg",
+  "autore": "Tom dl",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Trofie"
  }
 }
