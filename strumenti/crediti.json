@@ -607,5 +607,75 @@
   "autore": "Anagoria",
   "licenza": "CC BY 3.0",
   "q": "w:Coleslaw"
+ },
+ "ricette/zuppa-di-cipolle-gratinata": {
+  "file": "File:Soupe_à_l'oignon.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Soupe_%C3%A0_l%27oignon.jpg",
+  "autore": "Ludovic Péron",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:French onion soup"
+ },
+ "ricette/scorzonera-in-padella-con-burro-e-prezzemolo": {
+  "file": "File:Everything for the garden (16364903506).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Everything_for_the_garden_(16364903506).jpg",
+  "autore": "Henry G. Gilbert Nursery and Seed Trade Catalog Collection.; Peter Henderson &am",
+  "licenza": "Public domain",
+  "q": "scorzonera cooked"
+ },
+ "ricette/pasta-e-broccoli-con-i-cavolfiori-d-inverno": {
+  "file": "File:Broccoli_and_cross_section_edit.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Broccoli_and_cross_section_edit.jpg",
+  "autore": "Fir0002",
+  "licenza": "GFDL 1.2",
+  "q": "w:Broccoli"
+ },
+ "ricette/frittelle-di-cavolo-nero-come-pakora": {
+  "file": "File:Onion_pakora_-_a.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Onion_pakora_-_a.jpg",
+  "autore": "Babu iyer",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Pakora"
+ },
+ "ricette/porri-in-agrodolce": {
+  "file": "File:Illuminated facade of a restaurant serving traditional food with fresh vegetables in Chiyoda, Tokyo.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Illuminated_facade_of_a_restaurant_serving_traditional_food_with_fresh_vegetables_in_Chiyoda,_Tokyo.jpg",
+  "autore": "Basile Morin",
+  "licenza": "CC BY-SA 4.0",
+  "q": "leeks vinaigrette"
+ },
+ "ricette/crema-di-topinambur-con-nocciole-tostate": {
+  "file": "File:Jerusalem artichoke soup at a sittning.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Jerusalem_artichoke_soup_at_a_sittning.jpg",
+  "autore": "JIP",
+  "licenza": "CC BY-SA 4.0",
+  "q": "Jerusalem artichoke soup"
+ },
+ "ricette/cavolo-rapa-crudo-in-insalata-con-mela": {
+  "file": "File:Brussels Sprouts and Apple Salad-Spicy Mustard, Fennel, Kohlrabi, Aged Goat Cheese, Marcona Almond ($12) (15608847791).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Brussels_Sprouts_and_Apple_Salad-Spicy_Mustard,_Fennel,_Kohlrabi,_Aged_Goat_Cheese,_Marcona_Almond_($12)_(15608847791).jpg",
+  "autore": "Lou Stejskal",
+  "licenza": "CC BY 2.0",
+  "q": "kohlrabi salad"
+ },
+ "ricette/frittata-di-patate-e-cipolla-tortilla": {
+  "file": "File:Tortilla_de_patata_-_San_Sebastián.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Tortilla_de_patata_-_San_Sebasti%C3%A1n.jpg",
+  "autore": "Kent Wang",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Spanish omelette"
+ },
+ "ricette/strudel-di-mele-e-uvetta": {
+  "file": "File:Strudel.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Strudel.jpg",
+  "autore": "che",
+  "licenza": "CC BY-SA 2.5",
+  "q": "w:Apple strudel"
+ },
+ "ricette/ravanelli-e-burro-alla-francese": {
+  "file": "File:Radieschen-Brot.JPG",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Radieschen-Brot.JPG",
+  "autore": "Manfred&amp;Barbara Aulbach",
+  "licenza": "CC BY-SA 3.0",
+  "q": "radishes butter salt"
  }
 }
