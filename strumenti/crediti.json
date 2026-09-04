@@ -467,5 +467,75 @@
   "autore": "Daderot",
   "licenza": "CC0",
   "q": "green beans tomato sauce"
+ },
+ "ricette/sciroppo-di-lamponi": {
+  "file": "File:Cheesecake with Syrups.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Cheesecake_with_Syrups.jpg",
+  "autore": "Texas Lane",
+  "licenza": "CC BY-SA 4.0",
+  "q": "raspberry syrup"
+ },
+ "ricette/passata-di-pomodoro-da-conserva": {
+  "file": "File:Tomato_passata.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Tomato_passata.jpg",
+  "autore": "Tabby",
+  "licenza": "CC0",
+  "q": "w:Tomato purée"
+ },
+ "ricette/peperonata": {
+  "file": "File:Peperonata22.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Peperonata22.jpg",
+  "autore": "Kobako",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Peperonata"
+ },
+ "ricette/salsa-verde-di-tomatillo": {
+  "file": "File:Salsa_verde.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salsa_verde.jpg",
+  "autore": "stu_spivack",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Salsa verde"
+ },
+ "ricette/frittata-di-spinaci-e-pecorino": {
+  "file": "File:Frittata02.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Frittata02.jpg",
+  "autore": "fir0002  flagstaffotos [at] gmail.com\n\t\tCanon 20D + Canon 17-40mm f/4 L",
+  "licenza": "GFDL 1.2",
+  "q": "w:Frittata"
+ },
+ "ricette/marmellata-di-fichi-e-noci": {
+  "file": "File:Ficus_carica_L,_1771.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ficus_carica_L,_1771.jpg",
+  "autore": "Trew, C.J",
+  "licenza": "Public domain",
+  "q": "w:Fig"
+ },
+ "ricette/vellutata-di-zucca-e-rosmarino": {
+  "file": "File:Kürbissuppe_mit_Kernöl.JPG",
+  "pagina": "https://commons.wikimedia.org/wiki/File:K%C3%BCrbissuppe_mit_Kern%C3%B6l.JPG",
+  "autore": "Wald1siedel",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Squash soup"
+ },
+ "ricette/finocchi-gratinati": {
+  "file": "File:Finocchi al graten (prima della cottura in forno).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Finocchi_al_graten_(prima_della_cottura_in_forno).jpg",
+  "autore": "Ensahequ",
+  "licenza": "CC BY-SA 4.0",
+  "q": "fennel gratin"
+ },
+ "ricette/orecchiette-con-cime-di-rapa": {
+  "file": "File:Orecchiette_carbonara.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Orecchiette_carbonara.jpg",
+  "autore": "Foodista",
+  "licenza": "CC BY 2.0",
+  "q": "w:Orecchiette"
+ },
+ "ricette/risotto-al-radicchio": {
+  "file": "File:RadicchioNL.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:RadicchioNL.jpg",
+  "autore": "Kasteelhoeve Puth at English Wikipedia",
+  "licenza": "Public domain",
+  "q": "w:Radicchio"
  }
 }
