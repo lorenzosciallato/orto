@@ -747,5 +747,75 @@
   "autore": "Jeremy Keith",
   "licenza": "CC BY 2.0",
   "q": "pasta with broad beans"
+ },
+ "ricette/torta-di-rabarbaro-e-mandorle": {
+  "file": "File:Rhubarb cake (26914385863).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Rhubarb_cake_(26914385863).jpg",
+  "autore": "Robbie Sproule from Montreal, Canada",
+  "licenza": "CC BY 2.0",
+  "q": "rhubarb cake"
+ },
+ "ricette/uova-in-purgatorio-con-bietoline": {
+  "file": "File:Shakshuka_by_Calliopejen1.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Shakshuka_by_Calliopejen1.jpg",
+  "autore": "Calliopejen1",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Shakshouka"
+ },
+ "ricette/fragole-con-aceto-balsamico-e-pepe": {
+  "file": "File:Panna Cotta with Balsamic Strawberries.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Panna_Cotta_with_Balsamic_Strawberries.jpg",
+  "autore": "Alpha from Melbourne, Australia",
+  "licenza": "CC BY-SA 2.0",
+  "q": "strawberries balsamic"
+ },
+ "ricette/taccole-saltate-con-aglio-e-limone": {
+  "file": "File:Liat Portal for Foodie Disorder - Stir Fried Snow Peas.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Stir_Fried_Snow_Peas.jpg",
+  "autore": "HaJunkiyada",
+  "licenza": "CC BY-SA 4.0",
+  "q": "snow peas stir fry"
+ },
+ "ricette/risotto-con-piselli-e-lattuga": {
+  "file": "File:Risotto_with_speck_and_goat_cheese_(6101067436).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Risotto_with_speck_and_goat_cheese_(6101067436).jpg",
+  "autore": "Luca Nebuloni from Milan, Italy",
+  "licenza": "CC BY 2.0",
+  "q": "w:Risi e bisi"
+ },
+ "ricette/agretti-con-uova-strapazzate": {
+  "file": "File:Liat Portal for Foodie Disorder - Homemade Breakfast Plate.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Homemade_Breakfast_Plate.jpg",
+  "autore": "HaJunkiyada",
+  "licenza": "CC BY-SA 4.0",
+  "q": "scrambled eggs greens"
+ },
+ "ricette/focaccia-con-cipollotti-e-rosmarino": {
+  "file": "File:Focaccia_with_Crumb.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Focaccia_with_Crumb.jpg",
+  "autore": "Fred Benenson",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Focaccia"
+ },
+ "ricette/sciroppo-di-fiori-di-sambuco": {
+  "file": "File:Picked_Elderflower.jpg",
+  "pagina": "https://en.wikipedia.org/wiki/File:Picked_Elderflower.jpg",
+  "autore": "SpitfireTally-ho! 18:40, 11 March 2009 (UTC)",
+  "licenza": "CC-BY-SA-3.0",
+  "q": "w:Elderflower cordial"
+ },
+ "ricette/pasta-con-asparagi-selvatici-e-uova": {
+  "file": "File:Wild Honey, Mayfair, W1 (3578735469).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Wild_Honey,_Mayfair,_W1_(3578735469).jpg",
+  "autore": "Ewan Munro from London, UK",
+  "licenza": "CC BY-SA 2.0",
+  "q": "wild asparagus eggs"
+ },
+ "ricette/zucchine-ripiene-al-forno": {
+  "file": "File:Полнети тиквица и пиперка со тавче гравче.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:%D0%9F%D0%BE%D0%BB%D0%BD%D0%B5%D1%82%D0%B8_%D1%82%D0%B8%D0%BA%D0%B2%D0%B8%D1%86%D0%B0_%D0%B8_%D0%BF%D0%B8%D0%BF%D0%B5%D1%80%D0%BA%D0%B0_%D1%81%D0%BE_%D1%82%D0%B0%D0%B2%D1%87%D0%B5_%D0%B3%D1%80%D0%B0%D0%B2%D1%87%D0%B5.jpg",
+  "autore": "Ivonatk",
+  "licenza": "CC BY-SA 4.0",
+  "q": "stuffed zucchini baked"
  }
 }
