@@ -677,5 +677,75 @@
   "autore": "Manfred&amp;Barbara Aulbach",
   "licenza": "CC BY-SA 3.0",
   "q": "radishes butter salt"
+ },
+ "ricette/zuppa-di-ortiche-e-patate": {
+  "file": "File:St_John_Restaurant,_Smithfield,_London_(3445306202).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:St_John_Restaurant,_Smithfield,_London_(3445306202).jpg",
+  "autore": "Ewan Munro from London, UK",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Nettle soup"
+ },
+ "ricette/vellutata-di-porri-e-patate": {
+  "file": "File:Mon_Plaisir,_Covent_Garden,_London_(3717184145).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mon_Plaisir,_Covent_Garden,_London_(3717184145).jpg",
+  "autore": "Ewan Munro from London, UK",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Leek soup"
+ },
+ "ricette/insalata-di-spinaci-novelli-uova-sode-e-pancetta": {
+  "file": "File:Mmm...salad again (5367876473).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Mmm...salad_again_(5367876473).jpg",
+  "autore": "jeffreyw",
+  "licenza": "CC BY 2.0",
+  "q": "spinach salad bacon egg"
+ },
+ "ricette/torta-salata-di-bietole-e-ricotta": {
+  "file": "File:Spaghetti_vongole_2.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Spaghetti_vongole_2.jpg",
+  "autore": "Popo le Chien",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Torta pasqualina"
+ },
+ "ricette/gnocchi-di-ortica": {
+  "file": "File:Gnocchi_di_ricotta_burro_e_salvia.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Gnocchi_di_ricotta_burro_e_salvia.jpg",
+  "autore": "Paoletta S.",
+  "licenza": "CC BY 2.0",
+  "q": "w:Gnocchi"
+ },
+ "ricette/risotto-agli-asparagi": {
+  "file": "File:Risotto_with_speck_and_goat_cheese_(6101067436).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Risotto_with_speck_and_goat_cheese_(6101067436).jpg",
+  "autore": "Luca Nebuloni from Milan, Italy",
+  "licenza": "CC BY 2.0",
+  "q": "w:Risotto"
+ },
+ "ricette/insalata-di-rucola-pere-e-pecorino": {
+  "file": "File:Eruca_sativa_sl11.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Eruca_sativa_sl11.jpg",
+  "autore": "Stefan.lefnaer",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Arugula"
+ },
+ "ricette/crespelle-agli-spinaci-e-ricotta": {
+  "file": "File:Crepes_dsc07085.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Crepes_dsc07085.jpg",
+  "autore": "David Monniaux",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Crêpe"
+ },
+ "ricette/cipollotti-alla-brace-con-salsa-verde": {
+  "file": "File:Paret_de_calçots.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Paret_de_cal%C3%A7ots.jpg",
+  "autore": "Laia Solanellas from Reus, Catalonia",
+  "licenza": "CC BY 2.0",
+  "q": "w:Calçot"
+ },
+ "ricette/pasta-con-le-fave-fresche-pecorino-e-menta": {
+  "file": "File:Pasta primavera.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pasta_primavera.jpg",
+  "autore": "Jeremy Keith",
+  "licenza": "CC BY 2.0",
+  "q": "pasta with broad beans"
  }
 }
