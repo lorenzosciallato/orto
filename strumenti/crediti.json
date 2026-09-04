@@ -222,5 +222,75 @@
   "autore": "Jonathunder",
   "licenza": "GFDL 1.2",
   "q": "w:Parsley"
+ },
+ "piante/topinambur": {
+  "file": "File:Sunroot_top.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Sunroot_top.jpg",
+  "autore": "",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Jerusalem artichoke"
+ },
+ "piante/rabarbaro": {
+  "file": "File:Rheum_rhabarbarum.2006-04-27.uellue.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Rheum_rhabarbarum.2006-04-27.uellue.jpg",
+  "autore": "Dieter Weber (User:Uellue)",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Rhubarb"
+ },
+ "piante/cardo": {
+  "file": "File:Cynara_cardunculus_flavescens_(14684164583).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Cynara_cardunculus_flavescens_(14684164583).jpg",
+  "autore": "peganum from Henfield, England",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Cardoon"
+ },
+ "piante/zafferano": {
+  "file": "File:Crocus_sativus2.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Crocus_sativus2.jpg",
+  "autore": "KENPEI",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Saffron crocus"
+ },
+ "piante/agretti": {
+  "file": "File:Salsola soda sl26.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Salsola_soda_sl26.jpg",
+  "autore": "Stefan.lefnaer",
+  "licenza": "CC BY-SA 4.0",
+  "q": "agretti Salsola soda"
+ },
+ "piante/piccolifrutti": {
+  "file": "File:Fertődi_kármin_málna.JPG",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Fert%C5%91di_k%C3%A1rmin_m%C3%A1lna.JPG",
+  "autore": "Kollányi Gábor",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Rubus idaeus"
+ },
+ "piante/frutta": {
+  "file": "File:Pink_lady_and_cross_section.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pink_lady_and_cross_section.jpg",
+  "autore": "fir0002  flagstaffotos [at] gmail.com\n\t\tCanon 20D + Sigma 150mm f/2.8",
+  "licenza": "GFDL 1.2",
+  "q": "w:Apple"
+ },
+ "piante/okra": {
+  "file": "File:Hong_Kong_Okra_Aug_25_2012.JPG",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Hong_Kong_Okra_Aug_25_2012.JPG",
+  "autore": "Earth100",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Okra"
+ },
+ "piante/quinoa": {
+  "file": "File:Reismelde.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Reismelde.jpg",
+  "autore": "User:MarkusHagenlocher",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Quinoa"
+ },
+ "piante/fiori": {
+  "file": "File:Tropaeolum_majus_2005_G1.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Tropaeolum_majus_2005_G1.jpg",
+  "autore": "George Chernilevsky",
+  "licenza": "Public domain",
+  "q": "w:Tropaeolum majus"
  }
 }
