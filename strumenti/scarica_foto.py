@@ -117,6 +117,23 @@ def prendi(chiave, cartella, queries, indice=0, forza=False):
     print("NIENTE", chiave, queries)
     return "niente"
 
+import subprocess
+NUOVE = 0
+def salva_nella_repo():
+    """Su GitHub Actions: salva subito le foto scaricate, così non si perde niente se scade il tempo."""
+    if not os.environ.get("GITHUB_ACTIONS"): return
+    try:
+        crediti_html()
+        subprocess.run(["git","config","user.name","foto-bot"], cwd=BASE)
+        subprocess.run(["git","config","user.email","foto-bot@users.noreply.github.com"], cwd=BASE)
+        subprocess.run(["git","add","img","strumenti/crediti.json","crediti.html"], cwd=BASE)
+        r = subprocess.run(["git","commit","-q","-m","Foto scaricate (salvataggio parziale)"], cwd=BASE)
+        if r.returncode == 0:
+            subprocess.run(["git","push","-q"], cwd=BASE)
+            print("-- salvate nella repo --", flush=True)
+    except Exception as e:
+        print("salvataggio fallito:", e, flush=True)
+
 def crediti_html():
     C = json.load(open(BASE+"/strumenti/crediti.json"))
     righe = []
@@ -134,6 +151,11 @@ if __name__ == "__main__":
     piano = json.load(open(sys.argv[1]))   # {"cartella":..., "voci":{chiave:[query,...]}}
     globals()["FIORI_OK"] = piano.get("fiori", False)
     for k, qs in piano["voci"].items():
-        print(k, prendi(k, piano["cartella"], qs), flush=True)
+        esito = prendi(k, piano["cartella"], qs)
+        print(k, esito, flush=True)
+        if esito == "nuova":
+            NUOVE += 1
+            if NUOVE % 10 == 0: salva_nella_repo()
         time.sleep(3)
     crediti_html()
+    salva_nella_repo()
