@@ -82,5 +82,75 @@
   "autore": "Kasteelhoeve Puth at English Wikipedia",
   "licenza": "Public domain",
   "q": "w:Radicchio"
+ },
+ "piante/fava": {
+  "file": "File:Illustration_Vicia_faba1.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Illustration_Vicia_faba1.jpg",
+  "autore": "",
+  "licenza": "Public domain",
+  "q": "w:Vicia faba"
+ },
+ "piante/cece": {
+  "file": "File:Chickpea_BNC.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Chickpea_BNC.jpg",
+  "autore": "Prathyush Thomas",
+  "licenza": "GFDL 1.2",
+  "q": "w:Chickpea"
+ },
+ "piante/cavoli": {
+  "file": "File:Brassica_-_Gardenology.org-IMG_0606_bbg09.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Brassica_-_Gardenology.org-IMG_0606_bbg09.jpg",
+  "autore": "Raffi Kojian",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Lacinato kale"
+ },
+ "piante/cime": {
+  "file": "File:Bok_Choy_(49553125456).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Bok_Choy_(49553125456).jpg",
+  "autore": "spurekar",
+  "licenza": "CC BY 2.0",
+  "q": "w:Bok choy"
+ },
+ "piante/rapa": {
+  "file": "File:Turnip_2622027.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Turnip_2622027.jpg",
+  "autore": "thebittenword.com",
+  "licenza": "CC BY 2.0",
+  "q": "w:Turnip"
+ },
+ "piante/ravanello": {
+  "file": "File:Radish_3371103037_4ab07db0bf_o.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Radish_3371103037_4ab07db0bf_o.jpg",
+  "autore": "Self, en:User:Jengod",
+  "licenza": "Public domain",
+  "q": "w:Radish"
+ },
+ "piante/lattuga": {
+  "file": "File:Iceberg_lettuce_in_SB.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Iceberg_lettuce_in_SB.jpg",
+  "autore": "en:User:Geographer",
+  "licenza": "CC BY 1.0",
+  "q": "w:Lettuce"
+ },
+ "piante/rucola": {
+  "file": "File:Eruca_vesicaria_BM010755249.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Eruca_vesicaria_BM010755249.jpg",
+  "autore": "Unknown authorUnknown author",
+  "licenza": "CC0",
+  "q": "w:Eruca vesicaria"
+ },
+ "piante/bietola": {
+  "file": "File:Chard_(Beta_vulgaris_var_cicla).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Chard_(Beta_vulgaris_var_cicla).jpg",
+  "autore": "Neelix at English Wikipedia",
+  "licenza": "Public domain",
+  "q": "w:Chard"
+ },
+ "piante/carota": {
+  "file": "File:Vegetable-Carrot-Bundle-wStalks.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Vegetable-Carrot-Bundle-wStalks.jpg",
+  "autore": "Evan-Amos",
+  "licenza": "Public domain",
+  "q": "w:Carrot"
  }
 }
