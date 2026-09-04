@@ -327,5 +327,75 @@
   "autore": "Original book source: Prof. Dr. Otto Wilhelm Thomé Flora von Deutschland, Österr",
   "licenza": "Public domain",
   "q": "w:Chicory"
+ },
+ "ricette/zuppa-di-cavolo-nero-fagioli-e-pane": {
+  "file": "File:Ribollita_Siena.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Ribollita_Siena.jpg",
+  "autore": "Ta4e Negodue",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Ribollita"
+ },
+ "ricette/pure-di-topinambur-e-patate": {
+  "file": "File:Sous_vide_mashed_potatoes.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Sous_vide_mashed_potatoes.jpg",
+  "autore": "sousvideguy",
+  "licenza": "CC BY 2.0",
+  "q": "w:Mashed potato"
+ },
+ "ricette/porri-gratinati-al-forno": {
+  "file": "File:Leek & Dauphinoise Potato Pastry - The Flour Pot Bakery 2026-04-06.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Leek_%26_Dauphinoise_Potato_Pastry_-_The_Flour_Pot_Bakery_2026-04-06.jpg",
+  "autore": "Andy Li",
+  "licenza": "CC0",
+  "q": "leek gratin"
+ },
+ "ricette/crema-di-sedano-rapa-e-mela": {
+  "file": "File:Céleri-rave-fendu.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:C%C3%A9leri-rave-fendu.jpg",
+  "autore": "DocteurCosmos",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Celeriac"
+ },
+ "ricette/pastinaca-arrosto-al-miele": {
+  "file": "File:Pastinaca_sativa_MHNT.BOT.2004.0.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Pastinaca_sativa_MHNT.BOT.2004.0.jpg",
+  "autore": "Didier Descouens",
+  "licenza": "CC BY-SA 4.0",
+  "q": "w:Parsnip"
+ },
+ "ricette/frittata-di-germogli-di-luppolo-o-di-asparagi": {
+  "file": "File:This is frittata with sliced asparagus, goats cheese and parsley 2014-05-25 21-54.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:This_is_frittata_with_sliced_asparagus,_goats_cheese_and_parsley_2014-05-25_21-54.jpg",
+  "autore": "User:Developedbud",
+  "licenza": "CC BY-SA 3.0",
+  "q": "asparagus frittata"
+ },
+ "ricette/pesto-di-aglio-orsino": {
+  "file": "File:Photo_of_Allium_Ursinum,_wild_garlic,_north-west_Hampshire,_UK,_May_2014.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Photo_of_Allium_Ursinum,_wild_garlic,_north-west_Hampshire,_UK,_May_2014.jpg",
+  "autore": "Rodolph",
+  "licenza": "CC BY-SA 3.0",
+  "q": "w:Allium ursinum"
+ },
+ "ricette/risotto-ai-porri-e-zafferano": {
+  "file": "File:Risotto_with_speck_and_goat_cheese_(6101067436).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Risotto_with_speck_and_goat_cheese_(6101067436).jpg",
+  "autore": "Luca Nebuloni from Milan, Italy",
+  "licenza": "CC BY 2.0",
+  "q": "w:Risotto alla milanese"
+ },
+ "ricette/rabarbaro-in-composta-per-lo-yogurt": {
+  "file": "File:Compote.jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Compote.jpg",
+  "autore": "",
+  "licenza": "CC BY-SA 2.0",
+  "q": "w:Compote"
+ },
+ "ricette/agretti-saltati-con-limone": {
+  "file": "File:Spaghetti with agretti and shrimps (33072545290).jpg",
+  "pagina": "https://commons.wikimedia.org/wiki/File:Spaghetti_with_agretti_and_shrimps_(33072545290).jpg",
+  "autore": "Luca Nebuloni",
+  "licenza": "CC BY 2.0",
+  "q": "agretti cooked"
  }
 }
