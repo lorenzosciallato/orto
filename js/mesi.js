@@ -105,7 +105,7 @@ const MESI = [
   ] },
 
 { id:"aprile", nome:"Aprile", sotto:"Semine dirette a raffica e nervi saldi: la gelata tardiva di metà aprile a fondovalle è quasi una regola.",
-  clima:"Le ultime gelate arrivano di solito tra il 10 e il 25 aprile; nel fondovalle vicino al fiume anche ai primi di maggio. Piogge frequenti.",
+  clima:"Le ultime gelate arrivano di solito tra il 10 e il 25 aprile; nei fondovalle anche ai primi di maggio. Piogge frequenti.",
   piante:[
     ["Patate (tutte)","impianto","Tutto il mese. Varietà: una precoce, una da conservazione, e per curiosità una viola (Vitelotte) o una Kennebec per la resa.",0],
     ["Carote, barbabietole, bietole, spinaci, rapa, rucola, ravanelli, lattughe","semina","Semina diretta scaglionata.",0],
@@ -123,7 +123,7 @@ const MESI = [
     ["Cavoli estivi, lattughe, sedano, sedano rapa, porri, cardo, cavolo rapa","trapianto","Piantine dal semenzaio, con TNT nelle notti fredde.",0],
     ["Cipolle da piantina","trapianto","Se non le hai messe a marzo.",0],
     ["Rabarbaro, asparagi, topinambur, crosne, luppolo","impianto","Ultima finestra per le perenni da tubero e rizoma.",0],
-    ["Fichi, melograno nano, kiwi, vite","impianto","Il melograno a 440 m con inverni a −8 è al limite: varietà russe rustiche (Salavatski) in posizione riparata, o in vaso.",1],
+    ["Fichi, melograno nano, kiwi, vite","impianto","Il melograno dove l'inverno scende sotto i −6/−8 °C è al limite: varietà russe rustiche (Salavatski) in posizione riparata, o in vaso.",1],
     ["Fragole di bosco e fragole rifiorenti","impianto","Le fragoline in un angolo a mezz'ombra: si spargono da sole.",0]
   ],
   raccolta:"Spinaci, ravanelli, lattughe, rucola, cicorie, agretti (dal 20 in poi), asparagi dal terzo anno, rabarbaro, cipollotti, erbe fresche, i primi piselli a fine mese se seminati a febbraio sotto tunnel.",
@@ -155,7 +155,7 @@ const MESI = [
     ["Carote, barbabietole, bietole, rucola, lattughe estive, ravanelli","semina","Continua le semine scaglionate. Lattughe: varietà da estate (Canasta, Regina dei ghiacci) che non salgono a seme.",0],
     ["Okra, luffa, lagenaria, cucamelon, fagiolo asparago","trapianto","Insoliti, dal semenzaio, dopo il 20 nel posto più caldo.",1],
     ["Physalis e tomatillo","trapianto","Insoliti, dal semenzaio di gennaio–marzo. Il physalis cresce a cespuglio da 1 m: dagli spazio.",1],
-    ["Batata (patata dolce)","impianto","Insolito: talee radicate (si fanno in casa da un tubero in un bicchiere d'acqua da marzo). Trapianto a fine maggio su cumulo con pacciamatura nera. A 440 m ce la fa nelle estati calde.",1],
+    ["Batata (patata dolce)","impianto","Insolito: talee radicate (si fanno in casa da un tubero in un bicchiere d'acqua da marzo). Trapianto a fine maggio su cumulo con pacciamatura nera. Nei climi freschi ce la fa solo nelle estati calde.",1],
     ["Yacon","impianto","Insolito: tubero sudamericano dolce e croccante, si mangia crudo come una mela. Da pianta in vaso, trapianto dopo il 20, raccolta a ottobre prima del gelo.",1],
     ["Stevia, verbena odorosa, dragoncello francese, santoreggia, cumino dei prati","impianto","Aromatiche da piantina. La verbena odorosa (cedrina) per la tisana più buona che c'è. Il dragoncello francese solo da talea, quello da seme è russo e non sa di niente.",1],
     ["Tagete, zinnia, cosmos, nasturzio, calendula","trapianto","Tra le verdure, non in un angolo a parte: attirano gli impollinatori dove servono.",0],
@@ -208,7 +208,7 @@ const MESI = [
     "Salva i semi delle fave e dei piselli migliori"
   ] },
 { id:"luglio", nome:"Luglio", sotto:"Raccolta a pieno ritmo e, con una mano, si semina l'orto d'autunno. Chi semina a luglio mangia a novembre.",
-  clima:"Il mese più caldo (30–33 °C), ma le notti restano sotto i 18 °C: le melanzane qui fanno più fatica che a Macerata.",
+  clima:"Il mese più caldo (30–33 °C), con le giornate buone per raccogliere all'alba, prima del gran caldo.",
   piante:[
     ["Cavolfiore, broccolo, cavolo nero, verza, cavolini di Bruxelles, cappuccio","trapianto","Da metà mese, le piantine del semenzaio di giugno. Ombreggia e bagna per una settimana.",0],
     ["Finocchio","trapianto","Da metà mese a inizio agosto: piantine a 25 cm. Rincalzare a settembre per il grumolo bianco.",0],
@@ -310,11 +310,11 @@ const MESI = [
     ["Aglio elefante","impianto","Insolito: in realtà un porro che fa teste enormi dal sapore dolce. Si pianta come l'aglio, teste da 300 g a luglio.",1],
     ["Cipolla da bulbillo invernale, scalogno","impianto","Stesso discorso dell'aglio sul drenaggio.",0],
     ["Cipolla bianca (piantine)","trapianto","Quelle del semenzaio di fine agosto.",0],
-    ["Fave","semina","Fine mese, sotto TNT, su aiuola rialzata. A 440 m con inverni a −8 è al limite: fai una fila di prova e il grosso a febbraio.",0],
+    ["Fave","semina","Fine mese, sotto TNT, su aiuola rialzata. Dove l'inverno è rigido è al limite: fai una fila di prova e il grosso a febbraio.",0],
     ["Piselli invernali (Meraviglia d'Italia, Rondo)","tunnel","Come le fave: solo protetti.",0],
     ["Spinacio, valerianella, lattughino, rucola, cerfoglio, coriandolo","tunnel","Ultime semine possibili, sotto tunnel o TNT: nasceranno con calma.",0],
     ["Alberi da frutto a radice nuda","impianto","Da fine mese: meli antichi (la Mela Rosa dei Sibillini è di qui), peri, susini, cotogno, ciliegio, noce, nocciolo. Buca larga, argilla mescolata a compost e mai fondo di plastica.",0],
-    ["Azzeruolo, giuggiolo, nespolo germanico, sorbo domestico, corniolo","impianto","Insoliti: i frutti dimenticati che stavano in ogni orto marchigiano. Rustici, senza trattamenti, frutti da marmellata e liquori. Il giuggiolo vuole il posto più caldo.",1],
+    ["Azzeruolo, giuggiolo, nespolo germanico, sorbo domestico, corniolo","impianto","Insoliti: i frutti dimenticati che stavano in ogni orto contadino. Rustici, senza trattamenti, frutti da marmellata e liquori. Il giuggiolo vuole il posto più caldo.",1],
     ["Lamponi, more senza spine, ribes, uva spina, aronia, goji, sambuco","impianto","Da fine mese a marzo. Il sambuco per lo sciroppo di fiori a maggio.",0],
     ["Rabarbaro, luppolo, asparagi (divisione)","impianto","Divisione dei cespi vecchi.",0],
     ["Sovescio (segale)","semina","Ultima chiamata: la segale nasce anche a 5 °C, la veccia da sola non fa più in tempo.",0]

@@ -1,7 +1,7 @@
 {
  "name": "Orto",
  "short_name": "Orto",
- "description": "L'orto di Pievebovigliana, tutto l'anno",
+ "description": "Il calendario del tuo orto, comune per comune",
  "start_url": "./index.html",
  "scope": "./",
  "display": "standalone",

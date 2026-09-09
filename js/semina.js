@@ -1,50 +1,50 @@
-/* Quando seminare — condizioni di cielo e di terreno per ogni scheda, tarate su Pievebovigliana (440 m):
-   ultime gelate fino a fine aprile/inizio maggio, prime gelate a fine ottobre.
+/* Quando seminare — condizioni di cielo e di terreno per ogni scheda, valide per tutta Italia.
+   Le date legate al gelo sono relative: la riga sul clima del comune scelto, mostrata in cima alla scheda, dice quando le gelate finiscono e tornano.
    SEMI: cosa cercare per comprare (q = parole da cercare, bio = si trova anche da Arcoiris, nota = avvertenza) */
 
 const SEMINA = {
-pomodoro:`<p><b>Periodo</b>: semenzaio al caldo tra febbraio e metà marzo; trapianto fuori da metà maggio, quando le gelate qui sono davvero finite.</p>
+pomodoro:`<p><b>Periodo</b>: semenzaio al caldo tra febbraio e metà marzo; trapianto fuori un paio di settimane dopo l'ultima gelata della tua zona (la riga sul tuo clima, qui sopra, dice quando).</p>
 <p><b>Cielo e temperatura</b>: il seme germina a 22–26 °C (serve un posto caldo in casa); la piantina fuori vuole notti stabilmente sopra i 10 °C. Una notte sotto zero la uccide, una settimana fredda la blocca per un mese: meglio trapiantare una settimana dopo che una prima.</p>
 <p><b>Terreno</b>: profondo, ben lavorato, ricco di compost maturo, senza ristagni d'acqua. Interra il fusto fino alle prime foglie: fa radici anche dal gambo e la pianta parte più forte.</p>`,
 
-patata:`<p><b>Periodo</b>: si piantano i tuberi da fine marzo a tutto aprile, quando la terra a 10 cm di profondità è sui 8–10 °C (non fredda al tatto). Farli pregermogliare in cassetta alla luce per 3–4 settimane fa guadagnare due settimane di raccolto.</p>
-<p><b>Cielo e temperatura</b>: il tubero sotto terra sopporta, ma la vegetazione fuori viene bruciata dalle gelate tardive: se ad aprile è annunciata una gelata, rincalza la terra sopra i germogli e li salvi.</p>
+patata:`<p><b>Periodo</b>: si piantano i tuberi quando la terra a 10 cm di profondità è sui 8–10 °C — a fine inverno nelle zone miti, in aprile dove l'inverno è vero (non fredda al tatto). Farli pregermogliare in cassetta alla luce per 3–4 settimane fa guadagnare due settimane di raccolto.</p>
+<p><b>Cielo e temperatura</b>: il tubero sotto terra sopporta, ma la vegetazione fuori viene bruciata dalle gelate tardive: se dopo la nascita è annunciata una gelata, rincalza la terra sopra i germogli e li salvi.</p>
 <p><b>Terreno</b>: sciolto e profondo; nei terreni pesanti e sempre bagnati i tuberi marciscono, quindi niente conche, meglio porche leggermente rialzate. Mai letame fresco a contatto.</p>`,
 
-peperone:`<p><b>Periodo</b>: semenzaio a febbraio, prima del pomodoro, perché è lento; trapianto da fine maggio.</p>
+peperone:`<p><b>Periodo</b>: semenzaio prestissimo, prima del pomodoro, perché è lento; trapianto tre settimane dopo l'ultima gelata della tua zona.</p>
 <p><b>Cielo e temperatura</b>: per germinare vuole 25–28 °C costanti (senza un posto molto caldo il seme sta fermo settimane). Fuori vuole notti sopra i 12–13 °C: sotto, smette di crescere e ingiallisce. È la pianta più freddolosa dell'orto insieme alla melanzana: dagli il posto più caldo e riparato.</p>
 <p><b>Terreno</b>: fertile, ben drenato, che si scaldi presto; acqua regolare ma poca per volta.</p>`,
 
-melanzana:`<p><b>Periodo</b>: semenzaio tra febbraio e i primi di marzo; trapianto da fine maggio ai primi di giugno.</p>
-<p><b>Cielo e temperatura</b>: germina a 24–26 °C e fuori pretende caldo vero: sotto i 15 °C si ferma, i fiori cascano senza allegare. A 440 m dalle un muro esposto a sud o la pacciamatura scura che scalda la terra.</p>
+melanzana:`<p><b>Periodo</b>: semenzaio in pieno inverno; trapianto tre-quattro settimane dopo l'ultima gelata della tua zona.</p>
+<p><b>Cielo e temperatura</b>: germina a 24–26 °C e fuori pretende caldo vero: sotto i 15 °C si ferma, i fiori cascano senza allegare. Nei climi freschi dalle un muro esposto a sud o la pacciamatura scura che scalda la terra.</p>
 <p><b>Terreno</b>: il più ricco che hai, profondo e fresco; è una mangiona e beve tanto, ma sempre senza ristagni.</p>`,
 
-zucchina:`<p><b>Periodo</b>: semina diretta da metà maggio, quando la terra è sui 15 °C; oppure in vasetto al coperto a metà aprile per trapiantare a maggio.</p>
+zucchina:`<p><b>Periodo</b>: semina diretta quando la terra è sui 15 °C, a gelate finite; oppure in vasetto al coperto un mese prima.</p>
 <p><b>Cielo e temperatura</b>: il seme in terra fredda e bagnata marcisce in pochi giorni, non ha fretta che ripaghi. Germina in 5–7 giorni a 20–25 °C. Una brinata azzera la pianta.</p>
 <p><b>Terreno</b>: buca generosa riempita di compost o letame maturo: la zucchina cresce quanto trova da mangiare. Postarelle a un metro l'una dall'altra, 2–3 semi per buca e poi lasci la piantina migliore.</p>`,
 
-zucca:`<p><b>Periodo</b>: semina diretta a maggio, in vasetto ad aprile al coperto.</p>
+zucca:`<p><b>Periodo</b>: semina diretta a gelate finite, in vasetto al coperto un mese prima.</p>
 <p><b>Cielo e temperatura</b>: come la zucchina, terra ad almeno 15 °C e nessun rischio di brina. Le serve poi un'estate lunga: le varietà da inverno seminate tardi arrivano piccole.</p>
 <p><b>Terreno</b>: è la pianta perfetta per il posto più grasso dell'orto — sopra o accanto alla vecchia compostiera è casa sua. Tanto spazio: una pianta occupa 2–4 metri, mettila dove può correre senza soffocare il resto.</p>`,
 
-cetriolo:`<p><b>Periodo</b>: semina diretta a maggio; se vuoi anticipare, vasetti di torba ad aprile da interrare interi.</p>
+cetriolo:`<p><b>Periodo</b>: semina diretta a gelate finite; se vuoi anticipare, vasetti di torba un mese prima, da interrare interi.</p>
 <p><b>Cielo e temperatura</b>: terra ad almeno 15 °C e aria mite; odia due cose, il freddo e il trapianto a radice nuda (le radici sono delicatissime, per questo i vasetti che si piantano interi).</p>
 <p><b>Terreno</b>: fresco, ricco, con acqua costante: sete e sbalzi rendono i frutti amari. Una rete su cui arrampicarsi tiene i frutti dritti e puliti.</p>`,
 
-melone:`<p><b>Periodo</b>: vasetto al caldo ad aprile, trapianto da fine maggio; semina diretta solo a maggio inoltrato.</p>
-<p><b>Cielo e temperatura</b>: è il più esigente dei cucurbitacei: germina a 24–28 °C e fuori vuole notti sopra i 15 °C. A 440 m riesce, ma scegli varietà precoci e dagli il posto più assolato, con pacciamatura scura o un telo che scaldi la terra.</p>
+melone:`<p><b>Periodo</b>: vasetto al caldo un mese e mezzo prima della fine delle gelate; trapianto quando le notti stanno sopra i 15 °C.</p>
+<p><b>Cielo e temperatura</b>: è il più esigente dei cucurbitacei: germina a 24–28 °C e fuori vuole notti sopra i 15 °C. In collina e in montagna riesce, ma scegli varietà precoci e dagli il posto più assolato, con pacciamatura scura o un telo che scaldi la terra.</p>
 <p><b>Terreno</b>: leggero, che si scalda in fretta, concimato bene; poca acqua in maturazione, sennò i frutti restano sciapi.</p>`,
 
-fagiolo:`<p><b>Periodo</b>: semina diretta da maggio a metà luglio, a scalare per averne sempre.</p>
+fagiolo:`<p><b>Periodo</b>: semina diretta da dopo le ultime gelate a metà luglio, a scalare per averne sempre.</p>
 <p><b>Cielo e temperatura</b>: la terra deve essere ad almeno 13–14 °C: in terra fredda il seme marcisce e basta. Il detto vecchio funziona ancora: si semina quando puoi camminare scalzo sulla terra senza patire.</p>
 <p><b>Terreno</b>: quasi qualunque, purché non ristagni; si fabbrica l'azoto da solo, quindi niente concimi azotati (faresti solo foglie). Semi a 3 cm, non di più, e non annaffiare finché non è nato.</p>`,
 
-fava:`<p><b>Periodo</b>: due finestre: ottobre–novembre (la migliore qui: sverna e a primavera è già avanti) oppure febbraio–marzo appena la terra si lavora.</p>
+fava:`<p><b>Periodo</b>: due finestre: ottobre–novembre (dove l'inverno non è durissimo è la migliore: sverna e a primavera è già avanti) oppure febbraio–marzo appena la terra si lavora.</p>
 <p><b>Cielo e temperatura</b>: germina già a 5 °C e la piantina regge gelate fino a −5/−6 °C: il freddo non è un problema, il caldo sì — seminata tardi incontra gli afidi neri e il secco.</p>
 <p><b>Terreno</b>: una delle poche che tollera bene anche i terreni pesanti e argillosi. Niente azoto: se lo fa da sola, e anzi lo lascia in regalo alla coltura dopo.</p>`,
 
 pisello:`<p><b>Periodo</b>: febbraio–marzo, tra i primissimi dell'anno; a ottobre le varietà da svernamento.</p>
-<p><b>Cielo e temperatura</b>: germina a 4–5 °C, la piantina regge la brina. Il vero nemico è il caldo: sopra i 25 °C in fioritura smette di produrre, quindi qui conviene seminare presto e raccogliere entro giugno.</p>
+<p><b>Cielo e temperatura</b>: germina a 4–5 °C, la piantina regge la brina. Il vero nemico è il caldo: sopra i 25 °C in fioritura smette di produrre, quindi conviene seminare presto e raccogliere prima del gran caldo.</p>
 <p><b>Terreno</b>: drenato e senza croste; niente azoto, come per fave e fagioli. Una rete bassa pronta da subito: i viticci cercano appiglio dai primi giorni.</p>`,
 
 cece:`<p><b>Periodo</b>: da metà marzo a tutto aprile.</p>
@@ -91,7 +91,7 @@ bietola:`<p><b>Periodo</b>: da aprile ad agosto; quella d'agosto dà foglie per 
 <p><b>Cielo e temperatura</b>: germina dai 10–12 °C in su e poi sopporta quasi tutto, caldo e prime gelate: è tra le più generose e resistenti.</p>
 <p><b>Terreno</b>: profondo e fresco. Ogni "seme" è in realtà un glomerulo con dentro 3–4 semi veri: nasceranno ciuffetti, e va sfoltito senza pietà lasciando una pianta ogni 25–30 cm.</p>`,
 
-carota:`<p><b>Periodo</b>: da marzo a metà luglio; le semine di giugno–luglio danno le carote da conservare per l'inverno.</p>
+carota:`<p><b>Periodo</b>: da fine inverno a metà luglio; le semine di giugno–luglio danno le carote da conservare per l'inverno.</p>
 <p><b>Cielo e temperatura</b>: la nascita è il punto critico: ci mette 2–3 settimane e in quel tempo il letto di semina non deve MAI asciugarsi — una tavola o un telo sopra il solco fino alla nascita fa miracoli.</p>
 <p><b>Terreno</b>: sciolto, sabbioso, profondo, senza sassi; e mai letame fresco, che fa radici biforcute e pelose. In terra pesante e argillosa scegli varietà mezze-lunghe o tonde: verranno comunque, le lunghe no.</p>`,
 
@@ -116,7 +116,7 @@ finocchio:`<p><b>Periodo</b>: semina diretta da metà giugno a fine luglio, per 
 <p><b>Terreno</b>: sciolto, fresco, con acqua regolare fino alla fine: il grumolo croccante è fatto d'acqua. Un rincalzo a metà crescita lo fa bianco e tenero.</p>`,
 
 aglio:`<p><b>Periodo</b>: ottobre–novembre, oppure gennaio–febbraio. Quello d'autunno viene più grosso.</p>
-<p><b>Cielo e temperatura</b>: il freddo non è un nemico, è un ingrediente: senza 1–2 mesi sotto i 10 °C la testa non si divide in spicchi. A 440 m l'inverno fa il lavoro da solo.</p>
+<p><b>Cielo e temperatura</b>: il freddo non è un nemico, è un ingrediente: senza 1–2 mesi sotto i 10 °C la testa non si divide in spicchi. In quasi tutta Italia l'inverno fa il lavoro da solo; solo sulle coste più calde le teste possono restare piccole.</p>
 <p><b>Terreno</b>: il suo unico vero nemico è l'acqua ferma d'inverno: terreno drenatissimo, in argilla una porca rialzata di 15 cm. Spicchi con la punta in su, 3–5 cm sotto, niente letame fresco, e da lì non si annaffia praticamente mai.</p>`,
 
 cipolla:`<p><b>Periodo</b>: tre strade: da seme in semenzaio a febbraio–marzo; da bulbillo a marzo–aprile (la via facile); e ad agosto–settembre da seme, o ottobre–novembre da bulbillo, per le cipolle che svernano.</p>
@@ -127,7 +127,7 @@ porro:`<p><b>Periodo</b>: semenzaio da febbraio ad aprile; trapianto a giugno–
 <p><b>Cielo e temperatura</b>: paziente e freddoloso al contrario: cresce piano tutta l'estate e dà il meglio con le gelate, restando in terra fino a febbraio.</p>
 <p><b>Terreno</b>: il trucco è tutto nel trapianto: buchi profondi 15 cm fatti col piolo, una piantina per buco, e NON si richiude — si annaffia e basta, la terra scivola da sola. È così che viene il fusto bianco lungo. Terreno ricco e fresco.</p>`,
 
-mais:`<p><b>Periodo</b>: semina diretta da fine aprile a inizio giugno.</p>
+mais:`<p><b>Periodo</b>: semina diretta a gelate finite, quando la terra è tiepida.</p>
 <p><b>Cielo e temperatura</b>: terra ad almeno 12–14 °C: in terra fredda il seme marcisce o nasce a macchia di leopardo.</p>
 <p><b>Terreno</b>: fertile e con acqua garantita in fioritura, quando si gioca tutto. E la regola che cambia il raccolto: semina a blocco quadrato (almeno 4×4 file), mai a fila singola — l'impollinazione è a vento, e la fila singola dà pannocchie mezze vuote.</p>`,
 
@@ -135,7 +135,7 @@ girasole:`<p><b>Periodo</b>: semina diretta da metà aprile a giugno.</p>
 <p><b>Cielo e temperatura</b>: germina dai 10–12 °C, la piantina tollera una leggera brina. Pieno sole, ovviamente: al buio si affloscia.</p>
 <p><b>Terreno</b>: profondo, perché la radice scende tanto (ed è per questo che regge il secco); non troppo grasso. Semi a 2–3 cm. Il vero nemico sono uccelli e topi che scavano i semi appena messi: una rete o delle bottiglie tagliate sopra le postarelle finché non è nato.</p>`,
 
-basilico:`<p><b>Periodo</b>: in vasetto al caldo da fine marzo; fuori solo da metà maggio. Una seconda semina a giugno–luglio dà foglie fresche fino all'autunno.</p>
+basilico:`<p><b>Periodo</b>: in vasetto al caldo da fine marzo; fuori solo a gelate del tutto finite. Una seconda semina a stagione piena dà foglie fresche fino all'autunno.</p>
 <p><b>Cielo e temperatura</b>: germina a 20–25 °C; sotto i 10 °C soffre e annerisce, e la minima brina lo azzera. È un termometro vivente: quando il basilico sta bene fuori, tutto l'orto estivo può uscire.</p>
 <p><b>Terreno</b>: ricco, drenato, al sole; acqua alla base e non sulle foglie. Cimalo appena fa i fiori, o smette di fare foglie buone.</p>`,
 
@@ -152,7 +152,7 @@ asparago:`<p><b>Periodo</b>: le zampe si mettono a dimora a febbraio–marzo, a 
 <p><b>Terreno</b>: fossi profondi 25–30 cm con letame maturo sul fondo coperto da un dito di terra, zampe adagiate a ragno a 40 cm l'una dall'altra, e si ricopre man mano che crescono. Drenaggio perfetto: in argilla aggiungi sabbia nel fosso. Primo raccolto vero al terzo anno — la pazienza è nell'appezzamento giusto.</p>`,
 
 rabarbaro:`<p><b>Periodo</b>: si piantano le corone (o si dividono i cespi vecchi) a marzo o a ottobre.</p>
-<p><b>Cielo e temperatura</b>: notizia buona per Pievebovigliana: il rabarbaro VUOLE l'inverno freddo, senza gelo vero non riparte bene — a 440 m è nel suo clima ideale. D'estate gradisce mezz'ombra e non patire sete.</p>
+<p><b>Cielo e temperatura</b>: il rabarbaro VUOLE l'inverno freddo, senza gelo vero non riparte bene: in collina e in montagna è nel suo clima ideale, nella pianura calda soffre. D'estate gradisce mezz'ombra e non patire sete.</p>
 <p><b>Terreno</b>: profondo, ricco, fresco: prepara la buca con abbondante compost. Il primo anno non si raccoglie niente, dal secondo si tirano (non si tagliano) le coste esterne. Le foglie non si mangiano mai.</p>`,
 
 cardo:`<p><b>Periodo</b>: semina diretta ad aprile–maggio, a postarelle.</p>
@@ -172,19 +172,19 @@ fragola:`<p><b>Periodo</b>: la finestra migliore è agosto–settembre, con pian
 <p><b>Terreno</b>: ricco di humus, tendente all'acido, pacciamato (paglia: tiene i frutti puliti e la terra fresca). Regola d'oro al trapianto: il colletto esattamente a livello terra — interrato marcisce, alto secca.</p>`,
 
 piccolifrutti:`<p><b>Periodo</b>: a radice nuda da novembre a marzo, fuori dai giorni di gelo forte; in vaso quasi tutto l'anno, evitando luglio–agosto.</p>
-<p><b>Cielo e temperatura</b>: lamponi, ribes e uva spina sono piante di montagna: il freddo di Pievebovigliana gli piace, e anzi gradiscono mezz'ombra nelle ore roventi.</p>
-<p><b>Terreno</b>: fresco e ricco per tutti, con un'eccezione grossa: il mirtillo vuole SOLO terra acida (pH 4,5–5,5), che qui non c'è — si coltiva in vaso o fossa foderata con terriccio per acidofile, annaffiato con acqua piovana. Piantarlo in terra normale è il modo classico di vederlo morire lentamente.</p>`,
+<p><b>Cielo e temperatura</b>: lamponi, ribes e uva spina sono piante di montagna: il freddo invernale gli piace, e anzi gradiscono mezz'ombra nelle ore roventi.</p>
+<p><b>Terreno</b>: fresco e ricco per tutti, con un'eccezione grossa: il mirtillo vuole SOLO terra acida (pH 4,5–5,5), che quasi nessun orto ha di suo — si coltiva in vaso o fossa foderata con terriccio per acidofile, annaffiato con acqua piovana. Piantarlo in terra normale è il modo classico di vederlo morire lentamente.</p>`,
 
 frutta:`<p><b>Periodo</b>: gli alberi a radice nuda si piantano da novembre a marzo, durante il riposo, evitando i giorni di terra gelata o fradicia. Quelli in vaso quasi tutto l'anno.</p>
 <p><b>Cielo e temperatura</b>: il detto dei vivaisti è "buca pronta un mese prima": scavata larga e lasciata ad arieggiare. Piantato in autunno, l'albero fa radici tutto l'inverno e parte avvantaggiato.</p>
 <p><b>Terreno</b>: buca larga il doppio delle radici, letame maturo sul fondo MAI a contatto con le radici, e la regola che decide tutto: il punto d'innesto (il nodo gonfio alla base) resta 5–10 cm FUORI dalla terra. Interrato, la pianta si ammala o l'innesto viene scavalcato. Tutore subito, annaffiatura abbondante anche se piove.</p>`,
 
-physalis:`<p><b>Periodo</b>: si tratta come un pomodoro: semenzaio al caldo a febbraio–marzo, trapianto da metà maggio.</p>
-<p><b>Cielo e temperatura</b>: germina a 22–25 °C; il ciclo è lungo e i frutti maturano da fine agosto in poi, quindi a 440 m dagli il posto più caldo e parti presto col semenzaio. Il gelo lo azzera.</p>
+physalis:`<p><b>Periodo</b>: si tratta come un pomodoro: semenzaio al caldo in fine inverno, trapianto a gelate finite.</p>
+<p><b>Cielo e temperatura</b>: germina a 22–25 °C; il ciclo è lungo e i frutti maturano da fine estate in poi: nei climi freschi dagli il posto più caldo e parti presto col semenzaio. Il gelo lo azzera.</p>
 <p><b>Terreno</b>: sorpresa: rende meglio in terra normale o perfino povera — in terra grassa fa una giungla di foglie e pochi frutti. Drenaggio buono, poca acqua, e ricordati che ricade: un sostegno o mezzo metro di spazio attorno.</p>`,
 
 okra:`<p><b>Periodo</b>: semenzaio molto al caldo ad aprile, trapianto a giugno; semina diretta solo a giugno.</p>
-<p><b>Cielo e temperatura</b>: è una pianta tropicale sul serio: germina a 25–30 °C (ammollo del seme 24 ore, aiuta molto) e sotto i 15 °C sta semplicemente ferma. A 440 m riesce solo nell'angolo più rovente dell'orto, contro un muro a sud, o in serra; nelle estati fresche non aspettarti miracoli.</p>
+<p><b>Cielo e temperatura</b>: è una pianta tropicale sul serio: germina a 25–30 °C (ammollo del seme 24 ore, aiuta molto) e sotto i 15 °C sta semplicemente ferma. Fuori dai climi caldi riesce solo nell'angolo più rovente dell'orto, contro un muro a sud, o in serra; nelle estati fresche non aspettarti miracoli.</p>
 <p><b>Terreno</b>: drenato e ben esposto; raccogli i baccelli a 5–8 cm, ogni due giorni: crescono a vista d'occhio e diventano legnosi in nulla.</p>`,
 
 quinoa:`<p><b>Periodo</b>: da fine marzo ad aprile.</p>
@@ -204,7 +204,7 @@ luppolo:`<p><b>Periodo</b>: i rizomi si piantano da febbraio ad aprile, 10 cm so
 <p><b>Terreno</b>: profondo, ricco, drenato. Il primo anno sopra terra fa poco e sembra un fallimento: sta lavorando sotto. Dal secondo anno esplode, e da lì i getti in eccesso si tagliano — anche lui tende a colonizzare.</p>`,
 
 liquirizia:`<p><b>Periodo</b>: piantine o porzioni di radice ad aprile–maggio.</p>
-<p><b>Cielo e temperatura</b>: pianta mediterranea che vuole estati lunghe e calde; a 440 m va nel posto più caldo e riparato, e sverna senza problemi una volta adulta.</p>
+<p><b>Cielo e temperatura</b>: pianta mediterranea che vuole estati lunghe e calde; nei climi freschi va nel posto più caldo e riparato, e sverna senza problemi una volta adulta.</p>
 <p><b>Terreno</b>: la radice — che è quello che si raccoglie — scende oltre il metro: serve terra profonda, sciolta, anche calcarea, lavorata a fondo. In terra compatta la radice resta corta e amara. Raccolta dal terzo–quarto anno, e attenzione: anche lei, dove si trova bene, si allarga e non se ne va più.</p>`,
 
 germogli:`<p><b>Periodo</b>: tutto l'anno, in casa: è l'unica "semina" che a gennaio funziona come a luglio.</p>
@@ -226,7 +226,7 @@ melanzana:{q:"semi di melanzana",bio:true},
 zucchina:{q:"semi di zucchina",bio:true},
 zucca:{q:"semi di zucca",bio:true},
 cetriolo:{q:"semi di cetriolo",bio:true},
-melone:{q:"semi di melone",bio:true,nota:"A 440 m scegli una varietà segnata come precoce."},
+melone:{q:"semi di melone",bio:true,nota:"In collina e in montagna scegli una varietà segnata come precoce."},
 fagiolo:{q:"semi di fagiolo",bio:true},
 fava:{q:"semi di fava",bio:true},
 pisello:{q:"semi di pisello",bio:true},

@@ -5,8 +5,8 @@ const $ = s=>document.querySelector(s);
 const esc = s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
 const tipoLabel = {semina:"semina diretta",semenzaio:"semenzaio",trapianto:"trapianto",impianto:"impianto",tunnel:"sotto tunnel"};
 const COMUNE = (typeof comuneSalvato==="function") ? comuneSalvato() : null;
-const LAT = COMUNE ? COMUNE.lat : 43.06, LON = COMUNE ? COMUNE.lon : 13.09;   // Pievebovigliana se non scelto
-const NOME_LUOGO = COMUNE ? COMUNE.n : "Pievebovigliana";
+const LAT = COMUNE ? COMUNE.lat : null, LON = COMUNE ? COMUNE.lon : null;
+const NOME_LUOGO = COMUNE ? COMUNE.n : "il tuo orto";
 const GIORNI=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 const norm = s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 const slug = s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
@@ -38,7 +38,7 @@ function pannelloMese(m){
   const rs = RICETTE.filter(r=>r.mese===m.id);
   const nIns = m.piante.filter(p=>p[3]).length;
   return `<section class="pannello" id="p-${m.id}" role="tabpanel" aria-labelledby="t-${m.id}">
-  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p>${esc(m.sotto)}</p><div class="clima">${esc(m.clima)}</div>${COMUNE?`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`:""}</div></div>
+  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p>${esc(m.sotto)}</p><div class="clima">${COMUNE?meseClima(COMUNE,m.id):esc(m.clima)}</div></div></div>
   <div class="due">
     <div><h2>Cosa piantare <span>${m.piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
       <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button></div>
@@ -71,16 +71,16 @@ function pannelloRicette(){
 }
 function pannelloConsigli(){
   return `<section class="pannello" id="p-consigli" role="tabpanel" aria-labelledby="t-consigli">
-  <div class="mese-testa"><div class="mese-nome">Consigli</div><p>Quello che conta davvero per un orto su argilla, vicino al fiume, a 440 metri.</p></div>
+  <div class="mese-testa"><div class="mese-nome">Consigli</div><p>Quello che conta davvero per il tuo orto, qualunque terra e qualunque quota.</p></div>
   <div class="consigli">${CONSIGLI.map(c=>`<div class="consiglio"><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p></div>`).join("")}</div></section>`;
 }
 function pannelloOggi(){
   const tot = MESI.reduce((a,m)=>a+m.piante.length,0);
   return `<section class="pannello" id="p-oggi" role="tabpanel" aria-labelledby="t-oggi">
-  <div class="mese-testa"><div class="mese-nome" id="oggi-data"></div><div><p id="oggi-frase"></p><div class="clima">${esc(NOME_LUOGO)}, ${COMUNE?COMUNE.alt:440} m · ${tot} colture, ${RICETTE.length} ricette, 12 mesi.</div></div></div>
+  <div class="mese-testa"><div class="mese-nome" id="oggi-data"></div><div><p id="oggi-frase"></p><div class="clima">${COMUNE?`${esc(COMUNE.n)} (${esc(COMUNE.pr)}), ${COMUNE.alt} m · `:""}${tot} colture, ${RICETTE.length} ricette, 12 mesi.</div>${COMUNE?`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`:""}</div></div>
   <div class="oggi">
     <div>
-      <div class="meteo" id="meteo"><div class="stato">Leggo il meteo di ${NOME_LUOGO}…</div></div>
+      <div class="meteo" id="meteo"><div class="stato">${COMUNE?`Leggo il meteo di ${esc(COMUNE.n)}…`:"Scegli il tuo comune per vedere il meteo del tuo orto."}</div></div>
       <div class="consigli-oggi"><h2>Cosa fare oggi <span>tre spunti, diversi ogni giorno</span></h2><div id="consigli-oggi"></div></div>
     </div>
     <div>
@@ -124,7 +124,7 @@ $("#next").onclick = ()=>vai(corrente+1,1);
 $("#tablist").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"); if(b) vai(tabs.findIndex(t=>t.id===b.dataset.tab));});
 document.addEventListener("keydown",e=>{
   if(e.target.matches("input,textarea")) return;
-  if(!$("#modale-comune").hidden){ if(e.key==="Escape"){ $("#modale-comune").hidden=true; document.body.style.overflow=""; } return; }
+  if(!$("#modale-comune").hidden){ if(e.key==="Escape" && !$("#comune-chiudi").hidden){ $("#modale-comune").hidden=true; document.body.style.overflow=""; } return; }
   if(!$("#modale-pianta").hidden){ if(e.key==="Escape") chiudiPianta(); return; }
   if(e.key==="ArrowRight") vai(corrente+1,1);
   if(e.key==="ArrowLeft") vai(corrente-1,-1);
@@ -387,7 +387,7 @@ async function caricaMeteo(){
   }
 }
 mostraCalendario(null); mostraConsigli(null);
-caricaMeteo();
+if(COMUNE) caricaMeteo();
 
 /* ---- avvio ---- */
 const hash = location.hash.replace("#","");
@@ -435,9 +435,11 @@ vai(iniziale>=0?iniziale:0, 1);
     catch(e){ box.innerHTML=`<div class="cerca-vuoto">Non riesco a scaricare l'elenco: controlla la connessione, chiudi e riprova.</div>`; return false; }
   }
   $("#btn-comune").onclick=()=>{ mod.hidden=false; document.body.style.overflow="hidden"; if(COMUNE) inp.value=COMUNE.n; caricaLista(); };
+  const obbligo=!COMUNE;
+  if(obbligo){ $("#comune-chiudi").hidden=true; mod.hidden=false; document.body.style.overflow="hidden"; caricaLista(); }
   function chiudi(){ mod.hidden=true; document.body.style.overflow=""; }
   $("#comune-chiudi").onclick=chiudi;
-  mod.addEventListener("click",e=>{ if(e.target===mod) chiudi(); });
+  mod.addEventListener("click",e=>{ if(e.target===mod && !obbligo) chiudi(); });
   inp.addEventListener("input",()=>{
     $("#comune-scelto").hidden=true; scelto=null;
     if(!LISTA) return;

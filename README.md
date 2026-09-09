@@ -1,6 +1,6 @@
 # Orto
 
-L'orto di Pievebovigliana, tutto l'anno: calendario mese per mese, meteo in tempo reale, schede delle piante, ricette e guide di costruzione.
+Orto, comune per comune, tutto l'anno: calendario mese per mese, meteo in tempo reale, schede delle piante, ricette e guide di costruzione.
 
 Sito: https://lorenzosciallato.github.io/orto/
 
