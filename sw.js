@@ -1,6 +1,6 @@
 /* Orto — funziona anche senza campo. Pagine e codice: prima la rete, poi la copia salvata. Foto e dati: prima la copia salvata. */
-const VERSIONE = "orto-2026-09-09d";
-const BASE = [ "./", "index.html", "css/stile.css", "js/mesi.js", "js/consigli.js", "js/schede.js", "js/clima.js", "js/semina.js", "js/schede-extra.js", "js/ricette.js", "js/allevare.js", "js/coltivare.js", "js/app.js", "manifest.json", "dati/italia.json", "img/icona-192.jpg", "img/icona-512.jpg" ];
+const VERSIONE = "orto-202609092134";
+const BASE = [ "./", "index.html", "css/stile.css?v=202609092134", "js/mesi.js?v=202609092134", "js/ricette.js?v=202609092134", "js/schede.js?v=202609092134", "js/clima.js?v=202609092134", "js/semina.js?v=202609092134", "js/schede-extra.js?v=202609092134", "js/consigli.js?v=202609092134", "js/allevare.js?v=202609092134", "js/coltivare.js?v=202609092134", "js/app.js?v=202609092134", "manifest.json", "dati/italia.json", "img/icona-192.jpg", "img/icona-512.jpg" ];
 self.addEventListener("install", e=>{ e.waitUntil(caches.open(VERSIONE).then(c=>c.addAll(BASE)).then(()=>self.skipWaiting())); });
 self.addEventListener("activate", e=>{ e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==VERSIONE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });
 self.addEventListener("fetch", e=>{
@@ -11,6 +11,6 @@ self.addEventListener("fetch", e=>{
   if(statico){
     e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{ const copia=res.clone(); caches.open(VERSIONE).then(c=>c.put(e.request,copia)); return res; })));
   } else {
-    e.respondWith(fetch(e.request).then(res=>{ const copia=res.clone(); caches.open(VERSIONE).then(c=>c.put(e.request,copia)); return res; }).catch(()=>caches.match(e.request).then(r=>r||caches.match("index.html"))));
+    e.respondWith(fetch(e.request,{cache:"no-cache"}).then(res=>{ const copia=res.clone(); caches.open(VERSIONE).then(c=>c.put(e.request,copia)); return res; }).catch(()=>caches.match(e.request).then(r=>r||(e.request.mode==="navigate"?caches.match("index.html"):Response.error()))));
   }
 });
