@@ -634,7 +634,7 @@ h2 span{font-family:Manrope,sans-serif;font-weight:500;color:var(--muto);font-si
 .orto-nota{margin:.9rem 0 0;font-size:.86rem;color:var(--muto);line-height:1.5;padding-top:.8rem;border-top:1px dashed var(--riga)}
 @media (max-width:640px){.orto-lista li{grid-template-columns:auto 1fr auto;grid-template-areas:"foto nome stella" "foto tag tag" "foto come come"}}
 /* ===================== mesi: accento verde su Cosa piantare ===================== */
-.blocco-piante{border-left:4px solid var(--verde);background:color-mix(in srgb,var(--verde) 6%,var(--scheda));border:1px solid color-mix(in srgb,var(--verde) 30%,var(--riga));border-left-width:4px;border-left-color:var(--verde);border-radius:var(--raggio);padding:.5rem 1rem .2rem;margin-top:.4rem}
+.blocco-piante{border-left:4px solid var(--verde);border-radius:4px;padding:.3rem 0 .2rem 1rem;margin-top:.4rem}
 .blocco-piante .filtri{margin:.4rem 0 .2rem}
 .blocco-piante .piante li:last-child{border-bottom:0}
 /* ===================== tema giorno / notte ===================== */

@@ -664,7 +664,7 @@ mostraOrtoHome();
     b.setAttribute("aria-label", scuro ? "Passa al tema chiaro" : "Passa al tema scuro");
     if(meta) meta.content = scuro ? "#0E1311" : "#F5F6F3";
   }
-  let t=null; try{ t=localStorage.getItem("orto-tema")||null; }catch(e){}
+  let t="dark"; try{ t=localStorage.getItem("orto-tema")||"dark"; }catch(e){}
   applica(t);
   b.onclick=()=>{ const scuro=document.documentElement.dataset.theme==="dark" || (!document.documentElement.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches); t=scuro?"light":"dark"; try{ localStorage.setItem("orto-tema",t); }catch(e){} applica(t); };
 })();
