@@ -214,6 +214,7 @@ function filtraRicette(mese){
 }
 
 $("#finestra").addEventListener("click",e=>{
+  if(e.target.closest(".fasi")) return; /* le fasi hanno il loro gestore: non aprire la scheda */
   const v=e.target.closest("[data-vai]"); if(v){ vai(tabs.findIndex(t=>t.id===v.dataset.vai)); return; }
   const rm=e.target.closest("[data-ricette-mese]"); if(rm){ vai(tabs.findIndex(t=>t.id==="ricette"),1); filtraRicette(rm.dataset.ricetteMese); return; }
   const chip=e.target.closest("[data-rm]"); if(chip){ filtraRicette(chip.dataset.rm); return; }
