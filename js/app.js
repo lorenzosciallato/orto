@@ -4,22 +4,32 @@ RICETTE.sort((a,b)=>NOMI_MESI.indexOf(a.mese)-NOMI_MESI.indexOf(b.mese));
 const $ = s=>document.querySelector(s);
 const esc = s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
 const tipoLabel = {semina:"semina diretta",semenzaio:"semenzaio",trapianto:"trapianto",impianto:"impianto",tunnel:"sotto tunnel"};
+const oggi=new Date();
+const meseCorrente=MESI[oggi.getMonth()];
 const COMUNE = (typeof comuneSalvato==="function") ? comuneSalvato() : null;
 const LAT = COMUNE ? COMUNE.lat : null, LON = COMUNE ? COMUNE.lon : null;
 const NOME_LUOGO = COMUNE ? COMUNE.n : "il tuo orto";
 const GIORNI=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 const norm = s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 const slug = s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
-/* foto: piante in img/piante/<chiave>.jpg, ricette in img/ricette/<nome-in-minuscolo>.jpg; se manca, il tag si nasconde da solo */
-const fotoPianta = k=>`img/piante/${k}.jpg`;
-const fotoRicetta = r=>`img/ricette/${slug(r.nome)}.jpg`;
+/* foto: piante in img/piante/<chiave>.webp, ricette in img/ricette/<nome-in-minuscolo>.webp; se manca, il tag si nasconde da solo */
+const fotoPianta = k=>`img/piante/${k}.webp`;
+const fotoRicetta = r=>`img/ricette/${slug(r.nome)}.webp`;
 const imgTag = (src,alt,cls)=>`<img class="${cls}" src="${src}" alt="${esc(alt)}" loading="lazy" onerror="this.classList.add('manca');this.style.visibility='hidden'">`;
 
 /* le piante che l'utente dice di coltivare (chiavi delle schede) */
 let MIE = new Set();
 try{ MIE = new Set(JSON.parse(localStorage.getItem("orto-mie")||"[]")); }catch(e){}
 function salvaMie(){ try{ localStorage.setItem("orto-mie",JSON.stringify([...MIE])); }catch(e){} }
-function eMia(nome){ return chiaviPer(nome).some(k=>MIE.has(k)); }
+function chiaveMia(nome){ return chiaviPer(nome)[0] || ("n:"+nome); }
+function eMia(nome){ return MIE.has(chiaveMia(nome)); }
+function toggleMia(nome){ const k=chiaveMia(nome); if(MIE.has(k)) MIE.delete(k); else MIE.add(k); salvaMie(); aggiornaMieOvunque(); }
+function aggiornaMieOvunque(){
+  document.querySelectorAll("[data-pianta]").forEach(li=>{ const m=eMia(li.dataset.pianta); li.dataset.mia=m?1:0; const st=li.querySelector(".stella"); if(st) st.setAttribute("aria-pressed",m?"true":"false"); });
+  const p=$("#p-piante"); if(p){ const attivo=p.classList.contains("attivo"); p.outerHTML=pannelloPiante(); if(attivo) $("#p-piante").classList.add("attivo"); }
+  if(typeof aggiornaMia==="function") aggiornaMia();
+  if(typeof mostraSettimana==="function") mostraSettimana();
+}
 let stato = {};
 try{ stato = JSON.parse(localStorage.getItem("orto-pb-anno")||"{}"); }catch(e){ stato={}; }
 function salva(){ try{ localStorage.setItem("orto-pb-anno",JSON.stringify(stato)); }catch(e){} }
@@ -37,7 +47,7 @@ function ricettePer(k){
 function gzLink(nome){ return "https://www.giallozafferano.it/ricerca-ricette/"+encodeURIComponent(nome.replace(/[()]/g,"").trim().replace(/\s+/g,"+"))+"/"; }
 
 /* ---- pannelli ---- */
-const tabs = [{id:"oggi",label:"Oggi",nav:"oggi"},...MESI.map(m=>({id:m.id,label:m.nome,nav:"mesi",mese:true})),{id:"piante",label:"Piante",nav:"piante"},{id:"ricette",label:"Cucina",nav:"ricette"},{id:"guide",label:"Guide",nav:"guide"},{id:"costruire",label:"Costruire",nav:"guide"},{id:"coltivare",label:"Coltivare",nav:"guide"},{id:"allevare",label:"Allevare",nav:"guide"},{id:"consigli",label:"Consigli",nav:"guide"}];
+const tabs = [{id:"oggi",label:"Oggi",nav:"oggi"},...MESI.map(m=>({id:m.id,label:m.nome,nav:"mesi",mese:true})),{id:"piante",label:"Il mio orto",nav:"piante"},{id:"ricette",label:"Cucina",nav:"ricette"},{id:"guide",label:"Guide",nav:"guide"},{id:"costruire",label:"Costruire",nav:"guide"},{id:"coltivare",label:"Coltivare",nav:"guide"},{id:"allevare",label:"Allevare",nav:"guide"},{id:"consigli",label:"Consigli",nav:"guide"}];
 const ORDINE_TIPO = {trapianto:0,semina:1,semenzaio:2,impianto:3,tunnel:4};
 
 function pannelloMese(m){
@@ -56,10 +66,10 @@ function pannelloMese(m){
   return `<section class="pannello" id="p-${m.id}" role="tabpanel" aria-labelledby="t-${m.id}">
   <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p class="mese-sotto">${testo}</p>${ambTesto?`<p class="clima clima-utente">${ambTesto}</p>`:""}</div></div>
   <div class="due">
-    <div><h2>Cosa piantare <span>${piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
+    <div><h2>Cosa piantare <span>${piante.length} colture · tocca il nome per la scheda, la stella per metterla nel tuo orto</span></h2>
       <div class="legenda"><span><i class="tag semenzaio"></i>in semenzaio: si semina in vasetto, al coperto</span><span><i class="tag semina"></i>semina diretta: il seme va in terra nell'orto</span><span><i class="tag trapianto"></i>trapianto: la piantina passa dal vasetto all'orto</span><span><i class="tag impianto"></i>impianto: si mettono a dimora bulbi, tuberi, radici o piante</span><span><i class="tag tunnel"></i>sotto tunnel: coltura protetta da telo o serra fredda</span></div>
       <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button><button class="filtro filtro-mie" data-f="mie" aria-pressed="false">Le mie</button></div>
-      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="${eMia(p[0])?1:0}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul>
+      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="${eMia(p[0])?1:0}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><button class="stella" data-stella="${esc(p[0])}" aria-pressed="${eMia(p[0])?"true":"false"}" aria-label="Metti ${esc(p[0])} nel mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul>
     </div>
     <div>
       <div class="raccolta"><b>Cosa si raccoglie</b>${ad(esc(src.raccolta))}</div>
@@ -70,25 +80,39 @@ function pannelloMese(m){
         <ul>${rs.slice(0,5).map(r=>`<li>${esc(r.nome)}</li>`).join("")}<li>… e altre ${rs.length-5}</li></ul>
         <button data-ricette-mese="${m.id}">Apri le ricette di ${m.nome.toLowerCase()}</button></div>
     </div>
-  </div></section>`;
+  </div>
+  <nav class="mese-nav" aria-label="Altri mesi">${(i=>`${i>0?`<button data-vai="${MESI[i-1].id}"><small>Mese prima</small>${MESI[i-1].nome}</button>`:"<span></span>"}${i<11?`<button class="avanti" data-vai="${MESI[i+1].id}"><small>Mese dopo</small>${MESI[i+1].nome}</button>`:"<span></span>"}`)(MESI.findIndex(x=>x.id===m.id))}</nav></section>`;
 }
 
 function pannelloPiante(){
   const chiavi=Object.keys(SCHEDE).sort((a,b)=>SCHEDE[a].nome.localeCompare(SCHEDE[b].nome,"it"));
-  const card=k=>`<button class="pianta-card" data-apri-chiave="${k}">${imgTag(fotoPianta(k),SCHEDE[k].nome,"pc-foto")}<span class="pc-nome">${esc(SCHEDE[k].nome)}</span>${MIE.has(k)?'<span class="pc-mia">la coltivo</span>':''}</button>`;
-  const mie=chiavi.filter(k=>MIE.has(k));
+  const card=k=>`<button class="pianta-card" data-apri-chiave="${k}">${imgTag(fotoPianta(k),SCHEDE[k].nome,"pc-foto")}<span class="pc-nome">${esc(SCHEDE[k].nome)}</span>${MIE.has(k)?'<span class="pc-mia">nel tuo orto</span>':''}</button>`;
+  const mieChiavi=chiavi.filter(k=>MIE.has(k));
+  const mieNomi=[...MIE].filter(k=>k.startsWith("n:")).map(k=>k.slice(2));
+  const vuoto=!mieChiavi.length && !mieNomi.length;
+  const mId=meseCorrente.id;
+  const src = COMUNE ? (MESI.find(x=>x.id===meseBasePer(COMUNE,mId))||meseCorrente) : meseCorrente;
+  const daFare=[...src.piante,...((COMUNE&&meseCorrente.extra)||[])].filter(p=>eMia(p[0]));
   return `<section class="pannello" id="p-piante" role="tabpanel" aria-labelledby="t-piante">
-  <div class="mese-testa"><div class="mese-nome">Piante</div><p class="mese-sotto">${chiavi.length} schede: quando seminare, dove comprare i semi, consociazioni, conservazione, ricette e storia. Tocca una pianta e dille "la coltivo": i mesi e la tua settimana si adattano.</p></div>
-  ${mie.length?`<h2>Le tue piante <span>${mie.length}</span></h2><div class="griglia-piante">${mie.map(card).join("")}</div>`:""}
-  <h2>Tutte le schede <span>dalla A alla Z</span></h2>
+  <div class="mese-testa"><div class="mese-nome">Il mio orto</div><p class="mese-sotto">${vuoto?"Le piante che coltivi, in un posto solo: cosa fare per ciascuna questo mese, la scheda a un tocco, la tua settimana in Oggi.":`${(n=>n===1?"Una pianta":n+" piante")(mieChiavi.length+mieNomi.length)}. Questo mese ${daFare.length?`ce ne sono ${daFare.length} da mettere a dimora o curare`:"per le tue piante è tempo di raccolta e di cura"}.`}</p></div>
+  ${vuoto?`<div class="tutorial">
+    <p><b>Come si riempie</b></p>
+    <div class="tutorial-riga"><span class="mini manca"></span><b>Pomodori</b><span class="tag trapianto">trapianto</span><span class="stella demo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></span></div>
+    <p>Nei <b>Mesi</b>, accanto a ogni ortaggio c'è una stella: toccala e la pianta arriva qui. Da quel momento i mesi te la evidenziano, in Oggi la settimana la mette per prima, e qui trovi cosa farle. Puoi partire anche dall'elenco qui sotto: apri una scheda e tocca "La coltivi? Segnala".</p>
+    <button class="primario" data-vai="${mId}">Vai a ${meseCorrente.nome.toLowerCase()}</button>
+  </div>`:`
+  ${daFare.length?`<h2>Da fare a ${meseCorrente.nome.toLowerCase()} <span>per le tue piante</span></h2><ul class="piante">${daFare.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="1" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${esc(p[2])}</span></li>`).join("")}</ul>`:""}
+  <h2>Le tue piante <span>tocca per la scheda</span></h2>
+  <div class="griglia-piante">${mieChiavi.map(card).join("")}${mieNomi.map(n=>`<button class="pianta-card" data-pianta="${esc(n)}"><span class="pc-foto manca"></span><span class="pc-nome">${esc(n)}</span><span class="pc-mia">nel tuo orto</span></button>`).join("")}</div>`}
+  <h2>Tutte le piante <span>${chiavi.length} schede, dalla A alla Z</span></h2>
   <div class="griglia-piante">${chiavi.map(card).join("")}</div></section>`;
 }
 function pannelloGuide(){
   const g=[
-    ["costruire","Costruire","Irrigazione a goccia, tunnel e serre fredde, semenzaio, falegnameria per l'orto.","img/guide/serra.jpg"],
-    ["coltivare","Coltivare in altri modi","Vasi e balcone, aiuole rialzate, idroponica, acquaponica: come si comincia e dove studiare.","img/guide/idroponica.jpg"],
-    ["allevare","Allevare","Chiocciole, api e grilli accanto all'orto: come funzionano, costi, legge, link.","img/guide/api.jpg"],
-    ["consigli","Consigli","Le cose che contano davvero, dalla terra alle lune.","img/guide/aiuole.jpg"]
+    ["costruire","Costruire","Irrigazione a goccia, tunnel e serre fredde, semenzaio, falegnameria per l'orto.","img/guide/serra.webp"],
+    ["coltivare","Coltivare in altri modi","Vasi e balcone, aiuole rialzate, idroponica, acquaponica: come si comincia e dove studiare.","img/guide/idroponica.webp"],
+    ["allevare","Allevare","Chiocciole, api e grilli accanto all'orto: come funzionano, costi, legge, link.","img/guide/api.webp"],
+    ["consigli","Consigli","Le cose che contano davvero, dalla terra alle lune.","img/guide/aiuole.webp"]
   ];
   return `<section class="pannello" id="p-guide" role="tabpanel" aria-labelledby="t-guide">
   <div class="mese-testa"><div class="mese-nome">Guide</div><p class="mese-sotto">Quattro sezioni da leggere con calma, per costruire, coltivare in altri modi, allevare e capire.</p></div>
@@ -119,7 +143,8 @@ function pannelloOggi(){
   <div class="mese-testa"><div class="mese-nome" id="oggi-data"></div><div><p id="oggi-frase"></p><div class="clima">${COMUNE?`${esc(COMUNE.n)} (${esc(COMUNE.pr)}), ${COMUNE.alt} m · `:""}${tot} colture, ${RICETTE.length} ricette, 12 mesi.</div>${COMUNE?`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`:""}</div></div>
   <div class="oggi">
     <div>
-      <div class="meteo" id="meteo"><div class="stato">${COMUNE?`Leggo il meteo di ${esc(COMUNE.n)}…`:"Scegli il tuo comune per vedere il meteo del tuo orto."}</div></div>
+      <div class="meteo" id="meteo">${COMUNE?`<div class="shimmer-box" aria-label="Carico il meteo"><span class="sh l"></span><span class="sh m"></span><span class="sh s"></span><span class="sh m"></span></div>`:`<div class="stato">Scegli il tuo comune per vedere il meteo del tuo orto.</div>`}</div>
+      ${COMUNE?`<div class="mappa" id="mappa" aria-label="Il tuo comune sulla mappa d'Italia"></div>`:""}
       <div class="settimana"><h2>Questa settimana <span id="settimana-sotto"></span></h2><ul id="settimana" class="piante compatta"></ul></div>
       <div class="consigli-oggi"><h2>Cosa fare oggi <span>tre spunti, diversi ogni giorno</span></h2><div id="consigli-oggi"></div></div>
     </div>
@@ -129,7 +154,7 @@ function pannelloOggi(){
     </div>
   </div>
   <div class="intro" style="padding-top:2rem">
-    <div class="legenda"><span class="tag semina">semina diretta</span><span class="tag semenzaio">semenzaio</span><span class="tag trapianto">trapianto</span><span class="tag impianto">impianto</span><span class="tag tunnel">sotto tunnel o TNT</span><span class="ins" style="font-size:.78rem;color:var(--viola);border:1px solid var(--viola);border-radius:4px;padding:.15rem .4rem">insolita</span></div>
+    <div class="legenda"><span class="tag semina">semina diretta</span><span class="tag semenzaio">semenzaio</span><span class="tag trapianto">trapianto</span><span class="tag impianto">impianto</span><span class="tag tunnel">sotto tunnel o tessuto non tessuto</span><span class="ins" style="font-size:.78rem;color:var(--viola);border:1px solid var(--viola);border-radius:4px;padding:.15rem .4rem">insolita</span></div>
     <div class="calendario">${MESI.map(m=>`<button data-vai="${m.id}"><b>${m.nome}</b><small>${m.piante.length} colture · ${m.lavori.length} lavori · ${RICETTE.filter(r=>r.mese===m.id).length} ricette</small></button>`).join("")}</div>
   </div></section>`;
 }
@@ -163,13 +188,11 @@ function vai(i, dir){
   document.body.classList.toggle("in-mese", eMese);
   document.querySelectorAll("#barra-bassa [data-nav]").forEach(b=>b.setAttribute("aria-current", b.dataset.nav===tabs[i].nav ? "page" : "false"));
   const im = eMese ? MESI.findIndex(m=>m.id===tabs[i].id) : -1;
-  $("#prev").disabled = !eMese || im<=0; $("#next").disabled = !eMese || im>=MESI.length-1;
-  $("#pos").textContent = eMese ? `${tabs[i].label}` : "";
+  if($("#pos")) $("#pos").textContent = eMese ? tabs[i].label : "";
   try{ history.replaceState(null,"","#"+tabs[i].id); }catch(e){}
   try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){}
 }
-$("#prev").onclick = ()=>vai(corrente-1,-1);
-$("#next").onclick = ()=>vai(corrente+1,1);
+
 $("#barra-bassa").addEventListener("click",e=>{
   const b=e.target.closest("[data-nav]"); if(!b) return;
   const n=b.dataset.nav;
@@ -195,6 +218,7 @@ $("#finestra").addEventListener("click",e=>{
   const v=e.target.closest("[data-vai]"); if(v){ vai(tabs.findIndex(t=>t.id===v.dataset.vai)); return; }
   const rm=e.target.closest("[data-ricette-mese]"); if(rm){ vai(tabs.findIndex(t=>t.id==="ricette"),1); filtraRicette(rm.dataset.ricetteMese); return; }
   const chip=e.target.closest("[data-rm]"); if(chip){ filtraRicette(chip.dataset.rm); return; }
+  const st=e.target.closest("[data-stella]"); if(st){ e.stopPropagation(); toggleMia(st.dataset.stella); return; }
   const pc=e.target.closest("[data-apri-chiave]"); if(pc){ apriPianta(SCHEDE[pc.dataset.apriChiave].nome); return; }
   const f=e.target.closest("[data-f]"); if(f){
     const sez=f.closest(".pannello");
@@ -244,11 +268,7 @@ function aggiornaMia(){
 $("#mp-mia").addEventListener("click",()=>{
   if(!mpChiave) return;
   if(MIE.has(mpChiave)) MIE.delete(mpChiave); else MIE.add(mpChiave);
-  salvaMie(); aggiornaMia();
-  /* aggiorna i segni "mia" nei mesi, l'indice e la settimana senza ricaricare */
-  document.querySelectorAll(".piante li[data-pianta]").forEach(li=>{ li.dataset.mia = eMia(li.dataset.pianta)?1:0; });
-  const p=$("#p-piante"); if(p){ p.outerHTML=pannelloPiante(); if(tabs[corrente].id==="piante") $("#p-piante").classList.add("attivo"); }
-  mostraSettimana();
+  salvaMie(); aggiornaMieOvunque();
 });
 function chiudiPianta(){ $("#modale-pianta").hidden=true; document.body.style.overflow=""; }
 $("#mp-chiudi").onclick=chiudiPianta;
@@ -306,8 +326,6 @@ $("#mp-corpo").addEventListener("click",e=>{ const a=e.target.closest("[data-apr
 })();
 
 /* ---- OGGI: data, calendario, meteo, consigli ---- */
-const oggi=new Date();
-const meseCorrente=MESI[oggi.getMonth()];
 $("#oggi-data").innerHTML = `${oggi.getDate()}<br><span style="font-size:.5em;font-weight:600">${meseCorrente.nome}</span>`;
 $("#oggi-frase").textContent = COMUNE ? meseClima(COMUNE, meseCorrente.id) : meseCorrente.sotto;
 
@@ -358,17 +376,17 @@ function consigliMeteo(w){ // consigli che dipendono dal meteo di oggi e dei pro
   const piogPross=d.precipitation_sum.slice(1,4).reduce((a,b)=>a+b,0), vento=d.wind_speed_10m_max[0], um=c.relative_humidity_2m;
   const suolo = w.hourly && w.hourly.soil_temperature_0cm ? w.hourly.soil_temperature_0cm.slice(0,24).reduce((a,b)=>a+b,0)/24 : null;
   const m=oggi.getMonth();
-  if(minTre<=1) out.push(["Gelata in arrivo",`Minima prevista ${minTre.toFixed(0)} °C nei prossimi tre giorni: stasera copri con il TNT insalate, spinaci, radicchi e tutto ciò che è tenero. Zucche, yacon e batate in casa se sono ancora fuori.`]);
-  else if(minOggi<=3 && m>=2 && m<=4) out.push(["Notte fredda",`Minima a ${minOggi.toFixed(0)} °C: i trapianti delicati (pomodori, zucchine, basilico) aspettano. Tieni il TNT sulle piantine appena messe.`]);
+  if(minTre<=1) out.push(["Gelata in arrivo",`Minima prevista ${minTre.toFixed(0)} °C nei prossimi tre giorni: stasera copri con il tessuto non tessuto insalate, spinaci, radicchi e tutto ciò che è tenero. Zucche, yacon e batate in casa se sono ancora fuori.`]);
+  else if(minOggi<=3 && m>=2 && m<=4) out.push(["Notte fredda",`Minima a ${minOggi.toFixed(0)} °C: i trapianti delicati (pomodori, zucchine, basilico) aspettano. Tieni il tessuto non tessuto sulle piantine appena messe.`]);
   if(piog>=8) out.push(["Pioggia forte oggi",`Previsti ${piog.toFixed(0)} mm: non toccare l'argilla, non vangare, non trapiantare. Giornata da semenzaio in casa, falegnameria, ordine dei semi o pulizia attrezzi. Guarda dove ristagna l'acqua e segnalo.`]);
   else if(piog>=2 || probPiog>=60) out.push(["Pioggia probabile",`${probPiog}% di pioggia: semina o trapianta prima che arrivi e lascia che sia lei a innaffiare. Niente trattamenti (li lava via).`]);
   if(piog<1 && piogPross<2 && maxOggi>=26) out.push(["Caldo e secco",`Massima ${maxOggi.toFixed(0)} °C e niente pioggia in vista: irriga all'alba, alla base, a lungo e non tutti i giorni. Ombreggia le insalate tra le 11 e le 17. Raccogli zucchine e fagiolini oggi.`]);
-  if(vento>=40) out.push(["Vento forte",`Raffiche fino a ${vento.toFixed(0)} km/h: controlla che tunnel, TNT e reti siano ancorati, lega i pomodori alti e non irrigare a pioggia (si perde tutto).`]);
+  if(vento>=40) out.push(["Vento forte",`Raffiche fino a ${vento.toFixed(0)} km/h: controlla che tunnel, tessuto non tessuto e reti siano ancorati, lega i pomodori alti e non irrigare a pioggia (si perde tutto).`]);
   if(um>=85 && maxOggi>=15 && piog<8) out.push(["Aria umida",`Umidità ${um}%: giornata da funghi. Non bagnare le foglie, togli le foglie basse ai pomodori, scopri il tunnel per far uscire l'umidità. Con il sole, un trattamento con bicarbonato o zolfo contro l'oidio.`]);
   if(suolo!==null){
     if(m>=1 && m<=4 && suolo>=10 && suolo<14) out.push(["Terreno che si scalda",`Terreno a ${suolo.toFixed(0)} °C: nascono piselli, fave, spinaci, ravanelli, lattughe, carote. Per fagioli e mais servono almeno 14 °C: aspetta.`]);
     if(m>=3 && m<=6 && suolo>=15) out.push(["Terreno caldo",`Terreno a ${suolo.toFixed(0)} °C: via libera alla semina diretta di fagioli, zucchine, cetrioli e mais.`]);
-    if(m>=7 && m<=9 && suolo>=22) out.push(["Terreno troppo caldo per lo spinacio",`Terreno a ${suolo.toFixed(0)} °C: lo spinacio non germina sopra i 20. Semina la sera, copri con TNT bagnato o cartone, oppure aspetta una settimana fresca.`]);
+    if(m>=7 && m<=9 && suolo>=22) out.push(["Terreno troppo caldo per lo spinacio",`Terreno a ${suolo.toFixed(0)} °C: lo spinacio non germina sopra i 20. Semina la sera, copri con tessuto non tessuto bagnato o cartone, oppure aspetta una settimana fresca.`]);
   }
   if(minOggi>=5 && maxOggi>=12 && piog<2 && (m===2||m===3||m===9||m===10)) out.push(["Giornata da lavoro in campo",`Asciutto e mite: è il giorno giusto per i trapianti e le semine del mese. Guarda la lista qui accanto e portane a casa due.`]);
   return out;
@@ -450,6 +468,17 @@ function mostraMeteo(w){
     <div class="stato">Open-Meteo · ${NOME_LUOGO} · aggiornato alle ${c.time.slice(11,16)}</div>`;
 }
 
+/* fase lunare: 0 = nuova, 0.5 = piena; riferimento luna nuova 6 gennaio 2000, 18:14 UTC */
+function faseLuna(d){ const s=29.530588853; const t=(d.getTime()-Date.UTC(2000,0,6,18,14))/86400000; return ((t/s)%1+1)%1; }
+function lunaInfo(d){
+  const f=faseLuna(d), prossimo=faseLuna(new Date(d.getTime()+86400000));
+  const passa=(a,b,x)=> (a<=x && b>x) || (a>b && (x>=a || x<b)); /* attraversa x tra oggi e domani */
+  if(passa(f,prossimo,0)) return {ev:"nuova",icona:"🌑",txt:"luna nuova"};
+  if(passa(f,prossimo,0.25)) return {ev:"primo",icona:"🌓",txt:"primo quarto"};
+  if(passa(f,prossimo,0.5)) return {ev:"piena",icona:"🌕",txt:"luna piena"};
+  if(passa(f,prossimo,0.75)) return {ev:"ultimo",icona:"🌗",txt:"ultimo quarto"};
+  return {ev:null, crescente:f<0.5, txt:f<0.5?"luna crescente":"luna calante"};
+}
 function mostraCalendario(w){
   const y=oggi.getFullYear(), m=oggi.getMonth();
   const primo=new Date(y,m,1), nGiorni=new Date(y,m+1,0).getDate();
@@ -458,12 +487,14 @@ function mostraCalendario(w){
   let celle=""; for(let i=0;i<inizio;i++) celle+=`<div class="cal-giorno vuoto"></div>`;
   for(let g=1;g<=nGiorni;g++){
     const iso=`${y}-${String(m+1).padStart(2,"0")}-${String(g).padStart(2,"0")}`;
-    const p=prev[iso]; const cls=["cal-giorno", g===oggi.getDate()?"oggi":"", p&&p.gelo?"gelo":"", p&&p.pioggia?"pioggia":""].join(" ");
-    celle+=`<div class="${cls}">${g}${p?`<small>${Math.round(p.max)}°</small>`:""}</div>`;
+    const p=prev[iso]; const L=lunaInfo(new Date(y,m,g,12));
+    const cls=["cal-giorno", g===oggi.getDate()?"oggi":"", p&&p.gelo?"gelo":"", p&&p.pioggia?"pioggia":"", L.ev?"luna":""].join(" ");
+    celle+=`<div class="${cls}" title="${L.txt}"><span class="n">${g}</span>${L.ev?`<span class="lu" aria-label="${L.txt}">${L.icona}</span>`:""}${p?`<small>${Math.round(p.max)}°</small>`:""}</div>`;
   }
-  $("#cal").innerHTML=`<div class="cal-testa"><h2 style="margin:0">${meseCorrente.nome} ${y}</h2><small style="color:var(--muto)">${nGiorni-oggi.getDate()} giorni alla fine del mese</small></div>
+  const Lo=lunaInfo(oggi);
+  $("#cal").innerHTML=`<div class="cal-testa"><div><h2 style="margin:0">${meseCorrente.nome} ${y}</h2><small>${Lo.ev?Lo.txt:Lo.txt}, ${nGiorni-oggi.getDate()} giorni alla fine del mese</small></div><span class="cal-luna-oggi" aria-hidden="true">${Lo.ev?Lo.icona:(Lo.crescente?"🌒":"🌘")}</span></div>
     <div class="cal-griglia">${["L","M","M","G","V","S","D"].map(x=>`<div class="gn">${x}</div>`).join("")}${celle}</div>
-    <div class="cal-legenda">Pallino viola in basso: rischio gelata · pallino blu in alto: pioggia · il numero piccolo è la massima prevista</div>`;
+    <div class="cal-legenda"><span><i class="pt gelo"></i>rischio gelata</span><span><i class="pt pioggia"></i>pioggia</span><span>🌑🌓🌕🌗 fasi della luna</span><span>il numero piccolo è la massima prevista</span></div>`;
   const fatti=meseCorrente.lavori.filter((l,i)=>stato[meseCorrente.id+"-"+i]).length;
   const daFare=meseCorrente.lavori.filter((l,i)=>!stato[meseCorrente.id+"-"+i]);
   $("#cal-lavori").innerHTML=`<b>Lavori di ${meseCorrente.nome.toLowerCase()}: ${fatti} fatti, ${daFare.length} da fare</b><ul>${daFare.slice(0,5).map(l=>`<li>${esc(l)}</li>`).join("")}${daFare.length>5?`<li>… e altri ${daFare.length-5}</li>`:""}</ul><button class="azzera" data-vai="${meseCorrente.id}" style="margin-top:.6rem">Apri ${meseCorrente.nome.toLowerCase()}</button>`;
@@ -532,7 +563,7 @@ vai(iniziale>=0?iniziale:0, 1);
   segna("terra-bottoni","terra",terra); segna("esp-bottoni","esp",esp); segna("amb-bottoni","amb",amb);
   async function caricaLista(){
     if(LISTA) return true;
-    box.hidden=false; box.innerHTML=`<div class="cerca-vuoto">Scarico l'elenco dei comuni…</div>`;
+    box.hidden=false; box.innerHTML=`<div class="shimmer-box" aria-label="Carico i comuni"><span class="sh m"></span><span class="sh l"></span><span class="sh m"></span></div>`;
     try{ LISTA=await (await fetch("dati/comuni.json")).json(); box.hidden=true; box.innerHTML=""; return true; }
     catch(e){ box.innerHTML=`<div class="cerca-vuoto">Non riesco a scaricare l'elenco: controlla la connessione, chiudi e riprova.</div>`; return false; }
   }
@@ -576,3 +607,22 @@ vai(iniziale>=0?iniziale:0, 1);
 
 /* ---- funziona anche senza campo ---- */
 if("serviceWorker" in navigator){ window.addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); }); }
+
+/* ---- la mappa: Italia in linea sottile, e il punto dove sei ---- */
+async function mostraMappa(){
+  const box=$("#mappa"); if(!box||!COMUNE) return;
+  try{
+    const j=await (await fetch("dati/italia.json")).json();
+    const x=(COMUNE.lon-j.LON0)/(j.LON1-j.LON0)*j.W, y=(j.LAT1-COMUNE.lat)/(j.LAT1-j.LAT0)*j.H;
+    const labelX = x>j.W*0.6 ? x-14 : x+14, anchor = x>j.W*0.6 ? "end" : "start";
+    box.innerHTML=`<svg viewBox="0 0 ${j.W} ${j.H}" role="img" aria-label="${esc(COMUNE.n)} sulla mappa d'Italia">
+      <defs><pattern id="griglia" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r=".6" class="gr"/></pattern></defs>
+      <rect width="${j.W}" height="${j.H}" fill="url(#griglia)"/>
+      <path d="${j.d}" class="italia"/>
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="14" class="alone"/>
+      <circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" class="punto"/>
+      <text x="${labelX.toFixed(1)}" y="${(y+4).toFixed(1)}" text-anchor="${anchor}" class="etichetta">${esc(COMUNE.n)}</text>
+    </svg>`;
+  }catch(e){ box.hidden=true; }
+}
+mostraMappa();

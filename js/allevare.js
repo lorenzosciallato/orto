@@ -3,23 +3,25 @@
 
 function pannelloAllevare(){
   return `<section class="pannello" id="p-allevare" role="tabpanel" aria-labelledby="t-allevare">
-<div class="mese-testa"><div class="mese-nome">Allevare</div><p class="mese-sotto">Tre allevamenti piccoli che stanno accanto a un orto: chiocciole, api e grilli. Come funzionano davvero, come si comincia, cosa costa, cosa dice la legge, e dove studiare.</p></div>
+<div class="mese-testa"><div class="mese-nome">Allevare</div><p class="mese-sotto">Cinque allevamenti piccoli che stanno accanto a un orto: chiocciole, api, grilli, galline e oche. Come funzionano davvero, come si comincia, cosa costa, cosa dice la legge, e dove studiare.</p></div>
 <div class="guida">
 <div class="sommario">
   <a href="#lumache" data-anchor="g-lumache">Chiocciole</a>
   <a href="#api" data-anchor="g-api">Api</a>
   <a href="#grilli" data-anchor="g-grilli">Grilli</a>
+  <a href="#galline" data-anchor="g-galline">Galline</a>
+  <a href="#oche" data-anchor="g-oche">Oche</a>
 </div>
 
 <h2 id="g-lumache">Chiocciole: l'elicicoltura</h2>
-<img class="foto-guida" src="img/guide/lumache-allevamento.jpg" alt="Allevamento di chiocciole all'aperto, con i recinti e le reti">
+<img class="foto-guida" src="img/guide/lumache-allevamento.webp" alt="Allevamento di chiocciole all'aperto, con i recinti e le reti">
 <p>Allevare chiocciole è un'attività agricola vera, riconosciuta e in crescita: la domanda di lumache di qualità (allevate, non raccolte in giro) supera da anni la produzione italiana, e a questa si è aggiunto il mercato della bava per la cosmetica. Si presta a chi ha poco terreno, perché rende su superfici piccole, ma chiede regolarità: irrigare, controllare, sfalciare, difendere. Non è un lavoro pesante, è un lavoro costante.</p>
 
 <h3>Come funziona</h3>
 <p>In Italia si alleva quasi solo all'aperto, in recinti su terreno libero, con alimentazione vegetale seminata direttamente dentro i recinti. La specie è la <i>Cornu aspersum</i> (la vecchia <i>Helix aspersa</i>), nelle varietà <b>Muller</b> — più piccola, adatta ai climi miti — e <b>Maxima</b>, più grossa, che regge inverni fino a −8/−15 °C: la scelta si fa sulla temperatura minima del tuo comune. Il ciclo: si mettono i riproduttori in primavera (aprile–maggio), si accoppiano e depongono in terra, i piccoli nascono nei recinti e in autunno, o l'anno dopo, si raccolgono quelli arrivati a taglia, con il bordo del guscio indurito. Poi lo <b>spurgo</b>: una settimana circa senza cibo, in cassette aerate, perché svuotino l'intestino e siano vendibili.</p>
 <p>Il metodo di riferimento è quello dell'<b>Istituto Internazionale di Elicicoltura di Cherasco</b> (Cuneo, dal 1973), che ha standardizzato recinti, alimentazione e la "migrazione naturale" dei piccoli dalla zona di riproduzione a quella di ingrasso, e che oggi spinge un ciclo naturale breve per arrivare alla raccolta in circa un anno.</p>
 
-<img class="foto-guida piccola" src="img/guide/lumache.jpg" alt="Una chiocciola Cornu aspersum">
+<img class="foto-guida piccola" src="img/guide/lumache.webp" alt="Una chiocciola Cornu aspersum">
 <h3>Cosa serve</h3>
 <ul>
 <li><b>Un terreno soleggiato senza alberi</b>, pianeggiante o quasi, con acqua a disposizione (pozzo, corso d'acqua, raccolta piovana) non troppo salina. Va bene quasi qualunque terra — sciolta, mista, anche argillosa — purché non inquinata; l'ideale è drenante e ricca di calcio, che serve per il guscio.</li>
@@ -60,13 +62,13 @@ function pannelloAllevare(){
 </div>
 
 <h2 id="g-api">Api: l'apicoltura</h2>
-<img class="foto-guida" src="img/guide/api.jpg" alt="Un apiario con le arnie in un giardino terrazzato">
+<img class="foto-guida" src="img/guide/api.webp" alt="Un apiario con le arnie in un giardino terrazzato">
 <p>Due arnie in fondo all'orto sono il sogno di molti, e sono anche l'allevamento più regolamentato tra questi tre: in Italia gli obblighi valgono anche per chi tiene <b>una sola famiglia</b>, e le api si ammalano, sciamano e pungono. Chi parte con studio, un'associazione alle spalle e aspettative giuste ne ricava miele, impollinazione per l'orto e un mestiere che non si finisce mai di imparare. Chi compra un'arnia online e "vede come va" di solito la perde entro l'inverno.</p>
 
 <h3>Come funziona</h3>
 <p>Una famiglia è una regina, qualche decina di migliaia di operaie e i fuchi, dentro un'arnia a telaini mobili (in Italia quasi sempre il modello Dadant-Blatt da 10 o 12 telaini): sotto il nido, dove la regina depone, sopra i melari, dove le api stoccano il miele che tu raccogli. L'anno apistico va da fine inverno (la ripresa della covata) all'estate (i raccolti, uno o più a seconda delle fioriture: acacia, castagno, millefiori, tiglio) fino all'autunno, quando la famiglia si prepara a svernare e tu la lasci con scorte sufficienti. Il nemico numero uno è la <b>varroa</b>, un acaro che senza trattamenti uccide la colonia in una-due stagioni: i trattamenti sono obbligatori e vanno fatti nei momenti giusti, con prodotti registrati.</p>
 
-<img class="foto-guida piccola" src="img/guide/api-telaino.jpg" alt="Un telaino coperto di api in mano a un apicoltore">
+<img class="foto-guida piccola" src="img/guide/api-telaino.webp" alt="Un telaino coperto di api in mano a un apicoltore">
 <h3>La legge, in breve</h3>
 <ul>
 <li><b>Registrazione obbligatoria</b> per chiunque detenga alveari, anche per hobby: entro 20 giorni dall'inizio ci si registra presso il servizio veterinario dell'ASL e si ottiene il codice aziendale nella Banca Dati Apistica nazionale (BDA, sul portale Vetinfo). È gratuita; l'associazione locale la fa per te su delega.</li>
@@ -106,7 +108,7 @@ function pannelloAllevare(){
 </div>
 
 <h2 id="g-grilli">Grilli: insetti da pasto e novel food</h2>
-<img class="foto-guida" src="img/guide/grilli.jpg" alt="Un grillo domestico, Acheta domesticus, sul palmo di una mano">
+<img class="foto-guida" src="img/guide/grilli.webp" alt="Un grillo domestico, Acheta domesticus, sul palmo di una mano">
 <p>Il grillo domestico, <i>Acheta domesticus</i>, si alleva in una stanza, in cassoni di plastica, tutto l'anno: è l'allevamento che chiede meno terra di tutti e più attenzione a temperatura, igiene e legge. Ci sono due strade molto diverse, e vanno tenute separate fin dall'inizio: allevare grilli come <b>cibo per animali</b> (rettili, anfibi, uccelli, galline, pesci) è semplice e alla portata di chiunque; allevarli come <b>cibo per le persone</b> è un percorso industriale, con autorizzazioni europee e standard di sicurezza alimentare da rispettare, che non si improvvisa in garage.</p>
 
 <h3>Come funziona</h3>
@@ -147,5 +149,57 @@ function pannelloAllevare(){
 <a href="https://consulenzaagricola.it/circolari/varie/18526-allevamento-e-farina-di-insetti-business-per-le-aziende-agricole" target="_blank" rel="noopener"><b>Consulenza Agricola — insetti e aziende agricole</b><small>inquadramento fiscale e civilistico dell'allevamento di insetti</small></a>
 <a href="https://www.agripetgarden.it/blog/post/allevamento-di-grilli" target="_blank" rel="noopener"><b>Agripetgarden — allevare grilli in casa</b><small>la versione pratica per chi li vuole come cibo per i propri animali</small></a>
 </div>
+
+<h2 id="g-galline">Galline: uova e orto insieme</h2>
+<img class="foto-guida" src="img/guide/galline.webp" alt="Due galline a razzolare in un pollaio all'aperto" loading="lazy">
+<p>Quattro galline mangiano gli scarti dell'orto, ti danno tre-quattro uova al giorno per gran parte dell'anno, producono il concime migliore che esista e, se le fai razzolare in un pezzo di orto a riposo, lo puliscono da lumache, larve ed erbacce. In cambio chiedono un ricovero asciutto, acqua sempre, una recinzione seria e un quarto d'ora al giorno, tutti i giorni, feste comprese.</p>
+<h3>Cosa serve</h3>
+<ul>
+<li><b>Spazio</b>: almeno 4 m² di recinto per gallina, meglio 8–10; dentro il pollaio 3–4 galline per metro quadro, un posatoio di 25–30 cm a testa, un nido ogni 4–5 galline, lettiera di paglia o trucioli da cambiare spesso.</li>
+<li><b>Il pollaio</b>: asciutto, arieggiato ma senza correnti d'aria, sollevato da terra, con la porticina che si chiude ogni sera. Contro la volpe: rete alta 1,8 m, interrata 30 cm o piegata a L all'esterno, rete anche sopra dove serve, e porta chiusa al buio senza eccezioni. La volpe arriva sempre la sera che hai dimenticato.</li>
+<li><b>Le razze</b>: le ovaiole commerciali (le "rosse") fanno 280–300 uova all'anno per due-tre anni; le razze italiane (Livornese, Padovana, Ancona, Siciliana) ne fanno meno ma vivono e producono più a lungo e sono più rustiche. Per un pollaio di casa, quattro-sei galline giovani di 18–20 settimane, già pronte a deporre, dallo stesso allevatore.</li>
+<li><b>Cibo e acqua</b>: un mangime per ovaiole come base (100–120 g a testa al giorno), più gli scarti dell'orto e della cucina (no cipolla cruda in quantità, no avocado, no cibi salati o ammuffiti), gusci d'uovo tritati o conchiglie per il calcio, e acqua pulita sempre, all'ombra d'estate.</li>
+</ul>
+<h3>Legge e buon senso</h3>
+<ul>
+<li>Anche il pollaio di casa va comunicato al servizio veterinario dell'ASL, che lo registra come allevamento familiare: è gratuito, e serve perché in caso di influenza aviaria le autorità sappiano dove sono gli animali; nelle zone e nei periodi a rischio possono scattare obblighi di tenere le galline al coperto.</li>
+<li>Le uova per casa e per regalare non chiedono nulla; per venderle, anche al mercato, servono registrazione, bollatura e regole igieniche.</li>
+<li>Un gallo non serve per avere uova: serve solo per i pulcini, e canta alle cinque. In paese, chiedi ai vicini prima.</li>
+</ul>
+<h3>Come iniziare, in ordine</h3>
+<ol>
+<li>Costruisci o compra il pollaio e il recinto prima delle galline, e passaci una sera a immaginare da dove entrerebbe una volpe.</li>
+<li>Comunica il pollaio all'ASL.</li>
+<li>Compra 4–6 pollastre dallo stesso allevatore, in primavera o a fine estate.</li>
+<li>Prime due settimane chiuse nel recinto, così imparano dov'è casa; poi, se puoi, un'ora di libertà la sera nell'orto a riposo.</li>
+<li>Ogni giorno: acqua, cibo, uova, porta chiusa. Ogni settimana: lettiera. Ogni mese: controllo di acari e pidocchi nei posatoi e sotto le ali.</li>
+</ol>
+<p><b>Numeri onesti</b>: pollaio e recinto fatti bene 300–600 € (molto meno se sai costruire), galline 15–25 € l'una, mangime circa 3–4 € a gallina al mese. Le uova costano meno al supermercato: le galline si tengono per le uova <i>buone</i>, per il concime e per l'orto, non per risparmiare.</p>
+<div class="link-utili">
+<a href="https://www.ortodacoltivare.it/guide/elicicoltura/" target="_blank" rel="noopener"><b>Orto da Coltivare — animali da cortile e orto</b><small>guide pratiche su pollaio, alimentazione e cure</small></a>
+</div>
+
+<h2 id="g-oche">Oche: le tosaerba con le ali</h2>
+<img class="foto-guida" src="img/guide/oche.webp" alt="Un'oca domestica nell'erba alta" loading="lazy">
+<p>Le oche sono erbivore: due oche tengono pulito e rasato un frutteto o un prato di mezzo ettaro mangiando quasi solo erba, fanno la guardia meglio di un cane (e con altrettanto rumore), depongono 30–60 uova grandi tra febbraio e giugno, e vivono vent'anni. Non stanno però in un orto in produzione: mangiano tutto ciò che è verde e tenero, insalate comprese. Il loro posto è il frutteto, l'oliveto, il prato, con l'orto recintato.</p>
+<h3>Cosa serve</h3>
+<ul>
+<li><b>Erba</b>: è il loro cibo. Un'oca adulta ne mangia più di un chilo al giorno; d'inverno si integra con un po' di cereali o mangime per anatre.</li>
+<li><b>Acqua</b>: non serve un laghetto, ma una vasca in cui immergere tutta la testa e possibilmente il corpo (una vasca da 60–80 litri va bene), pulita spesso, perché senza bagno gli occhi e il piumaggio si ammalano.</li>
+<li><b>Un ricovero semplice</b>, asciutto e chiuso di notte contro la volpe, con lettiera di paglia; recinto da 1,2 m basta, le oche domestiche volano poco.</li>
+<li><b>In coppia o in gruppetto</b>: un'oca da sola soffre. Le razze italiane (Romagnola, Padovana, Pezzata veneta) sono rustiche e adatte al prato; l'Oca di Tolosa è più grossa e più tranquilla.</li>
+</ul>
+<h3>Cose da sapere</h3>
+<ul>
+<li>Il maschio in primavera difende la femmina e il nido: sibila, insegue, può dare beccate serie a bambini e cani. Non è cattiveria, è la stagione: si gestisce con spazio e rispetto.</li>
+<li>Come per le galline, anche le oche di casa si comunicano al servizio veterinario dell'ASL (allevamento familiare, gratuito).</li>
+<li>Le oche sono chiassose: la guardia che fanno la fanno anche alle tre di notte. Vicini vicini, oche lontane.</li>
+</ul>
+<h3>Come iniziare</h3>
+<ol>
+<li>Un prato o un frutteto recintato, con ombra e la vasca d'acqua.</li>
+<li>Due o tre oche giovani dallo stesso allevatore, in primavera, dopo aver comunicato il ricovero all'ASL.</li>
+<li>Erba, acqua pulita, porta chiusa la sera: è quasi tutto qui. Il resto lo fanno loro.</li>
+</ol>
 </div></section>`;
 }

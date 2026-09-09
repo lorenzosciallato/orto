@@ -397,3 +397,145 @@ body.in-mese .frecce{display:flex}
 .passo .muto{display:block;font-weight:400;font-size:.85rem;margin-top:.1rem}
 .mp-bottoni.scelte{margin:.4rem 0 .2rem}
 .mp-bottoni.scelte button{padding:.75rem .5rem;font-size:.92rem}
+
+/* =====================================================================
+   RESTYLE 2026 — palette neutra, tipografia Manrope + Fraunces, componenti
+   ===================================================================== */
+:root{
+  --carta:#F5F6F3; --scheda:#FFFFFF; --inchiostro:#101614; --muto:#66716B;
+  --verde:#157A48; --verde2:#2A9A62; --terra:#8A5A3C; --zucca:#D9822B; --viola:#6B5BD2;
+  --riga:#E4E8E3; --spunta:#157A48; --ombra:rgba(16,22,20,.06); --ombra2:rgba(16,22,20,.12);
+  --raggio:16px; --raggio-s:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --carta:#0E1311; --scheda:#161C19; --inchiostro:#EDF1EC; --muto:#96A19A;
+    --verde:#5CD293; --verde2:#3FB67A; --terra:#C9A483; --zucca:#E9A24A; --viola:#B3A6F0;
+    --riga:#242C27; --spunta:#5CD293; --ombra:rgba(0,0,0,.35); --ombra2:rgba(0,0,0,.5);
+  }
+}
+:root[data-theme="dark"]{
+  --carta:#0E1311; --scheda:#161C19; --inchiostro:#EDF1EC; --muto:#96A19A;
+  --verde:#5CD293; --verde2:#3FB67A; --terra:#C9A483; --zucca:#E9A24A; --viola:#B3A6F0;
+  --riga:#242C27; --spunta:#5CD293; --ombra:rgba(0,0,0,.35); --ombra2:rgba(0,0,0,.5);
+}
+body{font-family:Manrope,"Work Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:16px;line-height:1.6;letter-spacing:-.005em}
+h1,h2,h3,h4{letter-spacing:-.01em}
+.mese-nome{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.03em;color:var(--inchiostro)}
+h2 span{font-family:Manrope,sans-serif;font-weight:500;color:var(--muto);font-size:.88rem;letter-spacing:0}
+.testata h1{font-family:Fraunces,serif;font-size:1.35rem;font-weight:700;letter-spacing:-.02em}
+.testata{padding:.9rem 1.25rem .35rem}
+.marchio small{font-weight:500}
+.installa{background:var(--inchiostro);color:var(--carta);border-radius:999px;padding:.55rem 1rem;font-weight:700;font-size:.84rem;transition:transform .12s ease,opacity .12s ease}
+.installa:active{transform:scale(.97)}
+.installa.secondario{background:var(--scheda);color:var(--inchiostro);border:1.5px solid var(--riga)}
+.cerca input{border-radius:14px;border:1.5px solid var(--riga);background:var(--scheda);box-shadow:0 1px 2px var(--ombra);padding:.75rem 1rem}
+.cerca input:focus{border-color:var(--verde);box-shadow:0 0 0 4px color-mix(in srgb,var(--verde) 14%,transparent);outline:0}
+.schede{border-bottom:0;gap:.35rem;padding:.4rem 1.25rem .7rem}
+.scheda{border-radius:999px;background:var(--scheda);color:var(--muto);border:1px solid var(--riga);font-weight:600;font-size:.86rem;padding:.5rem 1rem;transition:background .15s ease,color .15s ease,transform .12s ease}
+.scheda[aria-selected="true"]{background:var(--inchiostro);color:var(--carta);border-color:var(--inchiostro)}
+.mese-testa{padding:1.2rem 0 .9rem;border-bottom:1px solid var(--riga);margin-bottom:1.2rem}
+.mese-sotto{color:var(--inchiostro);font-size:1.05rem;line-height:1.55;max-width:62ch}
+.clima.clima-utente{border:0;background:color-mix(in srgb,var(--verde) 9%,var(--scheda));border-radius:12px;padding:.65rem .85rem;color:var(--inchiostro)}
+.raccolta,.consiglio,.consiglio-oggi,.meteo,.oggi .cal,.ricetta,.rdm{background:var(--scheda);border:1px solid var(--riga);border-radius:var(--raggio);box-shadow:0 1px 2px var(--ombra)}
+.raccolta{padding:1rem 1.1rem}
+.filtro{border-radius:999px;border:1px solid var(--riga);background:var(--scheda);color:var(--muto);font-weight:600;font-size:.82rem;padding:.42rem .85rem;transition:all .15s ease}
+.filtro[aria-pressed="true"]{background:var(--inchiostro);color:var(--carta);border-color:var(--inchiostro)}
+.filtro-mie[aria-pressed="true"]{background:var(--verde);border-color:var(--verde)}
+.piante li{border-bottom:1px solid var(--riga);padding:.8rem 0;transition:background .15s ease}
+.piante li .mini{border-radius:12px;width:60px;height:60px}
+.tag{border-radius:999px;padding:.18rem .6rem;font-weight:600;font-size:.72rem;letter-spacing:.01em}
+.legenda{color:var(--muto);font-size:.8rem}
+.lavori li{padding:.5rem 0}
+.azzera,.rdm button,.tutorial .primario,.mese-nav button{font:inherit}
+.modale{background:rgba(10,14,12,.5);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.modale-box{border-radius:22px;box-shadow:0 24px 60px var(--ombra2)}
+.modale .primario{background:var(--verde);color:#fff;border-radius:14px;font-weight:700}
+.mp-bottoni button{border-radius:14px;border:1.5px solid var(--riga);background:var(--scheda);color:var(--inchiostro);font-weight:600;transition:all .15s ease}
+.mp-bottoni button[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#fff}
+.mp-bottoni.scelte button{padding:.8rem .5rem;font-size:.92rem}
+.compra,.link-utili a{border-radius:14px}
+.ric-link{border-radius:14px}
+
+/* --- barra in basso: chiara e vetrosa --- */
+.barra-bassa{background:color-mix(in srgb,var(--carta) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--riga);box-shadow:0 -8px 30px var(--ombra)}
+.barra-bassa button{color:var(--muto);font-weight:600;font-size:.7rem;gap:.2rem;padding:.4rem 0;border-radius:14px;transition:color .15s ease}
+.barra-bassa button svg{width:26px;height:26px;padding:3px;border-radius:12px;transition:background .18s ease,transform .18s ease}
+.barra-bassa button[aria-current="page"]{color:var(--verde)}
+.barra-bassa button[aria-current="page"] svg{background:color-mix(in srgb,var(--verde) 16%,transparent);stroke-width:2.3;transform:translateY(-2px)}
+.barra-bassa button[aria-current="page"] span{font-weight:800;color:var(--inchiostro)}
+
+/* --- navigazione tra i mesi, esplicita --- */
+.mese-nav{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:2rem 0 .5rem}
+.mese-nav button{display:flex;flex-direction:column;align-items:flex-start;gap:.1rem;padding:.9rem 1rem;border:1px solid var(--riga);background:var(--scheda);border-radius:var(--raggio);color:var(--inchiostro);font-family:Fraunces,serif;font-size:1.25rem;font-weight:600;text-align:left;box-shadow:0 1px 2px var(--ombra);transition:transform .12s ease,border-color .15s ease}
+.mese-nav button.avanti{align-items:flex-end;text-align:right}
+.mese-nav button small{font-family:Manrope,sans-serif;font-size:.74rem;font-weight:600;color:var(--muto)}
+.mese-nav button:hover{border-color:var(--verde)}
+.mese-nav button:active{transform:scale(.98)}
+
+/* --- stella "il mio orto" --- */
+.piante li{grid-template-columns:auto 1fr auto auto;grid-template-areas:"foto nome tag stella" "foto come come come"}
+.stella{grid-area:stella;background:none;border:0;padding:.25rem;margin:-.25rem 0 0 .2rem;color:var(--muto);line-height:0;border-radius:10px;transition:transform .15s ease,color .15s ease}
+.stella svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;transition:fill .15s ease}
+.stella[aria-pressed="true"]{color:var(--zucca)}
+.stella[aria-pressed="true"] svg{fill:currentColor}
+.stella:active{transform:scale(1.25)}
+.piante li[data-mia="1"] b::before{display:none}
+.piante li[data-mia="1"]{background:color-mix(in srgb,var(--zucca) 6%,transparent);margin:0 -.5rem;padding-left:.5rem;padding-right:.5rem;border-radius:12px}
+.pianta-card{border-radius:var(--raggio);box-shadow:0 1px 2px var(--ombra);border:1px solid var(--riga)}
+.pianta-card .pc-mia{background:var(--zucca);color:#fff}
+.guida-card{border-radius:var(--raggio);border:1px solid var(--riga)}
+
+/* --- tutorial di Il mio orto --- */
+.tutorial{background:var(--scheda);border:1px dashed color-mix(in srgb,var(--zucca) 50%,var(--riga));border-radius:var(--raggio);padding:1.1rem 1.2rem 1.2rem;margin:.2rem 0 1.6rem;max-width:560px}
+.tutorial>p:first-child{margin-bottom:.6rem}
+.tutorial-riga{display:grid;grid-template-columns:auto 1fr auto auto;gap:.6rem;align-items:center;padding:.6rem .7rem;border:1px solid var(--riga);border-radius:12px;background:var(--carta);margin-bottom:.8rem}
+.tutorial-riga .mini{width:44px;height:44px;border-radius:10px;background:var(--riga);display:block}
+.stella.demo{color:var(--zucca);animation:batti 1.6s ease-in-out infinite}
+.stella.demo svg{fill:currentColor}
+@keyframes batti{0%,100%{transform:scale(1)}50%{transform:scale(1.25)}}
+.tutorial .primario{margin-top:.4rem;background:var(--verde);color:#fff;border:0;border-radius:12px;padding:.7rem 1rem;font-weight:700}
+
+/* --- calendario con le lune --- */
+.cal-testa small{color:var(--muto);display:block;margin-top:.15rem}
+.cal-luna-oggi{font-size:1.7rem;line-height:1}
+.cal-griglia{gap:.35rem}
+.cal-griglia .gn{font-weight:700;letter-spacing:.04em}
+.cal-giorno{border-radius:12px;border:1px solid var(--riga);background:var(--scheda);font-weight:600;font-size:.9rem;justify-content:flex-start;padding-top:.3rem;gap:.05rem;transition:transform .12s ease}
+.cal-giorno .n{line-height:1}
+.cal-giorno small{font-weight:500;color:var(--muto);font-size:.66rem}
+.cal-giorno .lu{font-size:.8rem;line-height:1}
+.cal-giorno.oggi{background:var(--inchiostro);color:var(--carta);border-color:var(--inchiostro)}
+.cal-giorno.oggi small{color:color-mix(in srgb,var(--carta) 70%,transparent)}
+.cal-giorno.gelo::after{content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:#5b8fd8}
+.cal-giorno.pioggia::before{content:"";position:absolute;top:4px;right:4px;width:6px;height:6px;border-radius:50%;background:var(--verde2)}
+.cal-legenda{display:flex;flex-wrap:wrap;gap:.4rem 1rem;font-size:.76rem;color:var(--muto);margin-top:.6rem}
+.cal-legenda .pt{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:.35rem}
+.cal-legenda .pt.gelo{background:#5b8fd8}.cal-legenda .pt.pioggia{background:var(--verde2)}
+
+/* --- mappa editoriale --- */
+.mappa{margin-top:1rem;background:var(--scheda);border:1px solid var(--riga);border-radius:var(--raggio);padding:.8rem;box-shadow:0 1px 2px var(--ombra)}
+.mappa svg{width:100%;height:auto;max-height:420px;display:block}
+.mappa .gr{fill:var(--riga)}
+.mappa .italia{fill:color-mix(in srgb,var(--inchiostro) 4%,transparent);stroke:var(--inchiostro);stroke-width:.55;stroke-linejoin:round;opacity:.9}
+.mappa .punto{fill:var(--zucca);stroke:var(--scheda);stroke-width:1.5}
+.mappa .alone{fill:none;stroke:var(--zucca);stroke-width:1;opacity:.6;transform-origin:center;transform-box:fill-box;animation:pulsa 2.4s ease-out infinite}
+.mappa .etichetta{font-family:Fraunces,serif;font-size:13px;fill:var(--inchiostro);font-weight:600;letter-spacing:-.01em}
+@keyframes pulsa{0%{transform:scale(.4);opacity:.8}100%{transform:scale(1.6);opacity:0}}
+
+/* --- shimmer --- */
+.shimmer-box{display:grid;gap:.6rem;padding:1rem}
+.sh{display:block;height:14px;border-radius:8px;background:linear-gradient(90deg,var(--riga) 25%,color-mix(in srgb,var(--riga) 40%,var(--scheda)) 50%,var(--riga) 75%);background-size:200% 100%;animation:shimmer 1.4s linear infinite}
+.sh.l{width:70%;height:22px}.sh.m{width:55%}.sh.s{width:35%}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+/* --- transizioni di sezione --- */
+.pannello.attivo{animation:entra .28s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.pannello.attivo,.stella.demo,.mappa .alone,.sh{animation:none}}
+@media (max-width:640px){
+  .mese-nome{font-size:2.4rem}
+  .piante li{grid-template-columns:auto 1fr auto;grid-template-areas:"foto nome stella" "foto tag tag" "foto come come"}
+  .piante li .tag{justify-self:start;margin-top:.15rem}
+  .mese-nav button{font-size:1.1rem;padding:.8rem .85rem}
+}

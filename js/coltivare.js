@@ -13,7 +13,7 @@ function pannelloColtivare(){
 </div>
 
 <h2 id="g-vasi">Vasi, cassoni e balcone</h2>
-<img class="foto-guida" src="img/guide/vasi.jpg" alt="Pomodori e aromatiche coltivati in grandi contenitori lungo un muro">
+<img class="foto-guida" src="img/guide/vasi.webp" alt="Pomodori e aromatiche coltivati in grandi contenitori lungo un muro">
 <p>In vaso si può coltivare quasi tutto, ma non tutto rende: lo spazio per le radici è il limite, e l'errore classico è il vaso troppo piccolo. La regola pratica è che una pianta in contenitore vive in un mondo chiuso — l'acqua e il nutrimento che ha sono solo quelli che le dai tu, e finiscono in fretta.</p>
 <h3>Cosa serve</h3>
 <ul>
@@ -40,7 +40,7 @@ function pannelloColtivare(){
 </div>
 
 <h2 id="g-aiuole">Aiuole rialzate e orto senza vangare</h2>
-<img class="foto-guida" src="img/guide/aiuole.jpg" alt="Orto con aiuole rialzate in legno e sostegni per i fagioli">
+<img class="foto-guida" src="img/guide/aiuole.webp" alt="Orto con aiuole rialzate in legno e sostegni per i fagioli">
 <p>Un'aiuola rialzata è un cassone senza fondo, alto 25–40 cm, riempito di terra buona: si lavora senza piegarsi, si scalda prima in primavera, drena anche dove la terra è pesante, e non la calpesti mai. È la scorciatoia per chi ha argilla, per chi ha poco tempo e per chi ha la schiena che protesta. Il metodo "senza vangare" (no-dig) è il suo complemento naturale: invece di rivoltare la terra ogni anno, ci si stende sopra 5–7 cm di compost e si lascia lavorare i lombrichi. In tre anni la terra cambia struttura da sola.</p>
 <h3>Come si fa</h3>
 <ol>
@@ -58,7 +58,7 @@ function pannelloColtivare(){
 </div>
 
 <h2 id="g-idroponica">Idroponica: coltivare senza terra</h2>
-<img class="foto-guida" src="img/guide/idroponica.jpg" alt="Lattuga coltivata in idroponica con le radici nell'acqua">
+<img class="foto-guida" src="img/guide/idroponica.webp" alt="Lattuga coltivata in idroponica con le radici nell'acqua">
 <p>In idroponica le radici non stanno nella terra ma in acqua (o in un substrato inerte come argilla espansa o fibra di cocco) in cui sono disciolti tutti i nutrienti. Le piante crescono più in fretta perché trovano acqua, aria e cibo senza fatica; in cambio tu devi fare il lavoro che in campo fa la terra: controllare acidità e concentrazione della soluzione, ossigenarla, cambiarla, tenerla alla temperatura giusta. È un metodo da persone precise, e ripaga la precisione con insalate e aromatiche tutto l'anno in un metro quadro.</p>
 <h3>I sistemi, dal più semplice</h3>
 <ul>
@@ -96,7 +96,7 @@ function pannelloColtivare(){
 </div>
 
 <h2 id="g-acquaponica">Acquaponica: pesci e piante insieme</h2>
-<img class="foto-guida" src="img/guide/acquaponica.jpg" alt="Basilico coltivato in un impianto acquaponico in serra">
+<img class="foto-guida" src="img/guide/acquaponica.webp" alt="Basilico coltivato in un impianto acquaponico in serra">
 <p>L'acquaponica unisce una vasca di pesci e un letto di coltivazione: l'acqua dei pesci, ricca di ammoniaca, passa in un filtro dove i batteri la trasformano in nitrati, le piante se ne nutrono e restituiscono acqua pulita ai pesci. Un ciclo chiuso, quasi senza fertilizzanti e con un consumo d'acqua minimo. È affascinante e funziona, ma sono <b>due allevamenti in uno</b>: se sbagli con i pesci muoiono le piante, e viceversa. In casa nostra si fa con carpe, tinche, persici o pesci rossi (che non si mangiano, ma lavorano lo stesso); la tilapia vuole acqua a 25–28 °C e in Italia è una scelta da serra riscaldata.</p>
 <h3>Cosa serve per cominciare</h3>
 <ol>
@@ -113,7 +113,7 @@ function pannelloColtivare(){
 </div>
 
 <h2 id="g-serra">Serra fredda e tunnel</h2>
-<img class="foto-guida" src="img/guide/serra.jpg" alt="Serra fredda e cassone a vetri in un orto">
+<img class="foto-guida" src="img/guide/serra.webp" alt="Serra fredda e cassone a vetri in un orto">
 <p>Una serra fredda non è riscaldata: raccoglie il sole di giorno e trattiene qualche grado di notte. Regala uno o due mesi di stagione davanti e dietro, protegge dalla pioggia (addio peronospora sui pomodori) e permette insalate tutto l'inverno anche dove gela. Il suo problema è l'estate, quando dentro si superano i 40 °C se non si arieggia, e i giorni d'inverno senza sole, quando non scalda niente. Le misure, i materiali e la costruzione passo per passo li trovi in Guide → Costruire; qui solo le regole d'uso: aprire ogni mattina di sole anche a gennaio, non bagnare le foglie, tenere piante larghe, e ricordarsi che sotto un telo l'acqua la dai tu.</p>
 </div></section>`;
 }
