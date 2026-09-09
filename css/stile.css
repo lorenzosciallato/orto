@@ -248,3 +248,23 @@ h3{font-size:1.2rem}
 .mp-corpo .in-scrittura{color:var(--muto);font-style:italic;padding:1rem;background:var(--scheda);border-radius:8px}
 .gz{display:inline-block;margin-top:.6rem;font-size:.85rem;color:var(--zucca);text-decoration:none;font-weight:600}
 .gz::before{content:"↗ "}
+
+/* ---- barra di ricerca ---- */
+.cerca{max-width:1100px;margin:0 auto;padding:.1rem 1.25rem .7rem;position:relative}
+.cerca input{width:100%;padding:.65rem 1rem;border:1.5px solid var(--riga);border-radius:12px;background:var(--scheda);color:var(--inchiostro);font:inherit;font-size:1rem;box-shadow:0 1px 3px var(--ombra)}
+.cerca input::placeholder{color:var(--muto)}
+.cerca input:focus{outline:2px solid var(--verde);outline-offset:1px;border-color:var(--verde)}
+.cerca-risultati{position:absolute;left:1.25rem;right:1.25rem;top:100%;z-index:60;background:var(--scheda);border:1.5px solid var(--riga);border-radius:12px;box-shadow:0 12px 34px var(--ombra);max-height:60vh;overflow:auto}
+.cerca-riga{display:flex;gap:.7rem;align-items:center;width:100%;text-align:left;padding:.55rem .8rem;background:none;border:0;border-bottom:1px solid var(--riga);color:var(--inchiostro);font:inherit;cursor:pointer}
+.cerca-riga:last-child{border-bottom:0}
+.cerca-riga:hover{background:var(--carta)}
+.cerca-riga .mini{width:44px;height:44px;border-radius:8px;object-fit:cover;background:var(--carta);flex:none}
+.cerca-riga small{display:block;color:var(--muto);font-size:.78rem;margin-top:.1rem}
+.cerca-vuoto{padding:.85rem 1rem;color:var(--muto)}
+
+/* ---- dove comprare i semi ---- */
+.compra{display:block;border:1.5px solid var(--riga);border-radius:12px;padding:.75rem 1rem;margin:.55rem 0;text-decoration:none;color:var(--inchiostro);background:var(--carta)}
+.compra b{color:var(--verde)}
+.compra small{display:block;color:var(--muto);margin-top:.1rem}
+.compra:hover{border-color:var(--verde)}
+.nota-semi{color:var(--muto);font-size:.88rem;margin-top:.7rem}

@@ -25,6 +25,10 @@
   <small>Pievebovigliana · 440 m · valle del Chienti</small>
   <button class="installa" id="btn-installa">Installa sul telefono</button>
 </header>
+<div class="cerca">
+  <input type="search" id="cerca-input" placeholder="Cerca un ortaggio…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Cerca un ortaggio" enterkeyhint="search">
+  <div class="cerca-risultati" id="cerca-risultati" hidden></div>
+</div>
 <div class="modale" id="modale" hidden>
   <div class="modale-box">
     <h2>Metti Orto sul telefono</h2>
@@ -44,10 +48,12 @@
     <div class="mp-foto" id="mp-foto"></div>
     <div class="mp-sub" id="mp-sub" hidden></div>
     <div class="mp-bottoni" id="mp-bottoni">
+      <button data-sez="semina">Quando seminare?</button>
       <button data-sez="cons">Consociazioni</button>
       <button data-sez="conserva">Conservazione</button>
       <button data-sez="ricette">Ricette</button>
       <button data-sez="storia">Storia e curiosità</button>
+      <button data-sez="semi">Dove comprare i semi</button>
     </div>
     <div class="mp-corpo" id="mp-corpo"></div>
   </div>
@@ -324,6 +330,7 @@
 <script src="js/mesi.js"></script>
 <script src="js/ricette.js"></script>
 <script src="js/schede.js"></script>
+<script src="js/semina.js"></script>
 <script src="js/consigli.js"></script>
 <script src="js/app.js"></script>
 </body>

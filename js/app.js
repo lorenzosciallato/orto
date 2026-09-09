@@ -195,6 +195,16 @@ function mostraSez(s){
     const rs=ricettePer(mpChiave);
     c.innerHTML = rs.length ? rs.map(({r,i})=>`<a class="ric-link" href="#" data-apri-ricetta="${i}"><b>${esc(r.nome)}</b><small>${MESI.find(m=>m.id===r.mese).nome} · ${esc(r.tempo)}</small></a>`).join("") : `<div class="in-scrittura">Nessuna ricetta nell'app usa ancora questa pianta. <a href="${gzLink(mpNome.split(",")[0])}" target="_blank" rel="noopener">Cerca su Giallo Zafferano</a>.</div>`;
   } else if(s==="storia"){ c.innerHTML = S.storia && S.storia.trim() ? S.storia : `<div class="in-scrittura">La storia di questa pianta è in scrittura: sarà nel prossimo aggiornamento, con ricerca fatta apposta.</div>`; }
+  else if(s==="semina"){ c.innerHTML = (typeof SEMINA!=="undefined" && SEMINA[mpChiave]) ? SEMINA[mpChiave] : `<div class="in-scrittura">In scrittura.</div>`; }
+  else if(s==="semi"){
+    const info=(typeof SEMI!=="undefined")?SEMI[mpChiave]:null;
+    const q=info?info.q:("semi di "+mpNome.split(",")[0].split("(")[0].trim().toLowerCase());
+    const enc=encodeURIComponent(q);
+    c.innerHTML = `<p>Cosa cercare: <b>${esc(q)}</b>.</p>`
+      +(info&&info.bio?`<a class="compra" href="https://arcoiris.it/it/prodotti/${info.cat==="fiori"?"aromatiche-officinali-e-fiori-seme-biologico":info.cat==="cereali"?"cereali-e-grani-antichi-seme-biologico":info.cat==="api"?"piante-per-api-seme-biologico":"ortaggi-seme-biologico"}" target="_blank" rel="noopener"><b>Arcoiris</b><small>sementi biologiche italiane, varietà antiche — apri il catalogo e cerca la pianta</small></a>`:"")
+      +`<a class="compra" href="https://www.amazon.it/s?k=${enc}" target="_blank" rel="noopener"><b>Amazon</b><small>arriva a casa in pochi giorni</small></a>`
+      +(info&&info.nota?`<p class="nota-semi">${esc(info.nota)}</p>`:"");
+  }
   c.scrollIntoView && c.scrollIntoView({behavior:"smooth",block:"start"});
 }
 $("#mp-corpo").addEventListener("click",e=>{ const a=e.target.closest("[data-apri-ricetta]"); if(!a) return; e.preventDefault(); chiudiPianta(); vai(tabs.findIndex(t=>t.id==="ricette"),1); filtraRicette("tutti"); const d=$("#r-"+a.dataset.apriRicetta); if(d){ d.open=true; setTimeout(()=>d.scrollIntoView({behavior:"smooth",block:"start"}),320); } });
@@ -367,3 +377,33 @@ caricaMeteo();
 const hash = location.hash.replace("#","");
 let iniziale = tabs.findIndex(t=>t.id===hash);
 vai(iniziale>=0?iniziale:0, 1);
+
+/* ---- ricerca ortaggi (barra in alto) ---- */
+(function(){
+  const inp=$("#cerca-input"), box=$("#cerca-risultati"); if(!inp||!box) return;
+  /* indice: ogni voce del calendario, una sola volta, con i mesi in cui compare */
+  const mappa=new Map();
+  MESI.forEach(me=>me.piante.forEach(p=>{
+    const nome=p[0];
+    if(!mappa.has(nome)) mappa.set(nome,{nome, mesi:[], chiave:chiaviPer(nome)[0]||null});
+    const e=mappa.get(nome); if(!e.mesi.includes(me.nome)) e.mesi.push(me.nome);
+  }));
+  const indice=[...mappa.values()].map(e=>({...e, testo:norm(e.nome+" "+e.mesi.join(" ")+" "+(e.chiave?SCHEDE[e.chiave].nome+" "+SCHEDE[e.chiave].match.join(" "):""))}));
+  function chiudi(){ box.hidden=true; box.innerHTML=""; }
+  function cerca(){
+    const q=norm(inp.value.trim());
+    if(q.length<2){ chiudi(); return; }
+    const peso=e=>{ const n=norm(e.nome); return n.startsWith(q)?0 : n.includes(q)?1 : 2; };
+    const trovati=indice.filter(e=>e.testo.includes(q)).sort((a,b)=>peso(a)-peso(b)||a.nome.length-b.nome.length).slice(0,12);
+    if(!trovati.length){ box.innerHTML=`<div class="cerca-vuoto">Niente con questo nome. Prova con meno lettere.</div>`; box.hidden=false; return; }
+    box.innerHTML=trovati.map(e=>`<button class="cerca-riga" data-cerca-pianta="${esc(e.nome)}">${e.chiave?imgTag(fotoPianta(e.chiave),e.nome,"mini"):'<span class="mini manca"></span>'}<span><b>${esc(e.nome)}</b><small>${e.mesi.join(", ")}</small></span></button>`).join("");
+    box.hidden=false;
+  }
+  inp.addEventListener("input",cerca);
+  inp.addEventListener("keydown",e=>{
+    if(e.key==="Enter"){ const b=box.querySelector("[data-cerca-pianta]"); if(b){ apriPianta(b.dataset.cercaPianta); chiudi(); inp.blur(); } }
+    if(e.key==="Escape"){ chiudi(); inp.blur(); }
+  });
+  box.addEventListener("click",e=>{ const b=e.target.closest("[data-cerca-pianta]"); if(!b) return; apriPianta(b.dataset.cercaPianta); chiudi(); inp.blur(); });
+  document.addEventListener("click",e=>{ if(!e.target.closest(".cerca")) chiudi(); });
+})();
