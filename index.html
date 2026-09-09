@@ -22,7 +22,8 @@
 
 <header class="testata">
   <h1>Orto</h1>
-  <small>Pievebovigliana · 440 m · valle del Chienti</small>
+  <small id="testata-luogo">Pievebovigliana · 440 m · valle del Chienti</small>
+  <button class="installa" id="btn-comune">Il tuo comune</button>
   <button class="installa" id="btn-installa">Installa sul telefono</button>
 </header>
 <div class="cerca">
@@ -39,6 +40,29 @@
     <details><summary>Android (Chrome)</summary>
       <ol><li>Apri questa pagina in Chrome.</li><li>Tocca i tre puntini in alto a destra.</li><li>Tocca "Aggiungi a schermata Home" o "Installa app".</li><li>Conferma.</li></ol></details>
     <button class="chiudi" id="btn-chiudi">Chiudi</button>
+  </div>
+</div>
+
+<div class="modale" id="modale-comune" hidden>
+  <div class="modale-box">
+    <h2>Dove sta il tuo orto?</h2>
+    <p class="muto">Scegli il comune: calendario, meteo e consigli si adattano al tuo clima. Resta salvato su questo telefono.</p>
+    <div class="cerca" style="padding:0;margin:.6rem 0">
+      <input type="search" id="comune-input" placeholder="Scrivi il nome del comune…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Cerca il tuo comune">
+      <div class="cerca-risultati" id="comune-risultati" style="left:0;right:0" hidden></div>
+    </div>
+    <div id="comune-scelto" hidden>
+      <p id="comune-riep"></p>
+      <p class="muto" style="margin-top:.6rem"><b>Che terra hai nell'orto?</b> (se non lo sai: bagnala e strizzala in mano — se fa un salsicciotto compatto è argillosa, se si sbriciola è sabbiosa)</p>
+      <div class="mp-bottoni" id="terra-bottoni" style="margin:.6rem 0">
+        <button data-terra="argillosa">Argillosa<br><small>pesante, fa zolle</small></button>
+        <button data-terra="sabbiosa">Sabbiosa<br><small>sciolta, drena subito</small></button>
+        <button data-terra="media">Media<br><small>una via di mezzo</small></button>
+        <button data-terra="calcarea">Calcarea<br><small>chiara, con sassi bianchi</small></button>
+      </div>
+      <div class="modale-azioni"><button id="comune-salva" class="primario">Salva e adatta l'app</button></div>
+    </div>
+    <button class="chiudi" id="comune-chiudi">Chiudi</button>
   </div>
 </div>
 
@@ -330,6 +354,7 @@
 <script src="js/mesi.js"></script>
 <script src="js/ricette.js"></script>
 <script src="js/schede.js"></script>
+<script src="js/clima.js"></script>
 <script src="js/semina.js"></script>
 <script src="js/consigli.js"></script>
 <script src="js/app.js"></script>

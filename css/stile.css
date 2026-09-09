@@ -268,3 +268,9 @@ h3{font-size:1.2rem}
 .compra small{display:block;color:var(--muto);margin-top:.1rem}
 .compra:hover{border-color:var(--verde)}
 .nota-semi{color:var(--muto);font-size:.88rem;margin-top:.7rem}
+
+/* ---- clima del comune scelto ---- */
+.clima-utente{margin-top:.45rem;border-left:3px solid var(--verde);padding:.45rem .7rem;background:var(--scheda);border-radius:0 8px 8px 0}
+#terra-bottoni button small{display:block;font-weight:400;font-size:.72rem;color:var(--muto);margin-top:.15rem}
+#terra-bottoni button[aria-pressed="true"] small{color:inherit;opacity:.85}
+#modale-comune .modale-box{max-width:520px}

@@ -4,7 +4,9 @@ RICETTE.sort((a,b)=>NOMI_MESI.indexOf(a.mese)-NOMI_MESI.indexOf(b.mese));
 const $ = s=>document.querySelector(s);
 const esc = s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
 const tipoLabel = {semina:"semina diretta",semenzaio:"semenzaio",trapianto:"trapianto",impianto:"impianto",tunnel:"sotto tunnel"};
-const LAT=43.06, LON=13.09;   // Pievebovigliana
+const COMUNE = (typeof comuneSalvato==="function") ? comuneSalvato() : null;
+const LAT = COMUNE ? COMUNE.lat : 43.06, LON = COMUNE ? COMUNE.lon : 13.09;   // Pievebovigliana se non scelto
+const NOME_LUOGO = COMUNE ? COMUNE.n : "Pievebovigliana";
 const GIORNI=["Dom","Lun","Mar","Mer","Gio","Ven","Sab"];
 const norm = s=>s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
 const slug = s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,60);
@@ -36,7 +38,7 @@ function pannelloMese(m){
   const rs = RICETTE.filter(r=>r.mese===m.id);
   const nIns = m.piante.filter(p=>p[3]).length;
   return `<section class="pannello" id="p-${m.id}" role="tabpanel" aria-labelledby="t-${m.id}">
-  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p>${esc(m.sotto)}</p><div class="clima">${esc(m.clima)}</div></div></div>
+  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p>${esc(m.sotto)}</p><div class="clima">${esc(m.clima)}</div>${COMUNE?`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`:""}</div></div>
   <div class="due">
     <div><h2>Cosa piantare <span>${m.piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
       <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button></div>
@@ -75,10 +77,10 @@ function pannelloConsigli(){
 function pannelloOggi(){
   const tot = MESI.reduce((a,m)=>a+m.piante.length,0);
   return `<section class="pannello" id="p-oggi" role="tabpanel" aria-labelledby="t-oggi">
-  <div class="mese-testa"><div class="mese-nome" id="oggi-data"></div><div><p id="oggi-frase"></p><div class="clima">Pievebovigliana, 440 m · ${tot} colture, ${RICETTE.length} ricette, 12 mesi.</div></div></div>
+  <div class="mese-testa"><div class="mese-nome" id="oggi-data"></div><div><p id="oggi-frase"></p><div class="clima">${esc(NOME_LUOGO)}, ${COMUNE?COMUNE.alt:440} m · ${tot} colture, ${RICETTE.length} ricette, 12 mesi.</div></div></div>
   <div class="oggi">
     <div>
-      <div class="meteo" id="meteo"><div class="stato">Leggo il meteo di Pievebovigliana…</div></div>
+      <div class="meteo" id="meteo"><div class="stato">Leggo il meteo di ${NOME_LUOGO}…</div></div>
       <div class="consigli-oggi"><h2>Cosa fare oggi <span>tre spunti, diversi ogni giorno</span></h2><div id="consigli-oggi"></div></div>
     </div>
     <div>
@@ -93,6 +95,11 @@ function pannelloOggi(){
 }
 
 $("#tablist").innerHTML = tabs.map(t=>`<button class="scheda ${t.cls||""}" role="tab" id="t-${t.id}" data-tab="${t.id}" aria-selected="false" aria-controls="p-${t.id}">${t.label}</button>`).join("");
+if(COMUNE){
+  const ex=(typeof pianteExtraPer==="function")?pianteExtraPer(COMUNE):null;
+  if(ex) MESI.forEach(m=>{ (ex[m.id]||[]).forEach(p=>{ if(!m.piante.some(x=>x[0]===p[0])) m.piante.push(p); }); });
+  const tl=$("#testata-luogo"); if(tl) tl.textContent = `${COMUNE.n} (${COMUNE.pr}) · ${COMUNE.alt} m · zona ${COMUNE.z}`;
+}
 $("#finestra").innerHTML = pannelloOggi() + MESI.map(pannelloMese).join("") + pannelloRicette();
 $("#finestra").appendChild($("#tpl-costruire").content.cloneNode(true));
 $("#finestra").insertAdjacentHTML("beforeend", pannelloConsigli());
@@ -117,6 +124,7 @@ $("#next").onclick = ()=>vai(corrente+1,1);
 $("#tablist").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"); if(b) vai(tabs.findIndex(t=>t.id===b.dataset.tab));});
 document.addEventListener("keydown",e=>{
   if(e.target.matches("input,textarea")) return;
+  if(!$("#modale-comune").hidden){ if(e.key==="Escape"){ $("#modale-comune").hidden=true; document.body.style.overflow=""; } return; }
   if(!$("#modale-pianta").hidden){ if(e.key==="Escape") chiudiPianta(); return; }
   if(e.key==="ArrowRight") vai(corrente+1,1);
   if(e.key==="ArrowLeft") vai(corrente-1,-1);
@@ -125,7 +133,7 @@ let tx=null, ty=null;
 document.addEventListener("touchstart",e=>{tx=e.touches[0].clientX; ty=e.touches[0].clientY;},{passive:true});
 document.addEventListener("touchend",e=>{
   if(tx===null) return;
-  if(!$("#modale-pianta").hidden || !$("#modale").hidden){ tx=null; return; }
+  if(!$("#modale-pianta").hidden || !$("#modale").hidden || !$("#modale-comune").hidden){ tx=null; return; }
   const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; tx=null;
   if(Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)*1.5) vai(corrente+(dx<0?1:-1), dx<0?1:-1);
 },{passive:true});
@@ -193,9 +201,17 @@ function mostraSez(s){
   } else if(s==="conserva"){ c.innerHTML=S.conserva||`<div class="in-scrittura">In scrittura.</div>`; }
   else if(s==="ricette"){
     const rs=ricettePer(mpChiave);
-    c.innerHTML = rs.length ? rs.map(({r,i})=>`<a class="ric-link" href="#" data-apri-ricetta="${i}"><b>${esc(r.nome)}</b><small>${MESI.find(m=>m.id===r.mese).nome} · ${esc(r.tempo)}</small></a>`).join("") : `<div class="in-scrittura">Nessuna ricetta nell'app usa ancora questa pianta. <a href="${gzLink(mpNome.split(",")[0])}" target="_blank" rel="noopener">Cerca su Giallo Zafferano</a>.</div>`;
+    c.innerHTML = (rs.length ? rs.map(({r,i})=>`<a class="ric-link" href="#" data-apri-ricetta="${i}"><b>${esc(r.nome)}</b><small>${MESI.find(m=>m.id===r.mese).nome} · ${esc(r.tempo)}</small></a>`).join("") : `<div class="in-scrittura">Nessuna ricetta nell'app usa ancora questa pianta.</div>`) + `<a class="ric-link" href="${gzLink(mpNome.split(",")[0])}" target="_blank" rel="noopener"><b>Altre ricette su Giallo Zafferano</b><small>si apre nel browser</small></a>`;
   } else if(s==="storia"){ c.innerHTML = S.storia && S.storia.trim() ? S.storia : `<div class="in-scrittura">La storia di questa pianta è in scrittura: sarà nel prossimo aggiornamento, con ricerca fatta apposta.</div>`; }
-  else if(s==="semina"){ c.innerHTML = (typeof SEMINA!=="undefined" && SEMINA[mpChiave]) ? SEMINA[mpChiave] : `<div class="in-scrittura">In scrittura.</div>`; }
+  else if(s==="semina"){
+    const base=(typeof SEMINA!=="undefined" && SEMINA[mpChiave]) ? SEMINA[mpChiave] : `<div class="in-scrittura">In scrittura.</div>`;
+    let extra="";
+    if(COMUNE){
+      extra=`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`;
+      if(COMUNE.terra && typeof TERRE!=="undefined" && TERRE[COMUNE.terra]) extra+=`<p class="nota-semi"><b>La tua terra, ${TERRE[COMUNE.terra].nome}</b>: ${TERRE[COMUNE.terra].tip}</p>`;
+    }
+    c.innerHTML = extra + base;
+  }
   else if(s==="semi"){
     const info=(typeof SEMI!=="undefined")?SEMI[mpChiave]:null;
     const q=info?info.q:("semi di "+mpNome.split(",")[0].split("(")[0].trim().toLowerCase());
@@ -332,7 +348,7 @@ function mostraMeteo(w){
     </div>
     <div class="allarmi">${allarmi.join("")}</div>
     <div class="sette">${d.time.map((t,i)=>`<div class="${d.temperature_2m_min[i]<=1?"gelo":""}"><small>${nomeG(i)}</small><b>${Math.round(d.temperature_2m_max[i])}°</b><small>${Math.round(d.temperature_2m_min[i])}°</small><small>${d.precipitation_sum[i]>=1?d.precipitation_sum[i].toFixed(0)+" mm":"—"}</small></div>`).join("")}</div>
-    <div class="stato">Open-Meteo · Pievebovigliana · aggiornato alle ${c.time.slice(11,16)}</div>`;
+    <div class="stato">Open-Meteo · ${NOME_LUOGO} · aggiornato alle ${c.time.slice(11,16)}</div>`;
 }
 
 function mostraCalendario(w){
@@ -406,4 +422,49 @@ vai(iniziale>=0?iniziale:0, 1);
   });
   box.addEventListener("click",e=>{ const b=e.target.closest("[data-cerca-pianta]"); if(!b) return; apriPianta(b.dataset.cercaPianta); chiudi(); inp.blur(); });
   document.addEventListener("click",e=>{ if(!e.target.closest(".cerca")) chiudi(); });
+})();
+
+/* ---- scelta del comune ---- */
+(function(){
+  const mod=$("#modale-comune"), inp=$("#comune-input"), box=$("#comune-risultati"); if(!mod||!inp) return;
+  let LISTA=null, scelto=null, terra=(COMUNE&&COMUNE.terra)||null;
+  async function caricaLista(){
+    if(LISTA) return true;
+    box.hidden=false; box.innerHTML=`<div class="cerca-vuoto">Scarico l'elenco dei comuni…</div>`;
+    try{ LISTA=await (await fetch("dati/comuni.json")).json(); box.hidden=true; box.innerHTML=""; return true; }
+    catch(e){ box.innerHTML=`<div class="cerca-vuoto">Non riesco a scaricare l'elenco: controlla la connessione, chiudi e riprova.</div>`; return false; }
+  }
+  $("#btn-comune").onclick=()=>{ mod.hidden=false; document.body.style.overflow="hidden"; if(COMUNE) inp.value=COMUNE.n; caricaLista(); };
+  function chiudi(){ mod.hidden=true; document.body.style.overflow=""; }
+  $("#comune-chiudi").onclick=chiudi;
+  mod.addEventListener("click",e=>{ if(e.target===mod) chiudi(); });
+  inp.addEventListener("input",()=>{
+    $("#comune-scelto").hidden=true; scelto=null;
+    if(!LISTA) return;
+    const q=norm(inp.value.trim());
+    if(q.length<2){ box.hidden=true; box.innerHTML=""; return; }
+    const tr=LISTA.map((r,i)=>({r,i})).filter(x=>norm(x.r[0]).includes(q))
+      .sort((a,b)=>{const na=norm(a.r[0]),nb=norm(b.r[0]);return (na.startsWith(q)?0:1)-(nb.startsWith(q)?0:1)||na.length-nb.length;}).slice(0,12);
+    box.innerHTML = tr.length ? tr.map(x=>`<button class="cerca-riga" data-i="${x.i}"><span><b>${esc(x.r[0])}</b><small>${esc(x.r[1])} · ${esc(x.r[2])} · ${x.r[5]} m · zona ${x.r[7]}</small></span></button>`).join("") : `<div class="cerca-vuoto">Nessun comune con questo nome. Controlla come si scrive.</div>`;
+    box.hidden=false;
+  });
+  box.addEventListener("click",e=>{
+    const b=e.target.closest("[data-i]"); if(!b) return;
+    const r=LISTA[+b.dataset.i];
+    scelto={n:r[0],pr:r[1],reg:r[2],lat:r[3],lon:r[4],alt:r[5],gg:r[6],z:r[7]};
+    box.hidden=true; inp.value=r[0];
+    $("#comune-riep").innerHTML=`<b>${esc(r[0])} (${esc(r[1])})</b> — ${fraseClima(scelto)}`;
+    $("#comune-scelto").hidden=false;
+  });
+  $("#terra-bottoni").addEventListener("click",e=>{
+    const b=e.target.closest("[data-terra]"); if(!b) return;
+    terra=b.dataset.terra;
+    document.querySelectorAll("#terra-bottoni button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
+  });
+  $("#comune-salva").onclick=()=>{
+    if(!scelto){ chiudi(); return; }
+    scelto.terra=terra;
+    try{ localStorage.setItem("orto-comune",JSON.stringify(scelto)); }catch(e){}
+    location.reload();
+  };
 })();
