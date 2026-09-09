@@ -12,12 +12,14 @@ function pannelloAllevare(){
 </div>
 
 <h2 id="g-lumache">Chiocciole: l'elicicoltura</h2>
+<img class="foto-guida" src="img/guide/lumache-allevamento.jpg" alt="Allevamento di chiocciole all'aperto, con i recinti e le reti">
 <p>Allevare chiocciole è un'attività agricola vera, riconosciuta e in crescita: la domanda di lumache di qualità (allevate, non raccolte in giro) supera da anni la produzione italiana, e a questa si è aggiunto il mercato della bava per la cosmetica. Si presta a chi ha poco terreno, perché rende su superfici piccole, ma chiede regolarità: irrigare, controllare, sfalciare, difendere. Non è un lavoro pesante, è un lavoro costante.</p>
 
 <h3>Come funziona</h3>
 <p>In Italia si alleva quasi solo all'aperto, in recinti su terreno libero, con alimentazione vegetale seminata direttamente dentro i recinti. La specie è la <i>Cornu aspersum</i> (la vecchia <i>Helix aspersa</i>), nelle varietà <b>Muller</b> — più piccola, adatta ai climi miti — e <b>Maxima</b>, più grossa, che regge inverni fino a −8/−15 °C: la scelta si fa sulla temperatura minima del tuo comune. Il ciclo: si mettono i riproduttori in primavera (aprile–maggio), si accoppiano e depongono in terra, i piccoli nascono nei recinti e in autunno, o l'anno dopo, si raccolgono quelli arrivati a taglia, con il bordo del guscio indurito. Poi lo <b>spurgo</b>: una settimana circa senza cibo, in cassette aerate, perché svuotino l'intestino e siano vendibili.</p>
 <p>Il metodo di riferimento è quello dell'<b>Istituto Internazionale di Elicicoltura di Cherasco</b> (Cuneo, dal 1973), che ha standardizzato recinti, alimentazione e la "migrazione naturale" dei piccoli dalla zona di riproduzione a quella di ingrasso, e che oggi spinge un ciclo naturale breve per arrivare alla raccolta in circa un anno.</p>
 
+<img class="foto-guida piccola" src="img/guide/lumache.jpg" alt="Una chiocciola Cornu aspersum">
 <h3>Cosa serve</h3>
 <ul>
 <li><b>Un terreno soleggiato senza alberi</b>, pianeggiante o quasi, con acqua a disposizione (pozzo, corso d'acqua, raccolta piovana) non troppo salina. Va bene quasi qualunque terra — sciolta, mista, anche argillosa — purché non inquinata; l'ideale è drenante e ricca di calcio, che serve per il guscio.</li>
@@ -58,11 +60,13 @@ function pannelloAllevare(){
 </div>
 
 <h2 id="g-api">Api: l'apicoltura</h2>
+<img class="foto-guida" src="img/guide/api.jpg" alt="Un apiario con le arnie in un giardino terrazzato">
 <p>Due arnie in fondo all'orto sono il sogno di molti, e sono anche l'allevamento più regolamentato tra questi tre: in Italia gli obblighi valgono anche per chi tiene <b>una sola famiglia</b>, e le api si ammalano, sciamano e pungono. Chi parte con studio, un'associazione alle spalle e aspettative giuste ne ricava miele, impollinazione per l'orto e un mestiere che non si finisce mai di imparare. Chi compra un'arnia online e "vede come va" di solito la perde entro l'inverno.</p>
 
 <h3>Come funziona</h3>
 <p>Una famiglia è una regina, qualche decina di migliaia di operaie e i fuchi, dentro un'arnia a telaini mobili (in Italia quasi sempre il modello Dadant-Blatt da 10 o 12 telaini): sotto il nido, dove la regina depone, sopra i melari, dove le api stoccano il miele che tu raccogli. L'anno apistico va da fine inverno (la ripresa della covata) all'estate (i raccolti, uno o più a seconda delle fioriture: acacia, castagno, millefiori, tiglio) fino all'autunno, quando la famiglia si prepara a svernare e tu la lasci con scorte sufficienti. Il nemico numero uno è la <b>varroa</b>, un acaro che senza trattamenti uccide la colonia in una-due stagioni: i trattamenti sono obbligatori e vanno fatti nei momenti giusti, con prodotti registrati.</p>
 
+<img class="foto-guida piccola" src="img/guide/api-telaino.jpg" alt="Un telaino coperto di api in mano a un apicoltore">
 <h3>La legge, in breve</h3>
 <ul>
 <li><b>Registrazione obbligatoria</b> per chiunque detenga alveari, anche per hobby: entro 20 giorni dall'inizio ci si registra presso il servizio veterinario dell'ASL e si ottiene il codice aziendale nella Banca Dati Apistica nazionale (BDA, sul portale Vetinfo). È gratuita; l'associazione locale la fa per te su delega.</li>
@@ -102,6 +106,7 @@ function pannelloAllevare(){
 </div>
 
 <h2 id="g-grilli">Grilli: insetti da pasto e novel food</h2>
+<img class="foto-guida" src="img/guide/grilli.jpg" alt="Un grillo domestico, Acheta domesticus, sul palmo di una mano">
 <p>Il grillo domestico, <i>Acheta domesticus</i>, si alleva in una stanza, in cassoni di plastica, tutto l'anno: è l'allevamento che chiede meno terra di tutti e più attenzione a temperatura, igiene e legge. Ci sono due strade molto diverse, e vanno tenute separate fin dall'inizio: allevare grilli come <b>cibo per animali</b> (rettili, anfibi, uccelli, galline, pesci) è semplice e alla portata di chiunque; allevarli come <b>cibo per le persone</b> è un percorso industriale, con autorizzazioni europee e standard di sicurezza alimentare da rispettare, che non si improvvisa in garage.</p>
 
 <h3>Come funziona</h3>

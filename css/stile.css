@@ -326,3 +326,74 @@ h3{font-size:1.2rem}
 .link-utili a b{color:var(--verde)}
 .link-utili a small{display:block;color:var(--muto);margin-top:.15rem}
 .link-utili a:hover{border-color:var(--verde)}
+
+/* ===================== nuova navigazione ===================== */
+body{padding-bottom:calc(4.4rem + env(safe-area-inset-bottom))}
+.barra-bassa{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;justify-content:space-around;align-items:stretch;background:var(--carta);border-top:1px solid var(--riga);padding:.3rem .25rem calc(.3rem + env(safe-area-inset-bottom));box-shadow:0 -6px 24px var(--ombra)}
+.barra-bassa button{flex:1 1 0;display:flex;flex-direction:column;align-items:center;gap:.15rem;background:none;border:0;color:var(--muto);font:inherit;font-size:.72rem;font-weight:600;padding:.35rem 0;border-radius:12px;min-height:3.2rem}
+.barra-bassa svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.barra-bassa button[aria-current="page"]{color:var(--verde)}
+.barra-bassa button[aria-current="page"] svg{stroke-width:2.2}
+.barra-bassa button:active{transform:scale(.95)}
+@media (min-width:900px){
+  .barra-bassa{max-width:1100px;margin:0 auto;left:50%;transform:translateX(-50%);border-radius:18px 18px 0 0;border:1px solid var(--riga);border-bottom:0}
+}
+/* la striscia dei mesi e le frecce si vedono solo dentro i mesi */
+.schede,.frecce{display:none}
+body.in-mese .schede{display:flex}
+body.in-mese .frecce{display:flex}
+.frecce{bottom:calc(4.6rem + env(safe-area-inset-bottom))}
+
+/* ===================== allarme meteo ===================== */
+.allarme{max-width:1100px;margin:.2rem auto .4rem;padding:.75rem 1.25rem;border-radius:12px;font-size:.95rem;line-height:1.45}
+.allarme.gelo{background:color-mix(in srgb,#5b8fd8 22%,var(--scheda));border:1.5px solid #5b8fd8}
+.allarme.fresco{background:color-mix(in srgb,var(--verde2) 18%,var(--scheda));border:1.5px solid var(--verde2)}
+.allarme.caldo{background:color-mix(in srgb,var(--zucca) 22%,var(--scheda));border:1.5px solid var(--zucca)}
+@media (max-width:640px){.allarme{margin:.2rem 1rem .4rem;padding:.7rem .9rem}}
+
+/* ===================== Oggi: la settimana ===================== */
+.settimana{margin:0 0 1.4rem}
+.piante.compatta li{padding:.6rem 0;grid-template-columns:1fr auto;grid-template-areas:"nome tag" "come come"}
+.piante.compatta li .come{-webkit-line-clamp:2}
+.ins.mia{background:color-mix(in srgb,var(--verde) 18%,transparent);color:var(--verde)}
+
+/* ===================== liste dei mesi più compatte ===================== */
+.piante li .come{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+.piante li[data-mia="1"] b::before{content:"";display:inline-block;width:.5rem;height:.5rem;border-radius:50%;background:var(--verde);margin-right:.4rem;vertical-align:middle}
+.filtro-mie{border-color:var(--verde)!important}
+
+/* ===================== Piante A–Z ===================== */
+.griglia-piante{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem;margin:.6rem 0 1.6rem}
+.pianta-card{position:relative;display:block;padding:0;border:0;background:var(--scheda);border-radius:14px;overflow:hidden;text-align:left;font:inherit;color:var(--inchiostro);cursor:pointer;box-shadow:0 1px 3px var(--ombra)}
+.pianta-card .pc-foto{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--carta)}
+.pianta-card .pc-foto.manca{aspect-ratio:4/3}
+.pianta-card .pc-nome{display:block;padding:.55rem .7rem .65rem;font-weight:600;font-size:.95rem;line-height:1.25}
+.pianta-card .pc-mia{position:absolute;top:.5rem;left:.5rem;background:var(--verde);color:var(--carta);font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:999px}
+.pianta-card:hover .pc-nome{color:var(--verde)}
+@media (max-width:640px){.griglia-piante{grid-template-columns:repeat(2,1fr);gap:.55rem}}
+
+/* ===================== Guide (hub) ===================== */
+.griglia-guide{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.9rem;margin:.6rem 0 1.6rem}
+.guida-card{display:block;padding:0;border:0;background:var(--scheda);border-radius:16px;overflow:hidden;text-align:left;font:inherit;color:var(--inchiostro);cursor:pointer;box-shadow:0 1px 3px var(--ombra)}
+.guida-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.guida-card span{display:block;padding:.8rem .95rem 1rem}
+.guida-card b{display:block;font-family:Fraunces,serif;font-size:1.25rem;margin-bottom:.2rem}
+.guida-card small{color:var(--muto);font-size:.88rem;line-height:1.4}
+.guida-card:hover b{color:var(--verde)}
+
+/* ===================== foto nelle guide ===================== */
+.foto-guida{width:100%;max-height:340px;object-fit:cover;border-radius:14px;display:block;margin:.4rem 0 1rem}
+.foto-guida.piccola{max-height:220px}
+.foto-guida.manca{display:none}
+
+/* ===================== scheda pianta: "la coltivo" ===================== */
+.mp-testa{display:flex;align-items:center;gap:.6rem}
+.mp-testa h2{flex:1 1 auto}
+.mia{background:var(--scheda);color:var(--verde);border:1.5px solid var(--verde);border-radius:999px;padding:.4rem .8rem;font:inherit;font-size:.82rem;font-weight:600;white-space:nowrap}
+.mia[aria-pressed="true"]{background:var(--verde);color:var(--carta)}
+
+/* ===================== onboarding a tre domande ===================== */
+.passo{margin:.9rem 0 .35rem;line-height:1.4}
+.passo .muto{display:block;font-weight:400;font-size:.85rem;margin-top:.1rem}
+.mp-bottoni.scelte{margin:.4rem 0 .2rem}
+.mp-bottoni.scelte button{padding:.75rem .5rem;font-size:.92rem}

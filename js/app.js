@@ -15,6 +15,11 @@ const fotoPianta = k=>`img/piante/${k}.jpg`;
 const fotoRicetta = r=>`img/ricette/${slug(r.nome)}.jpg`;
 const imgTag = (src,alt,cls)=>`<img class="${cls}" src="${src}" alt="${esc(alt)}" loading="lazy" onerror="this.classList.add('manca');this.style.visibility='hidden'">`;
 
+/* le piante che l'utente dice di coltivare (chiavi delle schede) */
+let MIE = new Set();
+try{ MIE = new Set(JSON.parse(localStorage.getItem("orto-mie")||"[]")); }catch(e){}
+function salvaMie(){ try{ localStorage.setItem("orto-mie",JSON.stringify([...MIE])); }catch(e){} }
+function eMia(nome){ return chiaviPer(nome).some(k=>MIE.has(k)); }
 let stato = {};
 try{ stato = JSON.parse(localStorage.getItem("orto-pb-anno")||"{}"); }catch(e){ stato={}; }
 function salva(){ try{ localStorage.setItem("orto-pb-anno",JSON.stringify(stato)); }catch(e){} }
@@ -32,24 +37,29 @@ function ricettePer(k){
 function gzLink(nome){ return "https://www.giallozafferano.it/ricerca-ricette/"+encodeURIComponent(nome.replace(/[()]/g,"").trim().replace(/\s+/g,"+"))+"/"; }
 
 /* ---- pannelli ---- */
-const tabs = [{id:"oggi",label:"Oggi"},...MESI.map(m=>({id:m.id,label:m.nome})),{id:"ricette",label:"Ricette",cls:"speciale"},{id:"costruire",label:"Costruire",cls:"speciale"},{id:"allevare",label:"Allevare",cls:"speciale"},{id:"consigli",label:"Consigli",cls:"speciale"}];
+const tabs = [{id:"oggi",label:"Oggi",nav:"oggi"},...MESI.map(m=>({id:m.id,label:m.nome,nav:"mesi",mese:true})),{id:"piante",label:"Piante",nav:"piante"},{id:"ricette",label:"Cucina",nav:"ricette"},{id:"guide",label:"Guide",nav:"guide"},{id:"costruire",label:"Costruire",nav:"guide"},{id:"coltivare",label:"Coltivare",nav:"guide"},{id:"allevare",label:"Allevare",nav:"guide"},{id:"consigli",label:"Consigli",nav:"guide"}];
+const ORDINE_TIPO = {trapianto:0,semina:1,semenzaio:2,impianto:3,tunnel:4};
 
 function pannelloMese(m){
   const rs = RICETTE.filter(r=>r.mese===m.id);
   /* nelle fasce calde e in montagna il contenuto arriva dal mese del calendario base che corrisponde alla stagione reale del posto */
   const src = COMUNE ? (MESI.find(x=>x.id===meseBasePer(COMUNE,m.id))||m) : m;
   const extra = (COMUNE && m.extra) ? m.extra : [];
-  const piante = [...src.piante, ...extra.filter(p=>!src.piante.some(x=>x[0]===p[0]))];
+  const amb = COMUNE && COMUNE.amb;
+  const piante = [...src.piante, ...extra.filter(p=>!src.piante.some(x=>x[0]===p[0]))]
+    .filter(p=>adattaAmbiente(p[0], amb))
+    .sort((a,b)=>(ORDINE_TIPO[a[1]]??9)-(ORDINE_TIPO[b[1]]??9));
+  const ambTesto = COMUNE ? fraseAmbiente(COMUNE) : "";
   const nIns = piante.filter(p=>p[3]).length;
   const testo = COMUNE ? meseClima(COMUNE,m.id) : esc(m.sotto);
   const ad = t => COMUNE ? addolcisci(COMUNE,t) : t;
   return `<section class="pannello" id="p-${m.id}" role="tabpanel" aria-labelledby="t-${m.id}">
-  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p class="mese-sotto">${testo}</p></div></div>
+  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p class="mese-sotto">${testo}</p>${ambTesto?`<p class="clima clima-utente">${ambTesto}</p>`:""}</div></div>
   <div class="due">
     <div><h2>Cosa piantare <span>${piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
       <div class="legenda"><span><i class="tag semenzaio"></i>in semenzaio: si semina in vasetto, al coperto</span><span><i class="tag semina"></i>semina diretta: il seme va in terra nell'orto</span><span><i class="tag trapianto"></i>trapianto: la piantina passa dal vasetto all'orto</span><span><i class="tag impianto"></i>impianto: si mettono a dimora bulbi, tuberi, radici o piante</span><span><i class="tag tunnel"></i>sotto tunnel: coltura protetta da telo o serra fredda</span></div>
-      <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button></div>
-      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul>
+      <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button><button class="filtro filtro-mie" data-f="mie" aria-pressed="false">Le mie</button></div>
+      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="${eMia(p[0])?1:0}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul>
     </div>
     <div>
       <div class="raccolta"><b>Cosa si raccoglie</b>${ad(esc(src.raccolta))}</div>
@@ -61,6 +71,28 @@ function pannelloMese(m){
         <button data-ricette-mese="${m.id}">Apri le ricette di ${m.nome.toLowerCase()}</button></div>
     </div>
   </div></section>`;
+}
+
+function pannelloPiante(){
+  const chiavi=Object.keys(SCHEDE).sort((a,b)=>SCHEDE[a].nome.localeCompare(SCHEDE[b].nome,"it"));
+  const card=k=>`<button class="pianta-card" data-apri-chiave="${k}">${imgTag(fotoPianta(k),SCHEDE[k].nome,"pc-foto")}<span class="pc-nome">${esc(SCHEDE[k].nome)}</span>${MIE.has(k)?'<span class="pc-mia">la coltivo</span>':''}</button>`;
+  const mie=chiavi.filter(k=>MIE.has(k));
+  return `<section class="pannello" id="p-piante" role="tabpanel" aria-labelledby="t-piante">
+  <div class="mese-testa"><div class="mese-nome">Piante</div><p class="mese-sotto">${chiavi.length} schede: quando seminare, dove comprare i semi, consociazioni, conservazione, ricette e storia. Tocca una pianta e dille "la coltivo": i mesi e la tua settimana si adattano.</p></div>
+  ${mie.length?`<h2>Le tue piante <span>${mie.length}</span></h2><div class="griglia-piante">${mie.map(card).join("")}</div>`:""}
+  <h2>Tutte le schede <span>dalla A alla Z</span></h2>
+  <div class="griglia-piante">${chiavi.map(card).join("")}</div></section>`;
+}
+function pannelloGuide(){
+  const g=[
+    ["costruire","Costruire","Irrigazione a goccia, tunnel e serre fredde, semenzaio, falegnameria per l'orto.","img/guide/serra.jpg"],
+    ["coltivare","Coltivare in altri modi","Vasi e balcone, aiuole rialzate, idroponica, acquaponica: come si comincia e dove studiare.","img/guide/idroponica.jpg"],
+    ["allevare","Allevare","Chiocciole, api e grilli accanto all'orto: come funzionano, costi, legge, link.","img/guide/api.jpg"],
+    ["consigli","Consigli","Le cose che contano davvero, dalla terra alle lune.","img/guide/aiuole.jpg"]
+  ];
+  return `<section class="pannello" id="p-guide" role="tabpanel" aria-labelledby="t-guide">
+  <div class="mese-testa"><div class="mese-nome">Guide</div><p class="mese-sotto">Quattro sezioni da leggere con calma, per costruire, coltivare in altri modi, allevare e capire.</p></div>
+  <div class="griglia-guide">${g.map(([id,t,d,img])=>`<button class="guida-card" data-vai="${id}"><img src="${img}" alt="" loading="lazy"><span><b>${t}</b><small>${d}</small></span></button>`).join("")}</div></section>`;
 }
 
 function cardRicetta(r,i){
@@ -88,6 +120,7 @@ function pannelloOggi(){
   <div class="oggi">
     <div>
       <div class="meteo" id="meteo"><div class="stato">${COMUNE?`Leggo il meteo di ${esc(COMUNE.n)}…`:"Scegli il tuo comune per vedere il meteo del tuo orto."}</div></div>
+      <div class="settimana"><h2>Questa settimana <span id="settimana-sotto"></span></h2><ul id="settimana" class="piante compatta"></ul></div>
       <div class="consigli-oggi"><h2>Cosa fare oggi <span>tre spunti, diversi ogni giorno</span></h2><div id="consigli-oggi"></div></div>
     </div>
     <div>
@@ -107,10 +140,13 @@ if(COMUNE){
   if(ex) MESI.forEach(m=>{ m.extra = ex[m.id]||[]; });
   const tl=$("#testata-luogo"); if(tl) tl.textContent = `${COMUNE.n} (${COMUNE.pr}) · ${COMUNE.alt} m · zona ${COMUNE.z}`;
 }
-$("#finestra").innerHTML = pannelloOggi() + MESI.map(pannelloMese).join("") + pannelloRicette();
+$("#finestra").innerHTML = pannelloOggi() + MESI.map(pannelloMese).join("") + pannelloPiante() + pannelloRicette() + pannelloGuide();
 $("#finestra").appendChild($("#tpl-costruire").content.cloneNode(true));
+$("#finestra").insertAdjacentHTML("beforeend", pannelloColtivare());
 $("#finestra").insertAdjacentHTML("beforeend", pannelloAllevare());
 $("#finestra").insertAdjacentHTML("beforeend", pannelloConsigli());
+/* la barra dei mesi mostra solo i mesi; le altre sezioni si raggiungono dalla barra in basso */
+$("#tablist").innerHTML = tabs.filter(t=>t.mese).map(t=>`<button class="scheda" role="tab" id="t-${t.id}" data-tab="${t.id}" aria-selected="false" aria-controls="p-${t.id}">${t.label}</button>`).join("");
 
 /* ---- navigazione ---- */
 let corrente = 0;
@@ -121,14 +157,25 @@ function vai(i, dir){
   document.querySelectorAll(".pannello").forEach(p=>p.classList.remove("attivo"));
   document.querySelectorAll(".scheda").forEach(s=>s.setAttribute("aria-selected","false"));
   const p = $("#p-"+tabs[i].id); p.style.setProperty("--dir",(dir>0?14:-14)+"px"); p.classList.add("attivo");
-  const t = $("#t-"+tabs[i].id); t.setAttribute("aria-selected","true"); try{t.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}catch(e){}
-  $("#prev").disabled = i===0; $("#next").disabled = i===tabs.length-1;
-  $("#pos").textContent = `${tabs[i].label} · ${i+1} di ${tabs.length}`;
+  const t = $("#t-"+tabs[i].id); if(t){ t.setAttribute("aria-selected","true"); try{t.scrollIntoView({block:"nearest",inline:"center",behavior:"smooth"});}catch(e){} }
+  const eMese=!!tabs[i].mese;
+  document.body.dataset.nav = tabs[i].nav;
+  document.body.classList.toggle("in-mese", eMese);
+  document.querySelectorAll("#barra-bassa [data-nav]").forEach(b=>b.setAttribute("aria-current", b.dataset.nav===tabs[i].nav ? "page" : "false"));
+  const im = eMese ? MESI.findIndex(m=>m.id===tabs[i].id) : -1;
+  $("#prev").disabled = !eMese || im<=0; $("#next").disabled = !eMese || im>=MESI.length-1;
+  $("#pos").textContent = eMese ? `${tabs[i].label}` : "";
   try{ history.replaceState(null,"","#"+tabs[i].id); }catch(e){}
   try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){}
 }
 $("#prev").onclick = ()=>vai(corrente-1,-1);
 $("#next").onclick = ()=>vai(corrente+1,1);
+$("#barra-bassa").addEventListener("click",e=>{
+  const b=e.target.closest("[data-nav]"); if(!b) return;
+  const n=b.dataset.nav;
+  if(n==="mesi"){ const id=(tabs[corrente].mese)?tabs[corrente].id:meseCorrente.id; vai(tabs.findIndex(t=>t.id===id)); return; }
+  vai(tabs.findIndex(t=>t.id===n));
+});
 $("#tablist").addEventListener("click",e=>{const b=e.target.closest("[data-tab]"); if(b) vai(tabs.findIndex(t=>t.id===b.dataset.tab));});
 document.addEventListener("keydown",e=>{
   if(e.target.matches("input,textarea")) return;
@@ -148,12 +195,14 @@ $("#finestra").addEventListener("click",e=>{
   const v=e.target.closest("[data-vai]"); if(v){ vai(tabs.findIndex(t=>t.id===v.dataset.vai)); return; }
   const rm=e.target.closest("[data-ricette-mese]"); if(rm){ vai(tabs.findIndex(t=>t.id==="ricette"),1); filtraRicette(rm.dataset.ricetteMese); return; }
   const chip=e.target.closest("[data-rm]"); if(chip){ filtraRicette(chip.dataset.rm); return; }
+  const pc=e.target.closest("[data-apri-chiave]"); if(pc){ apriPianta(SCHEDE[pc.dataset.apriChiave].nome); return; }
   const f=e.target.closest("[data-f]"); if(f){
     const sez=f.closest(".pannello");
     sez.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed", b===f?"true":"false"));
     sez.querySelectorAll(".piante li").forEach(li=>{
       let vis = true;
       if(f.dataset.f==="insolite") vis = li.dataset.ins==="1";
+      if(f.dataset.f==="mie") vis = li.dataset.mia==="1";
       if(f.dataset.f==="campo") vis = ["semina","trapianto","impianto"].includes(li.dataset.tag);
       li.classList.toggle("nascosta", !vis);
     });
@@ -181,10 +230,26 @@ function apriPianta(nome){
   if(mpChiavi.length>1){ sub.hidden=false; sub.innerHTML=mpChiavi.map((k,i)=>`<button data-chiave="${k}" aria-pressed="${i===0}">${esc(SCHEDE[k].nome.split(" (")[0])}</button>`).join(""); }
   else { sub.hidden=true; sub.innerHTML=""; }
   mpChiave=mpChiavi[0]||null; mpSez=null;
+  aggiornaMia();
   document.querySelectorAll("#mp-bottoni button").forEach(b=>b.setAttribute("aria-pressed","false"));
   $("#mp-corpo").innerHTML = mpChiave ? `<p class="muto" style="color:var(--muto)">Scegli cosa vuoi sapere.</p>` : `<div class="in-scrittura">Scheda in preparazione per questa voce.</div>`;
   mod.hidden=false; document.body.style.overflow="hidden";
 }
+function aggiornaMia(){
+  const b=$("#mp-mia"); if(!b) return;
+  if(!mpChiave){ b.hidden=true; return; }
+  b.hidden=false; const on=MIE.has(mpChiave);
+  b.setAttribute("aria-pressed", on?"true":"false"); b.textContent = on ? "La coltivo" : "La coltivi? Segnala";
+}
+$("#mp-mia").addEventListener("click",()=>{
+  if(!mpChiave) return;
+  if(MIE.has(mpChiave)) MIE.delete(mpChiave); else MIE.add(mpChiave);
+  salvaMie(); aggiornaMia();
+  /* aggiorna i segni "mia" nei mesi, l'indice e la settimana senza ricaricare */
+  document.querySelectorAll(".piante li[data-pianta]").forEach(li=>{ li.dataset.mia = eMia(li.dataset.pianta)?1:0; });
+  const p=$("#p-piante"); if(p){ p.outerHTML=pannelloPiante(); if(tabs[corrente].id==="piante") $("#p-piante").classList.add("attivo"); }
+  mostraSettimana();
+});
 function chiudiPianta(){ $("#modale-pianta").hidden=true; document.body.style.overflow=""; }
 $("#mp-chiudi").onclick=chiudiPianta;
 $("#modale-pianta").addEventListener("click",e=>{ if(e.target===$("#modale-pianta")) chiudiPianta(); });
@@ -209,7 +274,10 @@ function mostraSez(s){
     let extra="";
     if(COMUNE){
       extra=`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`;
-      if(COMUNE.terra && typeof TERRE!=="undefined" && TERRE[COMUNE.terra]) extra+=`<p class="nota-semi"><b>La tua terra, ${TERRE[COMUNE.terra].nome}</b>: ${TERRE[COMUNE.terra].tip}</p>`;
+      if(COMUNE.esp && typeof ESPOSIZIONI!=="undefined" && ESPOSIZIONI[COMUNE.esp] && COMUNE.esp!=="pianura") extra+=`<p class="nota-semi"><b>Il tuo orto è ${ESPOSIZIONI[COMUNE.esp].nome}</b>: ${ESPOSIZIONI[COMUNE.esp].tip}</p>`;
+      if(COMUNE.amb==="vasi") extra+=`<p class="nota-semi"><b>In vaso</b>: ${adattaAmbiente(mpNome,"vasi")?"si può fare. Contenitore grande il giusto, terriccio nuovo ogni anno, acqua più spesso e meno per volta, e un concime liquido ogni due settimane in stagione.":"è una coltura da spazio, in vaso rende poco o niente: meglio puntare su altro."}</p>`;
+      if(COMUNE.amb==="idroponica") extra+=`<p class="nota-semi"><b>In idroponica</b>: ${adattaAmbiente(mpNome,"idroponica")?"rende bene. Le date qui sotto valgono per chi coltiva fuori; indoor conta la luce (14–16 ore) e l'acqua tra 18 e 24 °C. Trovi sistemi, pH ed EC in Guide → Coltivare.":"non è una coltura da idroponica: radici troppo grandi o ciclo troppo lungo per rendere senza terra."}</p>`;
+      if(COMUNE.terra && COMUNE.amb!=="idroponica" && typeof TERRE!=="undefined" && TERRE[COMUNE.terra]) extra+=`<p class="nota-semi"><b>La tua terra, ${TERRE[COMUNE.terra].nome}</b>: ${TERRE[COMUNE.terra].tip}</p>`;
     }
     c.innerHTML = extra + base;
   }
@@ -306,6 +374,36 @@ function consigliMeteo(w){ // consigli che dipendono dal meteo di oggi e dei pro
   return out;
 }
 
+/* la lista della settimana: colture del mese (già adattate a fascia e ambiente), scelte per metà mese e per le tue piante */
+let METEO_ULTIMO=null;
+function mostraSettimana(){
+  const ul=$("#settimana"); if(!ul) return;
+  const mId=meseCorrente.id;
+  const src = COMUNE ? (MESI.find(x=>x.id===meseBasePer(COMUNE,mId))||meseCorrente) : meseCorrente;
+  const extra=(COMUNE && meseCorrente.extra)?meseCorrente.extra:[];
+  const amb=COMUNE&&COMUNE.amb;
+  const g=oggi.getDate(), seconda=g>15;
+  let tutte=[...src.piante,...extra].filter(p=>adattaAmbiente(p[0],amb));
+  const meta=p=>{ const c=p[2].toLowerCase(); if(/fine mese|seconda met|a fine|ultimi giorni/.test(c)) return seconda; if(/inizio mese|prima met|primi giorni|a inizio|subito/.test(c)) return !seconda; return true; };
+  let scelte=tutte.filter(meta);
+  scelte.sort((a,b)=>(eMia(b[0])-eMia(a[0])) || ((ORDINE_TIPO[a[1]]??9)-(ORDINE_TIPO[b[1]]??9)));
+  const mie=scelte.filter(p=>eMia(p[0]));
+  const lista=(mie.length?[...mie,...scelte.filter(p=>!eMia(p[0]))]:scelte).slice(0,6);
+  $("#settimana-sotto").textContent = mie.length ? `prima le tue piante, poi il resto del mese` : `le colture del momento · segna le tue in Piante e diventa personale`;
+  const ad=t=>COMUNE?addolcisci(COMUNE,t):t;
+  ul.innerHTML = lista.length ? lista.map(p=>`<li data-pianta="${esc(p[0])}" data-mia="${eMia(p[0])?1:0}"><b>${esc(p[0])}${eMia(p[0])?'<span class="ins mia">tua</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("") : `<li><span class="come">Questo mese, con le tue scelte, non c'è nulla da mettere a dimora: è tempo di raccolta e di cura.</span></li>`;
+}
+function mostraAllarme(w){
+  const box=$("#allarme"); if(!box) return;
+  if(!w||!w.daily){ box.hidden=true; return; }
+  const mins=w.daily.temperature_2m_min.slice(0,4), minTre=Math.min(...mins), gg=mins.indexOf(minTre);
+  const quando=["stanotte","domani notte","dopodomani","tra tre notti"][gg]||"nei prossimi giorni";
+  const maxs=w.daily.temperature_2m_max.slice(0,3), maxTre=Math.max(...maxs);
+  if(minTre<=1){ box.className="allarme gelo"; box.innerHTML=`<b>Gelo ${quando}: ${minTre.toFixed(0)} °C.</b> Copri stasera quello che è tenero: insalate, piantine appena messe, basilico. Zucche e batate in casa se sono ancora fuori.`; box.hidden=false; return; }
+  if(minTre<=3 && oggi.getMonth()>=2 && oggi.getMonth()<=4){ box.className="allarme fresco"; box.innerHTML=`<b>Minima a ${minTre.toFixed(0)} °C ${quando}.</b> Per i trapianti delicati aspetta: pomodori, zucchine e basilico vogliono notti sopra i 10 °C.`; box.hidden=false; return; }
+  if(maxTre>=34){ box.className="allarme caldo"; box.innerHTML=`<b>Caldo forte: ${maxTre.toFixed(0)} °C nei prossimi giorni.</b> Acqua all'alba e alla base, ombra sulle insalate dalle 11 alle 17, raccogli presto la mattina.`; box.hidden=false; return; }
+  box.hidden=true;
+}
 function mostraConsigli(w){
   const rnd=seme(oggi);
   const dip=consigliMeteo(w);
@@ -380,7 +478,7 @@ async function caricaMeteo(){
     const r=await fetch(url); if(!r.ok) throw new Error(r.status);
     const w=await r.json();
     try{ localStorage.setItem("orto-meteo",JSON.stringify({t:Date.now(),w})); }catch(e){}
-    mostraMeteo(w); mostraCalendario(w); mostraConsigli(w);
+    METEO_ULTIMO=w; mostraMeteo(w); mostraCalendario(w); mostraConsigli(w); mostraAllarme(w);
   }catch(err){
     let cache=null; try{ cache=JSON.parse(localStorage.getItem("orto-meteo")||"null"); }catch(e){}
     if(cache && Date.now()-cache.t<12*3600*1000){ mostraMeteo(cache.w); $("#meteo").insertAdjacentHTML("beforeend",`<div class="stato">Senza connessione: dati di qualche ora fa.</div>`); mostraCalendario(cache.w); mostraConsigli(cache.w); }
@@ -388,6 +486,7 @@ async function caricaMeteo(){
   }
 }
 mostraCalendario(null); mostraConsigli(null);
+mostraSettimana();
 if(COMUNE) caricaMeteo();
 
 /* ---- avvio ---- */
@@ -428,14 +527,18 @@ vai(iniziale>=0?iniziale:0, 1);
 /* ---- scelta del comune ---- */
 (function(){
   const mod=$("#modale-comune"), inp=$("#comune-input"), box=$("#comune-risultati"); if(!mod||!inp) return;
-  let LISTA=null, scelto=null, terra=(COMUNE&&COMUNE.terra)||null;
+  let LISTA=null, scelto=null, terra=(COMUNE&&COMUNE.terra)||null, esp=(COMUNE&&COMUNE.esp)||null, amb=(COMUNE&&COMUNE.amb)||null;
+  function segna(gruppo, attr, val){ document.querySelectorAll(`#${gruppo} button`).forEach(x=>x.setAttribute("aria-pressed", x.dataset[attr]===val?"true":"false")); }
+  segna("terra-bottoni","terra",terra); segna("esp-bottoni","esp",esp); segna("amb-bottoni","amb",amb);
   async function caricaLista(){
     if(LISTA) return true;
     box.hidden=false; box.innerHTML=`<div class="cerca-vuoto">Scarico l'elenco dei comuni…</div>`;
     try{ LISTA=await (await fetch("dati/comuni.json")).json(); box.hidden=true; box.innerHTML=""; return true; }
     catch(e){ box.innerHTML=`<div class="cerca-vuoto">Non riesco a scaricare l'elenco: controlla la connessione, chiudi e riprova.</div>`; return false; }
   }
-  $("#btn-comune").onclick=()=>{ mod.hidden=false; document.body.style.overflow="hidden"; if(COMUNE) inp.value=COMUNE.n; caricaLista(); };
+  $("#btn-comune").onclick=()=>{ mod.hidden=false; document.body.style.overflow="hidden";
+    if(COMUNE){ inp.value=COMUNE.n; scelto={...COMUNE}; $("#comune-riep").innerHTML=`<b>${esc(COMUNE.n)} (${esc(COMUNE.pr)})</b> — ${fraseClima(COMUNE)}`; $("#comune-scelto").hidden=false; }
+    caricaLista(); };
   const obbligo=!COMUNE;
   if(obbligo){ $("#comune-chiudi").hidden=true; mod.hidden=false; document.body.style.overflow="hidden"; caricaLista(); }
   function chiudi(){ mod.hidden=true; document.body.style.overflow=""; }
@@ -459,15 +562,17 @@ vai(iniziale>=0?iniziale:0, 1);
     $("#comune-riep").innerHTML=`<b>${esc(r[0])} (${esc(r[1])})</b> — ${fraseClima(scelto)}`;
     $("#comune-scelto").hidden=false;
   });
-  $("#terra-bottoni").addEventListener("click",e=>{
-    const b=e.target.closest("[data-terra]"); if(!b) return;
-    terra=b.dataset.terra;
-    document.querySelectorAll("#terra-bottoni button").forEach(x=>x.setAttribute("aria-pressed",x===b?"true":"false"));
-  });
+  $("#terra-bottoni").addEventListener("click",e=>{ const b=e.target.closest("[data-terra]"); if(!b) return; terra=b.dataset.terra; segna("terra-bottoni","terra",terra); });
+  $("#esp-bottoni").addEventListener("click",e=>{ const b=e.target.closest("[data-esp]"); if(!b) return; esp=b.dataset.esp; segna("esp-bottoni","esp",esp);
+    if(scelto){ scelto.esp=esp; $("#comune-riep").innerHTML=`<b>${esc(scelto.n)} (${esc(scelto.pr)})</b> — ${fraseClima(scelto)}`; } });
+  $("#amb-bottoni").addEventListener("click",e=>{ const b=e.target.closest("[data-amb]"); if(!b) return; amb=b.dataset.amb; segna("amb-bottoni","amb",amb); });
   $("#comune-salva").onclick=()=>{
     if(!scelto){ chiudi(); return; }
-    scelto.terra=terra;
+    scelto.terra=terra; scelto.esp=esp||"pianura"; scelto.amb=amb||"campo";
     try{ localStorage.setItem("orto-comune",JSON.stringify(scelto)); }catch(e){}
     location.reload();
   };
 })();
+
+/* ---- funziona anche senza campo ---- */
+if("serviceWorker" in navigator){ window.addEventListener("load",()=>{ navigator.serviceWorker.register("sw.js").catch(()=>{}); }); }

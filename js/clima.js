@@ -23,13 +23,26 @@ function giornoInData(g){
   const parte = g<=10 ? "inizio" : g<=20 ? "metà" : "fine";
   return parte+" "+mesi[m];
 }
-function dateGelate(gg){
+/* esposizione dell'orto: sposta le date delle gelate (in giorni) rispetto al dato del comune */
+const ESPOSIZIONI = {
+  fondovalle:{nome:"in un fondovalle o vicino a un corso d'acqua", ultima:+10, prima:-10, tip:"l'aria fredda di notte scende e si ferma da te: le gelate arrivano più tardi in primavera e prima in autunno di quanto dica il comune. Tieni un telo sempre a portata di mano."},
+  pendio:{nome:"su un pendio o in collina aperta", ultima:-5, prima:+5, tip:"l'aria fredda scivola via verso il basso: da te le gelate sono più rare e più brevi che nel resto del comune."},
+  pianura:{nome:"in pianura aperta", ultima:0, prima:0, tip:"nessuna correzione: valgono le date del comune. Il vento è il tuo nemico più del gelo: frangivento e tutori robusti."},
+  costa:{nome:"vicino al mare o in città", ultima:-8, prima:+8, tip:"mare e muri accumulano calore: gelate più rare, ma d'estate il caldo è più duro e l'acqua conta di più."}
+};
+const AMBIENTI = {
+  campo:{nome:"in campo aperto"},
+  vasi:{nome:"in vasi, cassoni o balcone"},
+  idroponica:{nome:"in idroponica"}
+};
+function dateGelate(gg, esp){
+  const e=ESPOSIZIONI[esp]||ESPOSIZIONI.pianura;
   if(gg<900) return {ultima:"quasi mai", prima:"quasi mai", assenti:true};
   const R=GELATE_RIF.filter(r=>r[1]!==null);
   let a=R[0], b=R[R.length-1];
   for(let i=0;i<R.length-1;i++){ if(gg>=R[i][0] && gg<=R[i+1][0]){ a=R[i]; b=R[i+1]; break; } }
   const t=Math.max(0,Math.min(1,(gg-a[0])/(b[0]-a[0])));
-  const u=Math.round(a[1]+(b[1]-a[1])*t), p=Math.round(a[2]+(b[2]-a[2])*t);
+  const u=Math.round(a[1]+(b[1]-a[1])*t)+e.ultima, p=Math.round(a[2]+(b[2]-a[2])*t)+e.prima;
   return {ultima:giornoInData(u), prima:giornoInData(p), assenti:false, giorniSenzaGelo:p-u};
 }
 
@@ -44,7 +57,7 @@ function fasciaClima(gg){
 
 /* frase sul clima del comune: assoluta, parla solo del posto dell'utente */
 function fraseClima(c){
-  const f=fasciaClima(c.gg), g=dateGelate(c.gg);
+  const f=fasciaClima(c.gg), g=dateGelate(c.gg, c.esp);
   const gel = g.assenti ? "gelate rare o assenti: l'orto non si ferma mai davvero"
     : `ultime gelate di solito verso ${g.ultima}, prime verso ${g.prima} (${Math.round(g.giorniSenzaGelo/30)} mesi senza gelo)`;
   const coda={
@@ -73,7 +86,7 @@ function meseBasePer(c, meseId){
 
 /* nelle zone dove il gelo praticamente non esiste, i testi non devono parlarne */
 function addolcisci(c, testo){
-  if(!dateGelate(c.gg).assenti) return testo;
+  if(!dateGelate(c.gg, c.esp).assenti) return testo;
   return testo
     .replace(/prima della prima gelata/gi,"prima che arrivi il freddo")
     .replace(/prima del gelo/gi,"prima del freddo")
@@ -195,4 +208,19 @@ const PIANTE_EXTRA = {
 function pianteExtraPer(c){
   const f=fasciaClima(c.gg).id;
   return PIANTE_EXTRA[f]||null;
+}
+
+/* Colture adatte all'ambiente scelto. In vaso si escludono le colture da spazio; in idroponica restano solo quelle che ci rendono davvero. */
+const NO_VASI = /zucca\b|zucche|mais|granturco|girasol|asparag|cardo|topinambur|azzeruolo|giuggiol|nespol|sorbo|corniol|fich|melogran|kiwi|vite\b|noc[ei]|carciof|segale|grano|farro|orzo|sovescio|favino|angur|melon|cece|lenticch|cicerchia|quinoa|amaranto|luppolo|liquirizia|canapa|frutta|alber|olivo|castagn|tronco|funghi su tronco|lupino|yacon|batata|cavolfior|cavolo nero|verza|rabarbaro|arachide|sesamo|fico d'india|cappero|barbabietola da zucchero/i;
+const SI_IDRO = /lattug|insalat|rucola|spinac|valerianella|songino|basilico|prezzemolo|erba cipollina|menta|coriandol|aromat|fragol|pomodor|peperon|cetriol|bietol|erbette|ravanell|cavolo cinese|pak choi|mizuna|tatsoi|komatsuna|senape|sedano|fagiolin|melanzan|peperoncin|baby leaf|germogli|micro/i;
+function adattaAmbiente(nome, amb){
+  if(amb==="vasi") return !NO_VASI.test(nome);
+  if(amb==="idroponica") return SI_IDRO.test(nome);
+  return true;
+}
+/* riga sull'ambiente da mostrare sotto il testo del mese */
+function fraseAmbiente(c){
+  if(!c || !c.amb || c.amb==="campo") return "";
+  if(c.amb==="vasi") return "Coltivi in vaso: qui vedi solo le colture che rendono in un contenitore. Vasi da almeno 10 litri per le insalate, 30–40 per pomodori e peperoni, acqua più spesso e meno per volta, e un concime liquido ogni due settimane in stagione.";
+  return "Coltivi in idroponica: qui vedi solo le colture che rendono senza terra. Le date del gelo contano meno (indoor quasi niente), contano luce, temperatura dell'acqua (18–24 °C), pH 5,5–6,5 ed EC giusta per la coltura. La guida completa è in Guide → Coltivare.";
 }

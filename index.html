@@ -44,19 +44,32 @@
 <div class="modale" id="modale-comune" hidden>
   <div class="modale-box">
     <h2>Dove sta il tuo orto?</h2>
-    <p class="muto">Scrivi il comune: calendario, meteo e consigli si adattano al suo clima. Resta salvato su questo dispositivo.</p>
+    <p class="muto">Tre risposte e l'app parla del tuo posto: calendario, meteo, colture e consigli. Resta salvato su questo dispositivo e lo cambi quando vuoi.</p>
     <div class="cerca" style="padding:0;margin:.6rem 0">
-      <input type="search" id="comune-input" placeholder="Comune…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Cerca il tuo comune">
-      <div class="cerca-risultati" id="comune-risultati" style="left:0;right:0" hidden></div>
+      <input type="search" id="comune-input" placeholder="Comune…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Cerca il tuo comune" enterkeyhint="search">
+      <div class="cerca-risultati" id="comune-risultati" hidden></div>
     </div>
     <div id="comune-scelto" hidden>
       <p id="comune-riep"></p>
-      <p class="muto" style="margin-top:.6rem"><b>Che terra hai nell'orto?</b> (se non lo sai: bagnala e strizzala in mano — se fa un salsicciotto compatto è argillosa, se si sbriciola è sabbiosa)</p>
-      <div class="mp-bottoni" id="terra-bottoni" style="margin:.6rem 0">
+      <p class="passo"><b>Com'è messo l'orto?</b> <span class="muto">Il gelo dipende più da questo che dal comune.</span></p>
+      <div class="mp-bottoni scelte" id="esp-bottoni">
+        <button data-esp="pianura">Pianura aperta</button>
+        <button data-esp="pendio">Pendio o collina</button>
+        <button data-esp="fondovalle">Fondovalle o vicino all'acqua</button>
+        <button data-esp="costa">Vicino al mare o in città</button>
+      </div>
+      <p class="passo"><b>Dove coltivi?</b></p>
+      <div class="mp-bottoni scelte" id="amb-bottoni">
+        <button data-amb="campo">Campo aperto</button>
+        <button data-amb="vasi">Vasi, cassoni, balcone</button>
+        <button data-amb="idroponica">Idroponica</button>
+      </div>
+      <p class="passo"><b>Che terra hai?</b> <span class="muto">Bagnala e strizzala: se fa un salsicciotto è argillosa, se si sbriciola è sabbiosa. In idroponica salta pure.</span></p>
+      <div class="mp-bottoni scelte" id="terra-bottoni">
         <button data-terra="argillosa">Argillosa<br><small>pesante, fa zolle</small></button>
         <button data-terra="sabbiosa">Sabbiosa<br><small>sciolta, drena subito</small></button>
         <button data-terra="media">Media<br><small>una via di mezzo</small></button>
-        <button data-terra="calcarea">Calcarea<br><small>chiara, con sassi bianchi</small></button>
+        <button data-terra="calcarea">Calcarea<br><small>chiara, sassi bianchi</small></button>
       </div>
       <div class="modale-azioni"><button id="comune-salva" class="primario">Adatta</button></div>
     </div>
@@ -66,7 +79,7 @@
 
 <div class="modale" id="modale-pianta" hidden>
   <div class="modale-box modale-pianta">
-    <div class="mp-testa"><h2 id="mp-titolo"></h2><button class="chiudi-x" id="mp-chiudi" aria-label="Chiudi">×</button></div>
+    <div class="mp-testa"><h2 id="mp-titolo"></h2><button class="mia" id="mp-mia" aria-pressed="false" hidden>La coltivi? Segnala</button><button class="chiudi-x" id="mp-chiudi" aria-label="Chiudi">×</button></div>
     <div class="mp-foto" id="mp-foto"></div>
     <div class="mp-sub" id="mp-sub" hidden></div>
     <div class="mp-bottoni" id="mp-bottoni">
@@ -81,7 +94,8 @@
   </div>
 </div>
 
-<nav class="schede" role="tablist" aria-label="Sezioni" id="tablist"></nav>
+<div id="allarme" class="allarme" hidden></div>
+<nav class="schede" role="tablist" aria-label="Mesi" id="tablist"></nav>
 <main class="finestra" id="finestra"></main>
 
 <template id="tpl-costruire">
@@ -349,6 +363,13 @@
 
 <p class="crediti">Le fotografie di piante e piatti vengono da Wikimedia Commons, con licenze libere: <a href="crediti.html">elenco degli autori</a>.</p>
 
+<nav class="barra-bassa" id="barra-bassa" aria-label="Sezioni principali">
+  <button data-nav="oggi"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1"/></svg><span>Oggi</span></button>
+  <button data-nav="mesi"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Mesi</span></button>
+  <button data-nav="piante"><svg viewBox="0 0 24 24"><path d="M12 22V12M12 12c0-5 3-8 8-8-1 5-4 8-8 8ZM12 15c0-4-3-7-7-7 1 4 3 7 7 7Z"/></svg><span>Piante</span></button>
+  <button data-nav="ricette"><svg viewBox="0 0 24 24"><path d="M4 3v8a3 3 0 0 0 3 3v7M7 3v8M10 3v8M17 3c-2 0-3 3-3 6h3v12"/></svg><span>Cucina</span></button>
+  <button data-nav="guide"><svg viewBox="0 0 24 24"><path d="M4 4h6a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4ZM20 4h-6a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h7Z"/></svg><span>Guide</span></button>
+</nav>
 <script src="js/mesi.js"></script>
 <script src="js/ricette.js"></script>
 <script src="js/schede.js"></script>
@@ -356,6 +377,7 @@
 <script src="js/semina.js"></script>
 <script src="js/consigli.js"></script>
 <script src="js/allevare.js"></script>
+<script src="js/coltivare.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
