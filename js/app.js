@@ -3,7 +3,7 @@ const NOMI_MESI = MESI.map(m=>m.id);
 RICETTE.sort((a,b)=>NOMI_MESI.indexOf(a.mese)-NOMI_MESI.indexOf(b.mese));
 const $ = s=>document.querySelector(s);
 const esc = s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;");
-const tipoLabel = {semina:"semina diretta",semenzaio:"semenzaio",trapianto:"trapianto",impianto:"impianto",tunnel:"sotto tunnel"};
+const tipoLabel = {semina:"semina diretta",semenzaio:"semenzaio",trapianto:"trapianto",impianto:"impianto",tunnel:"sotto tunnel",riposo:"niente da fare"};
 const oggi=new Date();
 const meseCorrente=MESI[oggi.getMonth()];
 const COMUNE = (typeof comuneSalvato==="function") ? comuneSalvato() : null;
@@ -70,8 +70,8 @@ function pannelloMese(m){
   <div class="due">
     <div><h2>Cosa piantare <span>${piante.length} colture · tocca il nome per la scheda, la stella per metterla nel tuo orto</span></h2>
       <div class="legenda"><span><i class="tag semenzaio"></i>in semenzaio: si semina in vasetto, al coperto</span><span><i class="tag semina"></i>semina diretta: il seme va in terra nell'orto</span><span><i class="tag trapianto"></i>trapianto: la piantina passa dal vasetto all'orto</span><span><i class="tag impianto"></i>impianto: si mettono a dimora bulbi, tuberi, radici o piante</span><span><i class="tag tunnel"></i>sotto tunnel: coltura protetta da telo o serra fredda</span></div>
-      <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button><button class="filtro filtro-mie" data-f="mie" aria-pressed="false">Le mie</button></div>
-      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="${eMia(p[0])?1:0}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><button class="stella" data-stella="${esc(p[0])}" aria-pressed="${eMia(p[0])?"true":"false"}" aria-label="Metti ${esc(p[0])} nel mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul>
+      <div class="blocco-piante"><div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button><button class="filtro filtro-mie" data-f="mie" aria-pressed="false">Le mie</button></div>
+      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="${eMia(p[0])?1:0}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><button class="stella" data-stella="${esc(p[0])}" aria-pressed="${eMia(p[0])?"true":"false"}" aria-label="Metti ${esc(p[0])} nel mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul></div>
     </div>
     <div>
       <div class="raccolta"><b>Cosa si raccoglie</b>${ad(esc(src.raccolta))}</div>
@@ -611,11 +611,21 @@ function mostraOrtoHome(){
   const box=$("#orto-home"); if(!box) return;
   const chiaviMie=[...MIE];
   const nomeDi=k=>k.startsWith("n:")?k.slice(2):(SCHEDE[k]?SCHEDE[k].nome:k);
+  const mId=meseCorrente.id;
+  const src = COMUNE ? (MESI.find(x=>x.id===meseBasePer(COMUNE,mId))||meseCorrente) : meseCorrente;
+  const voci=[...src.piante,...((COMUNE&&meseCorrente.extra)||[])];
+  const ad=t=>COMUNE?addolcisci(COMUNE,t):t;
+  const riga=k=>{
+    const nome=nomeDi(k), v=voci.find(p=>chiaveMia(p[0])===k) || voci.find(p=>eMia(p[0]) && chiaveMia(p[0])===k);
+    const foto=k.startsWith("n:")?(chiaviPer(nome)[0]||null):k;
+    return `<li data-pianta="${esc(nome)}" data-mia="1">${foto?imgTag(fotoPianta(foto),nome,"mini"):'<span class="mini manca"></span>'}<b>${esc(nome)}</b>${v?`<span class="tag ${v[1]}">${tipoLabel[v[1]]}</span><span class="come">${ad(esc(v[2]))}</span>`:`<span class="tag riposo">niente da fare</span><span class="come">Questo mese per lei è tempo di raccolta o di attesa: la scheda ti dice il resto.</span>`}<button class="stella" data-stella="${esc(nome)}" aria-pressed="true" aria-label="Togli ${esc(nome)} dal mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button></li>`;
+  };
   box.innerHTML=`<div class="orto-box">
-    <div class="orto-testa"><h2>Il mio orto <span>${chiaviMie.length?`${chiaviMie.length===1?"una pianta":chiaviMie.length+" piante"}`:"vuoto"}</span></h2></div>
+    <div class="orto-testa"><h2>Il mio orto <span>${chiaviMie.length?`${chiaviMie.length===1?"una pianta":chiaviMie.length+" piante"} · cosa fare a ${meseCorrente.nome.toLowerCase()}`:"vuoto"}</span></h2></div>
     <div class="cerca-orto"><input type="search" id="orto-cerca" placeholder="Aggiungi una pianta…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Cerca una pianta da aggiungere al mio orto"><div class="orto-risultati" id="orto-risultati" hidden></div></div>
-    ${chiaviMie.length?`<div class="orto-chip">${chiaviMie.map(k=>`<button class="chip-pianta" data-orto-apri="${esc(nomeDi(k))}"><span>${esc(nomeDi(k))}</span><i data-orto-togli="${esc(k)}" aria-label="Togli ${esc(nomeDi(k))}">×</i></button>`).join("")}</div>`
-    :`<p class="orto-vuoto">Scrivi qui il nome di quello che coltivi e tocca la stella, oppure usa la stella accanto agli ortaggi nei <b>Mesi</b>. Da quel momento l'app ti dice cosa fare per le tue piante, settimana per settimana.</p>`}
+    ${chiaviMie.length?`<ul class="piante orto-lista">${chiaviMie.map(riga).join("")}</ul>
+    <p class="orto-nota">Con le tue piante dentro: qui vedi cosa fare per ciascuna mese per mese; in <b>Mesi</b> sono evidenziate e le filtri con "Le mie"; in <b>Questa settimana</b> vengono per prime; in <b>Piante</b> stanno in cima; in <b>Cucina</b> le ricette con quello che raccogli.</p>`
+    :`<p class="orto-vuoto">Scrivi qui il nome di quello che coltivi e tocca la stella, oppure usa la stella accanto agli ortaggi nei <b>Mesi</b>. Da quel momento l'app ti dice cosa fare per le tue piante, mese per mese e settimana per settimana.</p>`}
   </div>`;
 }
 mostraOrtoHome();
@@ -641,4 +651,20 @@ mostraOrtoHome();
   document.body.appendChild(b);
   b.onclick=()=>{ try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){ window.scrollTo(0,0); } };
   window.addEventListener("scroll",()=>{ b.hidden = window.scrollY < 700; },{passive:true});
+})();
+
+/* ---- tema: giorno, notte, o automatico ---- */
+(function(){
+  const b=$("#btn-tema"); if(!b) return;
+  const meta=document.querySelector('meta[name="theme-color"]');
+  function applica(t){
+    if(t) document.documentElement.dataset.theme=t; else delete document.documentElement.dataset.theme;
+    const scuro = t==="dark" || (!t && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    b.innerHTML = scuro ? '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"/></svg>' : '<svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z"/></svg>';
+    b.setAttribute("aria-label", scuro ? "Passa al tema chiaro" : "Passa al tema scuro");
+    if(meta) meta.content = scuro ? "#0E1311" : "#F5F6F3";
+  }
+  let t=null; try{ t=localStorage.getItem("orto-tema")||null; }catch(e){}
+  applica(t);
+  b.onclick=()=>{ const scuro=document.documentElement.dataset.theme==="dark" || (!document.documentElement.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches); t=scuro?"light":"dark"; try{ localStorage.setItem("orto-tema",t); }catch(e){} applica(t); };
 })();

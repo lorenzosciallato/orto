@@ -613,3 +613,37 @@ h2 span{font-family:Manrope,sans-serif;font-weight:500;color:var(--muto);font-si
 .torna-su svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .torna-su[hidden]{display:none}
 .calendario{display:none}
+
+/* ===================== mappa e meteo affiancati ===================== */
+.mappa-meteo{display:grid;grid-template-columns:1.05fr 1fr;align-items:stretch}
+.mappa-meteo .mappa{padding:.8rem .2rem .8rem .8rem}
+.mappa-meteo .meteo{position:static;width:auto;background:none;backdrop-filter:none;border:0;border-left:1px solid var(--riga);border-radius:0;box-shadow:none;padding:1rem 1.1rem;display:flex;flex-direction:column;justify-content:center}
+.meteo .temp{font-size:2.8rem}
+.meteo .dett{gap:.5rem .8rem;margin-top:.9rem;font-size:.86rem}
+.meteo .sette{margin-top:1rem}
+@media (max-width:760px){
+  .mappa-meteo{grid-template-columns:1fr}
+  .mappa-meteo .meteo{border-left:0;border-top:1px solid var(--riga);margin:0;padding:.9rem 1rem}
+  .mappa-meteo .mappa{padding:.6rem}
+}
+/* ===================== Il mio orto in Home: righe come nei mesi ===================== */
+.orto-lista{margin:.9rem 0 .2rem}
+.orto-lista li{grid-template-columns:auto 1fr auto auto;grid-template-areas:"foto nome tag stella" "foto come come come"}
+.orto-lista li[data-mia="1"]{background:none;margin:0;padding-left:0;padding-right:0;border-radius:0}
+.tag.riposo{background:color-mix(in srgb,var(--muto) 16%,transparent);color:var(--muto)}
+.orto-nota{margin:.9rem 0 0;font-size:.86rem;color:var(--muto);line-height:1.5;padding-top:.8rem;border-top:1px dashed var(--riga)}
+@media (max-width:640px){.orto-lista li{grid-template-columns:auto 1fr auto;grid-template-areas:"foto nome stella" "foto tag tag" "foto come come"}}
+/* ===================== mesi: accento verde su Cosa piantare ===================== */
+.blocco-piante{border-left:4px solid var(--verde);background:color-mix(in srgb,var(--verde) 6%,var(--scheda));border:1px solid color-mix(in srgb,var(--verde) 30%,var(--riga));border-left-width:4px;border-left-color:var(--verde);border-radius:var(--raggio);padding:.5rem 1rem .2rem;margin-top:.4rem}
+.blocco-piante .filtri{margin:.4rem 0 .2rem}
+.blocco-piante .piante li:last-child{border-bottom:0}
+/* ===================== tema giorno / notte ===================== */
+.tema{width:2.5rem;height:2.5rem;border-radius:999px;border:1.5px solid var(--riga);background:var(--scheda);color:var(--inchiostro);display:grid;place-items:center;padding:0;flex:none}
+.tema svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* notte pensata, non invertita: sfondi caldi, foto leggermente attenuate, accenti più morbidi */
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) img{filter:brightness(.9) saturate(.92)} :root:not([data-theme="light"]) .mappa .italia{opacity:.75} }
+:root[data-theme="dark"] img{filter:brightness(.9) saturate(.92)}
+:root[data-theme="dark"] .mappa .italia{opacity:.75}
+:root[data-theme="dark"] .raccolta{background:color-mix(in srgb,var(--zucca) 14%,var(--scheda))}
+:root[data-theme="light"] img{filter:none}
+:root[data-theme="light"] .mappa .italia{opacity:.9}
