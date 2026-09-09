@@ -5,26 +5,83 @@ function comuneSalvato(){
   try{ return JSON.parse(localStorage.getItem("orto-comune")||"null"); }catch(e){ return null; }
 }
 
-/* fascia climatica dai gradi giorno */
+/* Gradi giorno → data tipica dell'ultima e della prima gelata, in continuo (non a scatti).
+   Punti di riferimento (gg → giorno dell'anno), interpolati linearmente tra loro. */
+const GELATE_RIF = [
+  [600,  null, null],        // costa calda: gelate praticamente assenti
+  [900,   60, 350],          // 1 marzo / 16 dicembre
+  [1400,  85, 335],          // 26 marzo / 1 dicembre
+  [2100, 105, 315],          // 15 aprile / 11 novembre
+  [3000, 125, 295],          // 5 maggio / 22 ottobre
+  [4000, 150, 270],          // 30 maggio / 27 settembre
+  [5200, 170, 250]           // 19 giugno / 7 settembre
+];
+function giornoInData(g){
+  const mesi=["gennaio","febbraio","marzo","aprile","maggio","giugno","luglio","agosto","settembre","ottobre","novembre","dicembre"];
+  const gpm=[31,28,31,30,31,30,31,31,30,31,30,31];
+  let m=0; while(g>gpm[m]){ g-=gpm[m]; m++; }
+  const parte = g<=10 ? "inizio" : g<=20 ? "metà" : "fine";
+  return parte+" "+mesi[m];
+}
+function dateGelate(gg){
+  if(gg<900) return {ultima:"quasi mai", prima:"quasi mai", assenti:true};
+  const R=GELATE_RIF.filter(r=>r[1]!==null);
+  let a=R[0], b=R[R.length-1];
+  for(let i=0;i<R.length-1;i++){ if(gg>=R[i][0] && gg<=R[i+1][0]){ a=R[i]; b=R[i+1]; break; } }
+  const t=Math.max(0,Math.min(1,(gg-a[0])/(b[0]-a[0])));
+  const u=Math.round(a[1]+(b[1]-a[1])*t), p=Math.round(a[2]+(b[2]-a[2])*t);
+  return {ultima:giornoInData(u), prima:giornoInData(p), assenti:false, giorniSenzaGelo:p-u};
+}
+
+/* fascia climatica (per i testi) dai gradi giorno; le date invece sono continue */
 function fasciaClima(gg){
-  if(gg<900)  return {id:"caldissima", nome:"clima mediterraneo caldo", ultima:"quasi mai", prima:"quasi mai"};
-  if(gg<1400) return {id:"calda", nome:"clima mediterraneo", ultima:"metà marzo", prima:"inizio dicembre"};
-  if(gg<2100) return {id:"mite", nome:"clima mite di pianura e prima collina", ultima:"inizio aprile", prima:"metà novembre"};
-  if(gg<3000) return {id:"continentale", nome:"clima continentale, di collina e pianura fredda", ultima:"fine aprile", prima:"fine ottobre"};
-  return {id:"montagna", nome:"clima di montagna", ultima:"metà–fine maggio", prima:"inizio ottobre"};
+  if(gg<900)  return {id:"caldissima", nome:"clima mediterraneo caldo"};
+  if(gg<1400) return {id:"calda", nome:"clima mediterraneo"};
+  if(gg<2100) return {id:"mite", nome:"clima mite di pianura e prima collina"};
+  if(gg<3000) return {id:"continentale", nome:"clima continentale, di collina e pianura fredda"};
+  return {id:"montagna", nome:"clima di montagna"};
 }
 
 /* frase sul clima del comune: assoluta, parla solo del posto dell'utente */
 function fraseClima(c){
-  const f=fasciaClima(c.gg);
-  const frasi={
-    caldissima:`gelate rare o assenti: l'orto non si ferma mai davvero. I trapianti estivi partono già da metà marzo e l'orto invernale vive all'aperto.`,
-    calda:`ultime gelate verso ${f.ultima}, prime verso ${f.prima}. Trapianti estivi da inizio aprile e un autunno lungo che ripaga le semine tardive.`,
-    mite:`ultime gelate verso ${f.ultima}, prime verso ${f.prima}. Trapianti estivi da fine aprile; quasi nove mesi di orto pieno.`,
-    continentale:`ultime gelate fino a ${f.ultima}, prime già a ${f.prima}. Trapianti estivi da metà maggio; l'inverno si lavora in semenzaio e sotto protezione.`,
-    montagna:`gelate possibili fino a ${f.ultima} e di nuovo da ${f.prima}: stagione corta e intensa. Trapianti da fine maggio–giugno e varietà precoci.`
+  const f=fasciaClima(c.gg), g=dateGelate(c.gg);
+  const gel = g.assenti ? "gelate rare o assenti: l'orto non si ferma mai davvero"
+    : `ultime gelate di solito verso ${g.ultima}, prime verso ${g.prima} (${Math.round(g.giorniSenzaGelo/30)} mesi senza gelo)`;
+  const coda={
+    caldissima:"I trapianti estivi partono già da metà marzo e l'orto invernale vive all'aperto.",
+    calda:"Trapianti estivi tre settimane dopo l'ultima gelata; un autunno lungo ripaga le semine tardive.",
+    mite:"Trapianti estivi tre settimane dopo l'ultima gelata; quasi nove mesi di orto pieno.",
+    continentale:"Trapianti estivi tre settimane dopo l'ultima gelata; l'inverno si lavora in semenzaio e sotto protezione.",
+    montagna:"Stagione corta e intensa: trapianti a giugno, varietà precoci, protezioni pronte da settembre."
   };
-  return `${f.nome[0].toUpperCase()+f.nome.slice(1)} (${c.alt} m, zona ${c.z}): ${frasi[f.id]}`;
+  return `${f.nome[0].toUpperCase()+f.nome.slice(1)}, ${c.alt} m, zona ${c.z}: ${gel}. ${coda[f.id]}`;
+}
+
+/* Quale mese del calendario base (scritto per il clima continentale) alimenta ogni mese
+   nelle altre fasce: nelle zone calde la primavera arriva prima e l'autunno dopo, in montagna il contrario. */
+const MAPPA_MESE = {
+  caldissima:{gennaio:"febbraio",febbraio:"marzo",marzo:"maggio",aprile:"giugno",maggio:"luglio",giugno:"luglio",luglio:"luglio",agosto:"agosto",settembre:"agosto",ottobre:"settembre",novembre:"ottobre",dicembre:"novembre"},
+  calda:{gennaio:"gennaio",febbraio:"marzo",marzo:"aprile",aprile:"maggio",maggio:"giugno",giugno:"luglio",luglio:"luglio",agosto:"agosto",settembre:"settembre",ottobre:"settembre",novembre:"ottobre",dicembre:"novembre"},
+  mite:{},
+  continentale:{},
+  montagna:{gennaio:"gennaio",febbraio:"febbraio",marzo:"febbraio",aprile:"marzo",maggio:"aprile",giugno:"maggio",luglio:"giugno",agosto:"agosto",settembre:"ottobre",ottobre:"novembre",novembre:"dicembre",dicembre:"dicembre"}
+};
+function meseBasePer(c, meseId){
+  const f=fasciaClima(c.gg).id;
+  return (MAPPA_MESE[f]&&MAPPA_MESE[f][meseId])||meseId;
+}
+
+/* nelle zone dove il gelo praticamente non esiste, i testi non devono parlarne */
+function addolcisci(c, testo){
+  if(!dateGelate(c.gg).assenti) return testo;
+  return testo
+    .replace(/prima della prima gelata/gi,"prima che arrivi il freddo")
+    .replace(/prima del gelo/gi,"prima del freddo")
+    .replace(/dopo il gelo/gi,"con il freddo")
+    .replace(/(le |la )?gelat[ae] tardiv[ae]/gi,"le notti fredde")
+    .replace(/gelate/gi,"notti fredde")
+    .replace(/gelata/gi,"notte fredda")
+    .replace(/\bgelo\b/gi,"freddo");
 }
 
 /* il mese visto dal clima dell'utente: una riga per ognuna delle 5 fasce × 12 mesi */

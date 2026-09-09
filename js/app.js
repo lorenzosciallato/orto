@@ -13,7 +13,7 @@ const slug = s=>norm(s).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"").slice(0,
 /* foto: piante in img/piante/<chiave>.jpg, ricette in img/ricette/<nome-in-minuscolo>.jpg; se manca, il tag si nasconde da solo */
 const fotoPianta = k=>`img/piante/${k}.jpg`;
 const fotoRicetta = r=>`img/ricette/${slug(r.nome)}.jpg`;
-const imgTag = (src,alt,cls)=>`<img class="${cls}" src="${src}" alt="${esc(alt)}" loading="lazy" onerror="this.classList.add('manca')">`;
+const imgTag = (src,alt,cls)=>`<img class="${cls}" src="${src}" alt="${esc(alt)}" loading="lazy" onerror="this.classList.add('manca');this.style.visibility='hidden'">`;
 
 let stato = {};
 try{ stato = JSON.parse(localStorage.getItem("orto-pb-anno")||"{}"); }catch(e){ stato={}; }
@@ -32,22 +32,29 @@ function ricettePer(k){
 function gzLink(nome){ return "https://www.giallozafferano.it/ricerca-ricette/"+encodeURIComponent(nome.replace(/[()]/g,"").trim().replace(/\s+/g,"+"))+"/"; }
 
 /* ---- pannelli ---- */
-const tabs = [{id:"oggi",label:"Oggi"},...MESI.map(m=>({id:m.id,label:m.nome})),{id:"ricette",label:"Ricette",cls:"speciale"},{id:"costruire",label:"Costruire",cls:"speciale"},{id:"consigli",label:"Consigli",cls:"speciale"}];
+const tabs = [{id:"oggi",label:"Oggi"},...MESI.map(m=>({id:m.id,label:m.nome})),{id:"ricette",label:"Ricette",cls:"speciale"},{id:"costruire",label:"Costruire",cls:"speciale"},{id:"allevare",label:"Allevare",cls:"speciale"},{id:"consigli",label:"Consigli",cls:"speciale"}];
 
 function pannelloMese(m){
   const rs = RICETTE.filter(r=>r.mese===m.id);
-  const nIns = m.piante.filter(p=>p[3]).length;
+  /* nelle fasce calde e in montagna il contenuto arriva dal mese del calendario base che corrisponde alla stagione reale del posto */
+  const src = COMUNE ? (MESI.find(x=>x.id===meseBasePer(COMUNE,m.id))||m) : m;
+  const extra = (COMUNE && m.extra) ? m.extra : [];
+  const piante = [...src.piante, ...extra.filter(p=>!src.piante.some(x=>x[0]===p[0]))];
+  const nIns = piante.filter(p=>p[3]).length;
+  const testo = COMUNE ? meseClima(COMUNE,m.id) : esc(m.sotto);
+  const ad = t => COMUNE ? addolcisci(COMUNE,t) : t;
   return `<section class="pannello" id="p-${m.id}" role="tabpanel" aria-labelledby="t-${m.id}">
-  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p>${esc(m.sotto)}</p><div class="clima">${COMUNE?meseClima(COMUNE,m.id):esc(m.clima)}</div></div></div>
+  <div class="mese-testa"><div class="mese-nome">${m.nome}</div><div><p class="mese-sotto">${testo}</p></div></div>
   <div class="due">
-    <div><h2>Cosa piantare <span>${m.piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
+    <div><h2>Cosa piantare <span>${piante.length} colture, ${nIns} insolite · tocca una pianta per la scheda</span></h2>
+      <div class="legenda"><span><i class="tag semenzaio"></i>in semenzaio: si semina in vasetto, al coperto</span><span><i class="tag semina"></i>semina diretta: il seme va in terra nell'orto</span><span><i class="tag trapianto"></i>trapianto: la piantina passa dal vasetto all'orto</span><span><i class="tag impianto"></i>impianto: si mettono a dimora bulbi, tuberi, radici o piante</span><span><i class="tag tunnel"></i>sotto tunnel: coltura protetta da telo o serra fredda</span></div>
       <div class="filtri"><button class="filtro" data-f="tutte" aria-pressed="true">Tutte</button><button class="filtro" data-f="insolite" aria-pressed="false">Solo insolite</button><button class="filtro" data-f="campo" aria-pressed="false">Solo in campo aperto</button></div>
-      <ul class="piante">${m.piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${esc(p[2])}</span></li>`).join("")}</ul>
+      <ul class="piante">${piante.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}${p[3]?'<span class="ins">insolita</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("")}</ul>
     </div>
     <div>
-      <div class="raccolta"><b>Cosa si raccoglie</b>${esc(m.raccolta)}</div>
+      <div class="raccolta"><b>Cosa si raccoglie</b>${ad(esc(src.raccolta))}</div>
       <h2>Lavori del mese <span>spunta quello che hai fatto</span></h2>
-      <ul class="lavori">${m.lavori.map((l,i)=>{const k=m.id+"-"+i;return `<li><input type="checkbox" id="${k}" data-k="${k}" ${stato[k]?"checked":""}><label for="${k}">${esc(l)}</label></li>`;}).join("")}</ul>
+      <ul class="lavori">${src.lavori.map((l,i)=>{const k=m.id+"-"+i;return `<li><input type="checkbox" id="${k}" data-k="${k}" ${stato[k]?"checked":""}><label for="${k}">${ad(esc(l))}</label></li>`;}).join("")}</ul>
       <button class="azzera" data-mese="${m.id}">Azzera le spunte di ${m.nome.toLowerCase()}</button>
       <div class="rdm"><small style="color:var(--muto)">In cucina questo mese · ${rs.length} ricette</small>
         <ul>${rs.slice(0,5).map(r=>`<li>${esc(r.nome)}</li>`).join("")}<li>… e altre ${rs.length-5}</li></ul>
@@ -97,11 +104,12 @@ function pannelloOggi(){
 $("#tablist").innerHTML = tabs.map(t=>`<button class="scheda ${t.cls||""}" role="tab" id="t-${t.id}" data-tab="${t.id}" aria-selected="false" aria-controls="p-${t.id}">${t.label}</button>`).join("");
 if(COMUNE){
   const ex=(typeof pianteExtraPer==="function")?pianteExtraPer(COMUNE):null;
-  if(ex) MESI.forEach(m=>{ (ex[m.id]||[]).forEach(p=>{ if(!m.piante.some(x=>x[0]===p[0])) m.piante.push(p); }); });
+  if(ex) MESI.forEach(m=>{ m.extra = ex[m.id]||[]; });
   const tl=$("#testata-luogo"); if(tl) tl.textContent = `${COMUNE.n} (${COMUNE.pr}) · ${COMUNE.alt} m · zona ${COMUNE.z}`;
 }
 $("#finestra").innerHTML = pannelloOggi() + MESI.map(pannelloMese).join("") + pannelloRicette();
 $("#finestra").appendChild($("#tpl-costruire").content.cloneNode(true));
+$("#finestra").insertAdjacentHTML("beforeend", pannelloAllevare());
 $("#finestra").insertAdjacentHTML("beforeend", pannelloConsigli());
 
 /* ---- navigazione ---- */
@@ -129,14 +137,7 @@ document.addEventListener("keydown",e=>{
   if(e.key==="ArrowRight") vai(corrente+1,1);
   if(e.key==="ArrowLeft") vai(corrente-1,-1);
 });
-let tx=null, ty=null;
-document.addEventListener("touchstart",e=>{tx=e.touches[0].clientX; ty=e.touches[0].clientY;},{passive:true});
-document.addEventListener("touchend",e=>{
-  if(tx===null) return;
-  if(!$("#modale-pianta").hidden || !$("#modale").hidden || !$("#modale-comune").hidden){ tx=null; return; }
-  const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty; tx=null;
-  if(Math.abs(dx)>70 && Math.abs(dx)>Math.abs(dy)*1.5) vai(corrente+(dx<0?1:-1), dx<0?1:-1);
-},{passive:true});
+/* niente swipe tra i mesi: scorrere col dito serve a leggere, il mese si sceglie toccandolo nella barra */
 
 function filtraRicette(mese){
   document.querySelectorAll("#chip-ricette .filtro").forEach(b=>b.setAttribute("aria-pressed", b.dataset.rm===mese?"true":"false"));
@@ -240,7 +241,7 @@ $("#mp-corpo").addEventListener("click",e=>{ const a=e.target.closest("[data-apr
 const oggi=new Date();
 const meseCorrente=MESI[oggi.getMonth()];
 $("#oggi-data").innerHTML = `${oggi.getDate()}<br><span style="font-size:.5em;font-weight:600">${meseCorrente.nome}</span>`;
-$("#oggi-frase").textContent = meseCorrente.sotto;
+$("#oggi-frase").textContent = COMUNE ? meseClima(COMUNE, meseCorrente.id) : meseCorrente.sotto;
 
 function seme(d){ // numero pseudo-casuale stabile per il giorno
   let x = d.getFullYear()*372 + d.getMonth()*31 + d.getDate();
@@ -444,10 +445,10 @@ vai(iniziale>=0?iniziale:0, 1);
     $("#comune-scelto").hidden=true; scelto=null;
     if(!LISTA) return;
     const q=norm(inp.value.trim());
-    if(q.length<2){ box.hidden=true; box.innerHTML=""; return; }
-    const tr=LISTA.map((r,i)=>({r,i})).filter(x=>norm(x.r[0]).includes(q))
-      .sort((a,b)=>{const na=norm(a.r[0]),nb=norm(b.r[0]);return (na.startsWith(q)?0:1)-(nb.startsWith(q)?0:1)||na.length-nb.length;}).slice(0,12);
-    box.innerHTML = tr.length ? tr.map(x=>`<button class="cerca-riga" data-i="${x.i}"><span><b>${esc(x.r[0])}</b><small>${esc(x.r[1])} · ${esc(x.r[2])} · ${x.r[5]} m · zona ${x.r[7]}</small></span></button>`).join("") : `<div class="cerca-vuoto">Nessun comune con questo nome. Controlla come si scrive.</div>`;
+    if(q.length<1){ box.hidden=true; box.innerHTML=""; return; }
+    const tr=LISTA.map((r,i)=>({r,i,n:norm(r[0])})).filter(x=>x.n.includes(q))
+      .sort((a,b)=>((a.n.startsWith(q)?0:1)-(b.n.startsWith(q)?0:1)) || ((b.r[8]||0)-(a.r[8]||0)) || a.n.length-b.n.length).slice(0,4);
+    box.innerHTML = tr.length ? tr.map(x=>`<button class="cerca-riga" data-i="${x.i}"><span><b>${esc(x.r[0])}</b><small>${esc(x.r[2])} (${esc(x.r[1])}), ${x.r[5]} m</small></span></button>`).join("") : `<div class="cerca-vuoto">Nessun comune con questo nome. Controlla come si scrive.</div>`;
     box.hidden=false;
   });
   box.addEventListener("click",e=>{

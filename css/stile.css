@@ -274,3 +274,55 @@ h3{font-size:1.2rem}
 #terra-bottoni button small{display:block;font-weight:400;font-size:.72rem;color:var(--muto);margin-top:.15rem}
 #terra-bottoni button[aria-pressed="true"] small{color:inherit;opacity:.85}
 #modale-comune .modale-box{max-width:520px}
+
+/* ===== rifinitura: testata, barra mesi, mobile ===== */
+.testata{align-items:center;gap:.75rem .9rem;padding:.9rem 1.25rem .4rem}
+.marchio{display:flex;align-items:baseline;gap:.7rem;min-width:0}
+.marchio small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.azioni{display:flex;gap:.45rem;flex:none}
+.installa.secondario{background:var(--scheda);color:var(--verde);border:1.5px solid var(--riga)}
+.installa:focus-visible,.scheda:focus-visible,.filtro:focus-visible,.cerca input:focus-visible,.mp-bottoni button:focus-visible{outline:2px solid var(--verde);outline-offset:2px}
+.schede{padding:.35rem 1.25rem .65rem;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;gap:.3rem}
+.scheda{scroll-snap-align:center;padding:.5rem .95rem;min-height:2.5rem}
+.scheda:active{transform:scale(.97)}
+.mese-sotto{font-size:1.05rem;line-height:1.5}
+@media (max-width:640px){
+  .testata{padding:.75rem 1rem .35rem}
+  .marchio{flex-direction:column;gap:.1rem;flex:1 1 auto}
+  .marchio small{font-size:.8rem}
+  .installa{padding:.5rem .85rem;font-size:.82rem;min-height:2.4rem}
+  .cerca{padding:.15rem 1rem .6rem}
+  .cerca-risultati{left:1rem;right:1rem}
+  .schede{padding:.3rem 1rem .6rem;position:sticky;top:0;background:var(--carta);z-index:15}
+  .mese-nome{font-size:2.6rem}
+  .mese-sotto{font-size:1rem}
+  .mp-bottoni{gap:.5rem}
+  .mp-bottoni button{padding:.85rem .5rem;font-size:.95rem}
+  .modale{padding:0;align-items:end}
+  .modale-box{border-radius:18px 18px 0 0;max-height:94dvh;padding:1.1rem 1rem calc(1rem + env(safe-area-inset-bottom))}
+}
+
+/* ===== legenda dei tipi di lavoro ===== */
+.legenda{display:flex;flex-wrap:wrap;gap:.35rem .9rem;margin:.35rem 0 .75rem;font-size:.82rem;color:var(--muto);line-height:1.35}
+.legenda span{display:inline-flex;align-items:center;gap:.4rem}
+.legenda i{width:.7rem;height:.7rem;border-radius:3px;display:inline-block;flex:none}
+
+/* ===== finestra "Dove sta il tuo orto?" ===== */
+#modale-comune .modale-box{max-width:520px}
+#modale-comune .cerca{margin:.7rem 0 .3rem}
+#modale-comune .cerca input{font-size:1.1rem;padding:.8rem 1rem}
+#modale-comune .cerca-risultati{position:static;margin-top:.4rem;max-height:none;box-shadow:none}
+#modale-comune .cerca-riga{padding:.75rem .9rem;min-height:3.2rem}
+#modale-comune .cerca-riga b{font-size:1.02rem}
+#comune-riep{margin:.7rem 0 .2rem;line-height:1.5;padding:.7rem .85rem;background:var(--scheda);border-radius:12px;border:1px solid var(--riga)}
+#terra-bottoni button{line-height:1.2}
+#comune-salva{width:100%;padding:.9rem;font-size:1.05rem;border-radius:12px}
+#comune-chiudi{margin-top:.6rem}
+.legenda i.tag{padding:0;border-radius:3px}
+.legenda i.semina{background:var(--verde2)}.legenda i.semenzaio{background:var(--zucca)}.legenda i.trapianto{background:var(--terra)}.legenda i.impianto{background:var(--viola)}.legenda i.tunnel{background:var(--muto)}
+/* ===== link utili nelle guide ===== */
+.link-utili{display:grid;gap:.5rem;margin:.8rem 0 1.6rem}
+.link-utili a{display:block;text-decoration:none;color:var(--inchiostro);border:1.5px solid var(--riga);border-radius:12px;padding:.7rem .9rem;background:var(--scheda)}
+.link-utili a b{color:var(--verde)}
+.link-utili a small{display:block;color:var(--muto);margin-top:.15rem}
+.link-utili a:hover{border-color:var(--verde)}
