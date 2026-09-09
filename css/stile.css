@@ -647,3 +647,25 @@ h2 span{font-family:Manrope,sans-serif;font-weight:500;color:var(--muto);font-si
 :root[data-theme="dark"] .raccolta{background:color-mix(in srgb,var(--zucca) 14%,var(--scheda))}
 :root[data-theme="light"] img{filter:none}
 :root[data-theme="light"] .mappa .italia{opacity:.9}
+/* ===================== fasi di crescita nel mio orto ===================== */
+.orto-lista li{grid-template-areas:"foto nome tag stella" "foto come come come" "fasi fasi fasi fasi"}
+.fasi{grid-area:fasi;display:flex;flex-wrap:wrap;align-items:center;gap:.4rem;margin-top:.5rem}
+.fase{display:inline-flex;align-items:center;gap:.4rem;border-radius:999px;padding:.3rem .5rem .3rem .7rem;font-size:.8rem;background:color-mix(in srgb,var(--muto) 14%,transparent);color:var(--inchiostro)}
+.fase b{font-weight:600}.fase small{color:var(--muto)}
+.fase i{font-style:normal;width:1.2rem;height:1.2rem;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--inchiostro) 10%,transparent);cursor:pointer;font-size:.85rem}
+.fase.semenzaio{background:color-mix(in srgb,var(--zucca) 22%,transparent)}
+.fase.seminata,.fase.trapiantata{background:color-mix(in srgb,var(--verde) 20%,transparent)}
+.fase.vaso{background:color-mix(in srgb,var(--terra) 24%,transparent)}
+.fase.raccolta{background:color-mix(in srgb,var(--viola) 22%,transparent)}
+.fase-aggiungi{border:1.5px dashed color-mix(in srgb,var(--verde) 60%,var(--riga));background:none;color:var(--verde);border-radius:999px;padding:.35rem .8rem;font-size:.82rem;font-weight:700}
+.fase-form{flex-basis:100%;background:var(--carta);border:1px solid var(--riga);border-radius:12px;padding:.7rem .8rem;margin-top:.3rem;display:grid;gap:.6rem}
+.fase-scelte{display:flex;flex-wrap:wrap;gap:.4rem}
+.fase-scelte button{border:1px solid var(--riga);background:var(--scheda);color:var(--inchiostro);border-radius:999px;padding:.4rem .75rem;font-size:.82rem;font-weight:600}
+.fase-scelte button[aria-pressed="true"]{background:var(--verde);border-color:var(--verde);color:#fff}
+.fase-data{display:flex;align-items:center;gap:.6rem;font-size:.85rem;color:var(--muto)}
+.fase-data input{font:inherit;padding:.4rem .6rem;border-radius:8px;border:1px solid var(--riga);background:var(--scheda);color:var(--inchiostro)}
+.fase-azioni{display:flex;gap:.5rem}
+.fase-azioni .primario{background:var(--verde);color:#fff;border:0;border-radius:10px;padding:.5rem .9rem;font-weight:700}
+.fase-azioni .primario:disabled{opacity:.45}
+.fase-azioni [data-fase-annulla]{background:none;border:1px solid var(--riga);border-radius:10px;padding:.5rem .8rem;color:var(--muto)}
+@media (max-width:640px){.orto-lista li{grid-template-areas:"foto nome stella" "foto tag tag" "foto come come" "fasi fasi fasi"}}

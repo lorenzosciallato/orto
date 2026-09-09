@@ -1,6 +1,6 @@
 /* Orto — funziona anche senza campo. Pagine e codice: prima la rete, poi la copia salvata. Foto e dati: prima la copia salvata. */
-const VERSIONE = "orto-202609092150";
-const BASE = [ "./", "index.html", "css/stile.css?v=202609092150", "js/mesi.js?v=202609092150", "js/ricette.js?v=202609092150", "js/schede.js?v=202609092150", "js/clima.js?v=202609092150", "js/semina.js?v=202609092150", "js/schede-extra.js?v=202609092150", "js/consigli.js?v=202609092150", "js/allevare.js?v=202609092150", "js/coltivare.js?v=202609092150", "js/app.js?v=202609092150", "manifest.json", "dati/italia.json", "img/icona-192.jpg", "img/icona-512.jpg" ];
+const VERSIONE = "orto-202609092158";
+const BASE = [ "./", "index.html", "css/stile.css?v=202609092158", "js/mesi.js?v=202609092158", "js/ricette.js?v=202609092158", "js/schede.js?v=202609092158", "js/clima.js?v=202609092158", "js/semina.js?v=202609092158", "js/schede-extra.js?v=202609092158", "js/consigli.js?v=202609092158", "js/allevare.js?v=202609092158", "js/coltivare.js?v=202609092158", "js/app.js?v=202609092158", "manifest.json", "dati/italia.json", "img/icona-192.jpg", "img/icona-512.jpg" ];
 self.addEventListener("install", e=>{ e.waitUntil(caches.open(VERSIONE).then(c=>c.addAll(BASE)).then(()=>self.skipWaiting())); });
 self.addEventListener("activate", e=>{ e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==VERSIONE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });
 self.addEventListener("fetch", e=>{

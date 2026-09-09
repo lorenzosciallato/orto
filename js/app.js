@@ -20,6 +20,12 @@ const imgTag = (src,alt,cls)=>`<img class="${cls}" src="${src}" alt="${esc(alt)}
 /* le piante che l'utente dice di coltivare (chiavi delle schede) */
 let MIE = new Set();
 try{ MIE = new Set(JSON.parse(localStorage.getItem("orto-mie")||"[]")); }catch(e){}
+/* fasi di crescita per ogni pianta del mio orto: {chiave:[{f:"semenzaio",d:"2026-01-21"},...]} */
+let FASI={};
+try{ FASI=JSON.parse(localStorage.getItem("orto-fasi")||"{}"); }catch(e){}
+function salvaFasi(){ try{ localStorage.setItem("orto-fasi",JSON.stringify(FASI)); }catch(e){} }
+const FASE_NOMI={semenzaio:"In semenzaio",seminata:"Seminata in campo",trapiantata:"Trapiantata",vaso:"In vaso",raccolta:"In raccolta",finita:"Finita"};
+function dataBreve(iso){ if(!iso) return ""; const d=new Date(iso+"T12:00:00"); return `${d.getDate()} ${["gen","feb","mar","apr","mag","giu","lug","ago","set","ott","nov","dic"][d.getMonth()]}`; }
 function salvaMie(){ try{ localStorage.setItem("orto-mie",JSON.stringify([...MIE])); }catch(e){} }
 function chiaveMia(nome){ return chiaviPer(nome)[0] || ("n:"+nome); }
 function eMia(nome){ return MIE.has(chiaveMia(nome)); }
@@ -618,7 +624,8 @@ function mostraOrtoHome(){
   const riga=k=>{
     const nome=nomeDi(k), v=voci.find(p=>chiaveMia(p[0])===k) || voci.find(p=>eMia(p[0]) && chiaveMia(p[0])===k);
     const foto=k.startsWith("n:")?(chiaviPer(nome)[0]||null):k;
-    return `<li data-pianta="${esc(nome)}" data-mia="1">${foto?imgTag(fotoPianta(foto),nome,"mini"):'<span class="mini manca"></span>'}<b>${esc(nome)}</b>${v?`<span class="tag ${v[1]}">${tipoLabel[v[1]]}</span><span class="come">${ad(esc(v[2]))}</span>`:`<span class="tag riposo">niente da fare</span><span class="come">Questo mese per lei è tempo di raccolta o di attesa: la scheda ti dice il resto.</span>`}<button class="stella" data-stella="${esc(nome)}" aria-pressed="true" aria-label="Togli ${esc(nome)} dal mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button></li>`;
+    return `<li data-pianta="${esc(nome)}" data-mia="1">${foto?imgTag(fotoPianta(foto),nome,"mini"):'<span class="mini manca"></span>'}<b>${esc(nome)}</b>${v?`<span class="tag ${v[1]}">${tipoLabel[v[1]]}</span><span class="come">${ad(esc(v[2]))}</span>`:`<span class="tag riposo">niente da fare</span><span class="come">Questo mese per lei è tempo di raccolta o di attesa: la scheda ti dice il resto.</span>`}<button class="stella" data-stella="${esc(nome)}" aria-pressed="true" aria-label="Togli ${esc(nome)} dal mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button>
+      <div class="fasi" data-fasi="${esc(k)}">${(FASI[k]||[]).map((x,i)=>`<span class="fase ${x.f}"><b>${FASE_NOMI[x.f]||x.f}</b>${x.d?`<small>${dataBreve(x.d)}</small>`:""}<i data-togli-fase="${i}" aria-label="Togli questa fase">×</i></span>`).join("")}<button class="fase-aggiungi" data-fase-apri="${esc(k)}">${(FASI[k]||[]).length?"Aggiorna fase":"Dove sta? Segna la fase"}</button></div></li>`;
   };
   box.innerHTML=`<div class="orto-box">
     <div class="orto-testa"><h2>Il mio orto <span>${chiaviMie.length?`${chiaviMie.length===1?"una pianta":chiaviMie.length+" piante"} · cosa fare a ${meseCorrente.nome.toLowerCase()}`:"vuoto"}</span></h2></div>
@@ -668,3 +675,31 @@ mostraOrtoHome();
   applica(t);
   b.onclick=()=>{ const scuro=document.documentElement.dataset.theme==="dark" || (!document.documentElement.dataset.theme && window.matchMedia("(prefers-color-scheme: dark)").matches); t=scuro?"light":"dark"; try{ localStorage.setItem("orto-tema",t); }catch(e){} applica(t); };
 })();
+
+/* ---- fasi di crescita: form inline ---- */
+document.addEventListener("click",e=>{
+  const ap=e.target.closest("[data-fase-apri]");
+  if(ap){
+    const k=ap.dataset.faseApri, box=ap.closest(".fasi");
+    const oggiIso=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);
+    box.insertAdjacentHTML("beforeend",`<form class="fase-form" data-fase-form="${esc(k)}">
+      <div class="fase-scelte">${Object.entries(FASE_NOMI).map(([f,n])=>`<button type="button" data-f="${f}" aria-pressed="false">${n}</button>`).join("")}</div>
+      <label class="fase-data"><span>Data (facoltativa)</span><input type="date" name="d" value="${oggiIso}"></label>
+      <div class="fase-azioni"><button type="submit" class="primario" disabled>Salva</button><button type="button" data-fase-annulla>Annulla</button></div>
+    </form>`);
+    ap.hidden=true; return;
+  }
+  const sc=e.target.closest(".fase-scelte [data-f]");
+  if(sc){ const f=sc.closest("form"); f.querySelectorAll("[data-f]").forEach(b=>b.setAttribute("aria-pressed",b===sc?"true":"false")); f.querySelector('[type=submit]').disabled=false; return; }
+  const an=e.target.closest("[data-fase-annulla]");
+  if(an){ const f=an.closest("form"), box=f.closest(".fasi"); f.remove(); box.querySelector("[data-fase-apri]").hidden=false; return; }
+  const tg=e.target.closest("[data-togli-fase]");
+  if(tg){ const k=tg.closest(".fasi").dataset.fasi; (FASI[k]||[]).splice(+tg.dataset.togliFase,1); if(FASI[k]&&!FASI[k].length) delete FASI[k]; salvaFasi(); mostraOrtoHome(); return; }
+});
+document.addEventListener("submit",e=>{
+  const f=e.target.closest("[data-fase-form]"); if(!f) return;
+  e.preventDefault();
+  const k=f.dataset.faseForm, sc=f.querySelector('[data-f][aria-pressed="true"]'); if(!sc) return;
+  const d=f.querySelector('input[name=d]').value||null;
+  (FASI[k]=FASI[k]||[]).push({f:sc.dataset.f,d}); salvaFasi(); mostraOrtoHome();
+});
