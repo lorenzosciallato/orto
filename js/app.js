@@ -25,10 +25,11 @@ function chiaveMia(nome){ return chiaviPer(nome)[0] || ("n:"+nome); }
 function eMia(nome){ return MIE.has(chiaveMia(nome)); }
 function toggleMia(nome){ const k=chiaveMia(nome); if(MIE.has(k)) MIE.delete(k); else MIE.add(k); salvaMie(); aggiornaMieOvunque(); }
 function aggiornaMieOvunque(){
+  const ms=$("#mp-stella"); if(ms && ms.dataset.stella) ms.setAttribute("aria-pressed",eMia(ms.dataset.stella)?"true":"false");
   document.querySelectorAll("[data-pianta]").forEach(li=>{ const m=eMia(li.dataset.pianta); li.dataset.mia=m?1:0; const st=li.querySelector(".stella"); if(st) st.setAttribute("aria-pressed",m?"true":"false"); });
   const p=$("#p-piante"); if(p){ const attivo=p.classList.contains("attivo"); p.outerHTML=pannelloPiante(); if(attivo) $("#p-piante").classList.add("attivo"); }
-  if(typeof aggiornaMia==="function") aggiornaMia();
   if(typeof mostraSettimana==="function") mostraSettimana();
+  if(typeof mostraOrtoHome==="function") mostraOrtoHome();
 }
 let stato = {};
 try{ stato = JSON.parse(localStorage.getItem("orto-pb-anno")||"{}"); }catch(e){ stato={}; }
@@ -47,7 +48,8 @@ function ricettePer(k){
 function gzLink(nome){ return "https://www.giallozafferano.it/ricerca-ricette/"+encodeURIComponent(nome.replace(/[()]/g,"").trim().replace(/\s+/g,"+"))+"/"; }
 
 /* ---- pannelli ---- */
-const tabs = [{id:"oggi",label:"Oggi",nav:"oggi"},...MESI.map(m=>({id:m.id,label:m.nome,nav:"mesi",mese:true})),{id:"piante",label:"Il mio orto",nav:"piante"},{id:"ricette",label:"Cucina",nav:"ricette"},{id:"guide",label:"Guide",nav:"guide"},{id:"costruire",label:"Costruire",nav:"guide"},{id:"coltivare",label:"Coltivare",nav:"guide"},{id:"allevare",label:"Allevare",nav:"guide"},{id:"consigli",label:"Consigli",nav:"guide"}];
+const GIORNI_LUNGHI=["Domenica","Lunedì","Martedì","Mercoledì","Giovedì","Venerdì","Sabato"];
+const tabs = [{id:"oggi",label:"Home",nav:"oggi"},...MESI.map(m=>({id:m.id,label:m.nome,nav:"mesi",mese:true})),{id:"piante",label:"Piante",nav:"piante"},{id:"ricette",label:"Cucina",nav:"ricette"},{id:"guide",label:"Guide",nav:"guide"},{id:"costruire",label:"Costruire",nav:"guide"},{id:"coltivare",label:"Coltivare",nav:"guide"},{id:"allevare",label:"Allevare",nav:"guide"},{id:"consigli",label:"Consigli",nav:"guide"}];
 const ORDINE_TIPO = {trapianto:0,semina:1,semenzaio:2,impianto:3,tunnel:4};
 
 function pannelloMese(m){
@@ -76,7 +78,7 @@ function pannelloMese(m){
       <h2>Lavori del mese <span>spunta quello che hai fatto</span></h2>
       <ul class="lavori">${src.lavori.map((l,i)=>{const k=m.id+"-"+i;return `<li><input type="checkbox" id="${k}" data-k="${k}" ${stato[k]?"checked":""}><label for="${k}">${ad(esc(l))}</label></li>`;}).join("")}</ul>
       <button class="azzera" data-mese="${m.id}">Azzera le spunte di ${m.nome.toLowerCase()}</button>
-      <div class="rdm"><small style="color:var(--muto)">In cucina questo mese · ${rs.length} ricette</small>
+      <div class="rdm"><div class="rdm-testa"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 3v7a3 3 0 0 0 3 3v8M8 3v7M11 3v7M17 3c-2 0-3 3-3 6h3v12"/></svg><b>In cucina questo mese</b><small>${rs.length} ricette</small></div>
         <ul>${rs.slice(0,5).map(r=>`<li>${esc(r.nome)}</li>`).join("")}<li>… e altre ${rs.length-5}</li></ul>
         <button data-ricette-mese="${m.id}">Apri le ricette di ${m.nome.toLowerCase()}</button></div>
     </div>
@@ -86,7 +88,7 @@ function pannelloMese(m){
 
 function pannelloPiante(){
   const chiavi=Object.keys(SCHEDE).sort((a,b)=>SCHEDE[a].nome.localeCompare(SCHEDE[b].nome,"it"));
-  const card=k=>`<button class="pianta-card" data-apri-chiave="${k}">${imgTag(fotoPianta(k),SCHEDE[k].nome,"pc-foto")}<span class="pc-nome">${esc(SCHEDE[k].nome)}</span>${MIE.has(k)?'<span class="pc-mia">nel tuo orto</span>':''}</button>`;
+  const card=k=>`<div class="pianta-card" data-pianta="${esc(SCHEDE[k].nome)}"><button class="pc-apri" data-apri-chiave="${k}">${imgTag(fotoPianta(k),SCHEDE[k].nome,"pc-foto")}<span class="pc-nome">${esc(SCHEDE[k].nome)}</span></button><button class="stella pc-stella" data-stella="${esc(SCHEDE[k].nome)}" aria-pressed="${MIE.has(k)?"true":"false"}" aria-label="Metti ${esc(SCHEDE[k].nome)} nel mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button></div>`;
   const mieChiavi=chiavi.filter(k=>MIE.has(k));
   const mieNomi=[...MIE].filter(k=>k.startsWith("n:")).map(k=>k.slice(2));
   const vuoto=!mieChiavi.length && !mieNomi.length;
@@ -94,16 +96,8 @@ function pannelloPiante(){
   const src = COMUNE ? (MESI.find(x=>x.id===meseBasePer(COMUNE,mId))||meseCorrente) : meseCorrente;
   const daFare=[...src.piante,...((COMUNE&&meseCorrente.extra)||[])].filter(p=>eMia(p[0]));
   return `<section class="pannello" id="p-piante" role="tabpanel" aria-labelledby="t-piante">
-  <div class="mese-testa"><div class="mese-nome">Il mio orto</div><p class="mese-sotto">${vuoto?"Le piante che coltivi, in un posto solo: cosa fare per ciascuna questo mese, la scheda a un tocco, la tua settimana in Oggi.":`${(n=>n===1?"Una pianta":n+" piante")(mieChiavi.length+mieNomi.length)}. Questo mese ${daFare.length?`ce ne sono ${daFare.length} da mettere a dimora o curare`:"per le tue piante è tempo di raccolta e di cura"}.`}</p></div>
-  ${vuoto?`<div class="tutorial">
-    <p><b>Come si riempie</b></p>
-    <div class="tutorial-riga"><span class="mini manca"></span><b>Pomodori</b><span class="tag trapianto">trapianto</span><span class="stella demo" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></span></div>
-    <p>Nei <b>Mesi</b>, accanto a ogni ortaggio c'è una stella: toccala e la pianta arriva qui. Da quel momento i mesi te la evidenziano, in Oggi la settimana la mette per prima, e qui trovi cosa farle. Puoi partire anche dall'elenco qui sotto: apri una scheda e tocca "La coltivi? Segnala".</p>
-    <button class="primario" data-vai="${mId}">Vai a ${meseCorrente.nome.toLowerCase()}</button>
-  </div>`:`
-  ${daFare.length?`<h2>Da fare a ${meseCorrente.nome.toLowerCase()} <span>per le tue piante</span></h2><ul class="piante">${daFare.map(p=>`<li data-ins="${p[3]}" data-tag="${p[1]}" data-mia="1" data-pianta="${esc(p[0])}">${(k=>k?imgTag(fotoPianta(k),p[0],"mini"):'<span class="mini manca"></span>')(chiaviPer(p[0])[0])}<b>${esc(p[0])}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${esc(p[2])}</span></li>`).join("")}</ul>`:""}
-  <h2>Le tue piante <span>tocca per la scheda</span></h2>
-  <div class="griglia-piante">${mieChiavi.map(card).join("")}${mieNomi.map(n=>`<button class="pianta-card" data-pianta="${esc(n)}"><span class="pc-foto manca"></span><span class="pc-nome">${esc(n)}</span><span class="pc-mia">nel tuo orto</span></button>`).join("")}</div>`}
+  <div class="mese-testa"><div class="mese-nome">Piante</div><p class="mese-sotto">${chiavi.length} schede. Tocca la foto per leggere, la stella per metterla nel tuo orto.</p></div>
+  ${mieChiavi.length?`<h2>Nel tuo orto <span>${mieChiavi.length}</span></h2><div class="griglia-piante">${mieChiavi.map(card).join("")}</div>`:""}
   <h2>Tutte le piante <span>${chiavi.length} schede, dalla A alla Z</span></h2>
   <div class="griglia-piante">${chiavi.map(card).join("")}</div></section>`;
 }
@@ -138,24 +132,23 @@ function pannelloConsigli(){
   <div class="consigli">${CONSIGLI.map(c=>`<div class="consiglio"><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p></div>`).join("")}</div></section>`;
 }
 function pannelloOggi(){
-  const tot = MESI.reduce((a,m)=>a+m.piante.length,0);
+  const data=`${GIORNI_LUNGHI[oggi.getDay()]} ${oggi.getDate()} ${meseCorrente.nome.toLowerCase()}`;
   return `<section class="pannello" id="p-oggi" role="tabpanel" aria-labelledby="t-oggi">
-  <div class="mese-testa"><div class="mese-nome" id="oggi-data"></div><div><p id="oggi-frase"></p><div class="clima">${COMUNE?`${esc(COMUNE.n)} (${esc(COMUNE.pr)}), ${COMUNE.alt} m · `:""}${tot} colture, ${RICETTE.length} ricette, 12 mesi.</div>${COMUNE?`<div class="clima clima-utente">${fraseClima(COMUNE)}</div>`:""}</div></div>
+  <div class="home-testa"><div><div class="home-data">${data}</div>${COMUNE?`<div class="home-luogo">${esc(COMUNE.n)}, ${COMUNE.alt} m</div>`:""}</div></div>
   <div class="oggi">
     <div>
-      <div class="meteo" id="meteo">${COMUNE?`<div class="shimmer-box" aria-label="Carico il meteo"><span class="sh l"></span><span class="sh m"></span><span class="sh s"></span><span class="sh m"></span></div>`:`<div class="stato">Scegli il tuo comune per vedere il meteo del tuo orto.</div>`}</div>
-      ${COMUNE?`<div class="mappa" id="mappa" aria-label="Il tuo comune sulla mappa d'Italia"></div>`:""}
-      <div class="settimana"><h2>Questa settimana <span id="settimana-sotto"></span></h2><ul id="settimana" class="piante compatta"></ul></div>
-      <div class="consigli-oggi"><h2>Cosa fare oggi <span>tre spunti, diversi ogni giorno</span></h2><div id="consigli-oggi"></div></div>
+      ${COMUNE?`<div class="mappa-meteo" id="mappa-meteo"><div class="mappa" id="mappa"></div><div class="meteo" id="meteo"><div class="shimmer-box" aria-label="Carico il meteo"><span class="sh l"></span><span class="sh m"></span><span class="sh s"></span></div></div></div>`:`<div class="meteo" id="meteo"><div class="stato">Scegli il tuo comune per vedere il meteo del tuo orto.</div></div>`}
+      <div class="orto-home" id="orto-home"></div>
     </div>
     <div>
+      <div class="da-fare">
+        <div class="segmenti" role="tablist" aria-label="Cosa fare"><button data-seg="settimana" aria-selected="true">Questa settimana</button><button data-seg="oggi" aria-selected="false">Cosa fare oggi</button></div>
+        <div id="seg-settimana"><ul id="settimana" class="piante compatta"></ul><p class="muto" id="settimana-sotto" style="font-size:.82rem"></p></div>
+        <div id="seg-oggi" hidden><div id="consigli-oggi"></div></div>
+      </div>
       <div class="cal" id="cal"></div>
       <div class="cal-lavori" id="cal-lavori"></div>
     </div>
-  </div>
-  <div class="intro" style="padding-top:2rem">
-    <div class="legenda"><span class="tag semina">semina diretta</span><span class="tag semenzaio">semenzaio</span><span class="tag trapianto">trapianto</span><span class="tag impianto">impianto</span><span class="tag tunnel">sotto tunnel o tessuto non tessuto</span><span class="ins" style="font-size:.78rem;color:var(--viola);border:1px solid var(--viola);border-radius:4px;padding:.15rem .4rem">insolita</span></div>
-    <div class="calendario">${MESI.map(m=>`<button data-vai="${m.id}"><b>${m.nome}</b><small>${m.piante.length} colture · ${m.lavori.length} lavori · ${RICETTE.filter(r=>r.mese===m.id).length} ricette</small></button>`).join("")}</div>
   </div></section>`;
 }
 
@@ -254,22 +247,11 @@ function apriPianta(nome){
   if(mpChiavi.length>1){ sub.hidden=false; sub.innerHTML=mpChiavi.map((k,i)=>`<button data-chiave="${k}" aria-pressed="${i===0}">${esc(SCHEDE[k].nome.split(" (")[0])}</button>`).join(""); }
   else { sub.hidden=true; sub.innerHTML=""; }
   mpChiave=mpChiavi[0]||null; mpSez=null;
-  aggiornaMia();
+  const ms=$("#mp-stella"); if(ms){ ms.dataset.stella=nome; ms.setAttribute("aria-pressed",eMia(nome)?"true":"false"); }
   document.querySelectorAll("#mp-bottoni button").forEach(b=>b.setAttribute("aria-pressed","false"));
   $("#mp-corpo").innerHTML = mpChiave ? `<p class="muto" style="color:var(--muto)">Scegli cosa vuoi sapere.</p>` : `<div class="in-scrittura">Scheda in preparazione per questa voce.</div>`;
   mod.hidden=false; document.body.style.overflow="hidden";
 }
-function aggiornaMia(){
-  const b=$("#mp-mia"); if(!b) return;
-  if(!mpChiave){ b.hidden=true; return; }
-  b.hidden=false; const on=MIE.has(mpChiave);
-  b.setAttribute("aria-pressed", on?"true":"false"); b.textContent = on ? "La coltivo" : "La coltivi? Segnala";
-}
-$("#mp-mia").addEventListener("click",()=>{
-  if(!mpChiave) return;
-  if(MIE.has(mpChiave)) MIE.delete(mpChiave); else MIE.add(mpChiave);
-  salvaMie(); aggiornaMieOvunque();
-});
 function chiudiPianta(){ $("#modale-pianta").hidden=true; document.body.style.overflow=""; }
 $("#mp-chiudi").onclick=chiudiPianta;
 $("#modale-pianta").addEventListener("click",e=>{ if(e.target===$("#modale-pianta")) chiudiPianta(); });
@@ -326,8 +308,7 @@ $("#mp-corpo").addEventListener("click",e=>{ const a=e.target.closest("[data-apr
 })();
 
 /* ---- OGGI: data, calendario, meteo, consigli ---- */
-$("#oggi-data").innerHTML = `${oggi.getDate()}<br><span style="font-size:.5em;font-weight:600">${meseCorrente.nome}</span>`;
-$("#oggi-frase").textContent = COMUNE ? meseClima(COMUNE, meseCorrente.id) : meseCorrente.sotto;
+
 
 function seme(d){ // numero pseudo-casuale stabile per il giorno
   let x = d.getFullYear()*372 + d.getMonth()*31 + d.getDate();
@@ -392,6 +373,7 @@ function consigliMeteo(w){ // consigli che dipendono dal meteo di oggi e dei pro
   return out;
 }
 
+document.addEventListener("click",e=>{ const b=e.target.closest("[data-seg]"); if(!b) return; document.querySelectorAll("[data-seg]").forEach(x=>x.setAttribute("aria-selected",x===b?"true":"false")); $("#seg-settimana").hidden=b.dataset.seg!=="settimana"; $("#seg-oggi").hidden=b.dataset.seg!=="oggi"; });
 /* la lista della settimana: colture del mese (già adattate a fascia e ambiente), scelte per metà mese e per le tue piante */
 let METEO_ULTIMO=null;
 function mostraSettimana(){
@@ -407,7 +389,7 @@ function mostraSettimana(){
   scelte.sort((a,b)=>(eMia(b[0])-eMia(a[0])) || ((ORDINE_TIPO[a[1]]??9)-(ORDINE_TIPO[b[1]]??9)));
   const mie=scelte.filter(p=>eMia(p[0]));
   const lista=(mie.length?[...mie,...scelte.filter(p=>!eMia(p[0]))]:scelte).slice(0,6);
-  $("#settimana-sotto").textContent = mie.length ? `prima le tue piante, poi il resto del mese` : `le colture del momento · segna le tue in Piante e diventa personale`;
+  $("#settimana-sotto").textContent = mie.length ? `Prima le tue piante, poi il resto del mese.` : `Le colture del momento. Aggiungi le tue nel Mio orto e diventa personale.`;
   const ad=t=>COMUNE?addolcisci(COMUNE,t):t;
   ul.innerHTML = lista.length ? lista.map(p=>`<li data-pianta="${esc(p[0])}" data-mia="${eMia(p[0])?1:0}"><b>${esc(p[0])}${eMia(p[0])?'<span class="ins mia">tua</span>':''}</b><span class="tag ${p[1]}">${tipoLabel[p[1]]}</span><span class="come">${ad(esc(p[2]))}</span></li>`).join("") : `<li><span class="come">Questo mese, con le tue scelte, non c'è nulla da mettere a dimora: è tempo di raccolta e di cura.</span></li>`;
 }
@@ -438,34 +420,31 @@ function mostraConsigli(w){
 const WMO={0:"Sereno",1:"Quasi sereno",2:"Parzialmente nuvoloso",3:"Coperto",45:"Nebbia",48:"Nebbia con brina",51:"Pioviggine leggera",53:"Pioviggine",55:"Pioviggine fitta",56:"Pioviggine gelata",57:"Pioviggine gelata",61:"Pioggia leggera",63:"Pioggia",65:"Pioggia forte",66:"Pioggia gelata",67:"Pioggia gelata forte",71:"Neve leggera",73:"Neve",75:"Neve forte",77:"Nevischio",80:"Rovesci leggeri",81:"Rovesci",82:"Rovesci violenti",85:"Rovesci di neve",86:"Rovesci di neve forti",95:"Temporale",96:"Temporale con grandine",99:"Temporale con grandine forte"};
 const dirVento=g=>["N","NE","E","SE","S","SO","O","NO"][Math.round(g/45)%8];
 
+/* icone meteo (codici WMO) come piccoli simboli SVG */
+function iconaMeteo(code, grande){
+  const sz=grande?44:22;
+  const P={sole:'<circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/>',
+    nuvola:'<path d="M7 18h10a4 4 0 0 0 .5-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 18Z"/>',
+    var:'<circle cx="8" cy="8" r="3"/><path d="M8 2v1.5M2 8h1.5M3.8 3.8l1 1M12.2 3.8l-1 1"/><path d="M9 19h8a3.5 3.5 0 0 0 .4-7 4.8 4.8 0 0 0-9.2 1.3A2.9 2.9 0 0 0 9 19Z"/>',
+    pioggia:'<path d="M7 15h10a4 4 0 0 0 .5-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 15Z"/><path d="M8.5 18l-1 2.5M12.5 18l-1 2.5M16.5 18l-1 2.5"/>',
+    neve:'<path d="M7 15h10a4 4 0 0 0 .5-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 15Z"/><path d="M9 19v.01M12 20.5v.01M15 19v.01"/>',
+    nebbia:'<path d="M4 10h16M6 14h14M4 18h12"/>',
+    temporale:'<path d="M7 14h10a4 4 0 0 0 .5-8 5.5 5.5 0 0 0-10.6 1.5A3.3 3.3 0 0 0 7 14Z"/><path d="M13 14l-2.5 4h3L11 22"/>'};
+  const k = code===0?"sole" : code<=2?"var" : code===3?"nuvola" : code<=48?"nebbia" : (code>=71&&code<=77)||code>=85&&code<=86?"neve" : code>=95?"temporale" : "pioggia";
+  return `<svg class="ico-meteo" width="${sz}" height="${sz}" viewBox="0 0 24 24" aria-hidden="true">${P[k]}</svg>`;
+}
 function mostraMeteo(w){
   const c=w.current, d=w.daily;
   const nomeG=i=>{ const dt=new Date(d.time[i]+"T12:00:00"); return i===0?"Oggi":GIORNI[dt.getDay()]; };
-  const et0 = d.et0_fao_evapotranspiration ? d.et0_fao_evapotranspiration[0] : null;
-  const suoloOra = w.hourly && w.hourly.soil_temperature_0cm ? w.hourly.soil_temperature_0cm[new Date().getHours()] : null;
-  const umSuolo = w.hourly && w.hourly.soil_moisture_0_to_1cm ? w.hourly.soil_moisture_0_to_1cm[new Date().getHours()] : null;
-  const alba = d.sunrise[0].slice(11,16), tram=d.sunset[0].slice(11,16);
-  const allarmi=[];
-  const minTre=Math.min(...d.temperature_2m_min.slice(0,3));
-  if(minTre<=1) allarmi.push(`<div class="allarme gelo">Rischio gelata: minima ${minTre.toFixed(0)} °C entro tre giorni. Tessuto non tessuto pronto.</div>`);
-  if(d.precipitation_sum[0]>=8) allarmi.push(`<div class="allarme">Pioggia abbondante oggi (${d.precipitation_sum[0].toFixed(0)} mm): terreno da non lavorare.</div>`);
-  if(d.wind_speed_10m_max[0]>=40) allarmi.push(`<div class="allarme">Vento forte (raffiche ${d.wind_gusts_10m_max?d.wind_gusts_10m_max[0].toFixed(0):d.wind_speed_10m_max[0].toFixed(0)} km/h): controlla tunnel e tutori.</div>`);
-  if(d.uv_index_max && d.uv_index_max[0]>=7) allarmi.push(`<div class="allarme">UV alto (${d.uv_index_max[0].toFixed(0)}): lavora nell'orto la mattina presto o dopo le 17.</div>`);
   $("#meteo").innerHTML=`
-    <div class="ora"><div class="temp">${Math.round(c.temperature_2m)}°</div><div><div class="desc">${WMO[c.weather_code]||"—"}</div><div style="color:var(--muto);font-size:.88rem">percepita ${Math.round(c.apparent_temperature)}° · min ${Math.round(d.temperature_2m_min[0])}° / max ${Math.round(d.temperature_2m_max[0])}°</div></div></div>
+    <div class="ora">${iconaMeteo(c.weather_code,true)}<div class="temp">${Math.round(c.temperature_2m)}°</div><div class="desc"><b>${WMO[c.weather_code]||"—"}</b><span>min ${Math.round(d.temperature_2m_min[0])}° · max ${Math.round(d.temperature_2m_max[0])}°</span></div></div>
     <div class="dett">
+      <div><span>Pioggia</span>${d.precipitation_sum[0].toFixed(0)} mm · ${d.precipitation_probability_max[0]}%</div>
+      <div><span>Vento</span>${Math.round(c.wind_speed_10m)} km/h ${dirVento(c.wind_direction_10m)}</div>
       <div><span>Umidità</span>${c.relative_humidity_2m}%</div>
-      <div><span>Vento</span>${Math.round(c.wind_speed_10m)} km/h ${dirVento(c.wind_direction_10m)}${c.wind_gusts_10m?` · raffiche ${Math.round(c.wind_gusts_10m)}`:""}</div>
-      <div><span>Pioggia oggi</span>${d.precipitation_sum[0].toFixed(1)} mm · prob. ${d.precipitation_probability_max[0]}%</div>
-      ${suoloOra!==null?`<div><span>Temperatura terreno</span>${Math.round(suoloOra)} °C in superficie</div>`:""}
-      ${umSuolo!==null?`<div><span>Umidità terreno</span>${umSuolo<0.15?"secco":umSuolo<0.3?"buono":"bagnato"} (${umSuolo.toFixed(2)} m³/m³)</div>`:""}
-      ${et0!==null?`<div><span>Acqua che evapora oggi</span>${et0.toFixed(1)} mm (l/m²)</div>`:""}
-      <div><span>Sole</span>${alba} – ${tram}</div>
-      ${d.uv_index_max?`<div><span>UV max</span>${d.uv_index_max[0].toFixed(0)}</div>`:""}
+      <div><span>Sole</span>${d.sunrise[0].slice(11,16)}–${d.sunset[0].slice(11,16)}</div>
     </div>
-    <div class="allarmi">${allarmi.join("")}</div>
-    <div class="sette">${d.time.map((t,i)=>`<div class="${d.temperature_2m_min[i]<=1?"gelo":""}"><small>${nomeG(i)}</small><b>${Math.round(d.temperature_2m_max[i])}°</b><small>${Math.round(d.temperature_2m_min[i])}°</small><small>${d.precipitation_sum[i]>=1?d.precipitation_sum[i].toFixed(0)+" mm":"—"}</small></div>`).join("")}</div>
-    <div class="stato">Open-Meteo · ${NOME_LUOGO} · aggiornato alle ${c.time.slice(11,16)}</div>`;
+    <div class="sette">${d.time.map((t,i)=>`<div class="${d.temperature_2m_min[i]<=1?"gelo":""}"><small>${nomeG(i)}</small>${iconaMeteo(d.weather_code[i])}<b>${Math.round(d.temperature_2m_max[i])}°</b><small>${Math.round(d.temperature_2m_min[i])}°</small></div>`).join("")}</div>`;
 }
 
 /* fase lunare: 0 = nuova, 0.5 = piena; riferimento luna nuova 6 gennaio 2000, 18:14 UTC */
@@ -626,3 +605,40 @@ async function mostraMappa(){
   }catch(e){ box.hidden=true; }
 }
 mostraMappa();
+
+/* ---- Il mio orto, in Home: cerca una pianta e mettile la stella ---- */
+function mostraOrtoHome(){
+  const box=$("#orto-home"); if(!box) return;
+  const chiaviMie=[...MIE];
+  const nomeDi=k=>k.startsWith("n:")?k.slice(2):(SCHEDE[k]?SCHEDE[k].nome:k);
+  box.innerHTML=`<div class="orto-box">
+    <div class="orto-testa"><h2>Il mio orto <span>${chiaviMie.length?`${chiaviMie.length===1?"una pianta":chiaviMie.length+" piante"}`:"vuoto"}</span></h2></div>
+    <div class="cerca-orto"><input type="search" id="orto-cerca" placeholder="Aggiungi una pianta…" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Cerca una pianta da aggiungere al mio orto"><div class="orto-risultati" id="orto-risultati" hidden></div></div>
+    ${chiaviMie.length?`<div class="orto-chip">${chiaviMie.map(k=>`<button class="chip-pianta" data-orto-apri="${esc(nomeDi(k))}"><span>${esc(nomeDi(k))}</span><i data-orto-togli="${esc(k)}" aria-label="Togli ${esc(nomeDi(k))}">×</i></button>`).join("")}</div>`
+    :`<p class="orto-vuoto">Scrivi qui il nome di quello che coltivi e tocca la stella, oppure usa la stella accanto agli ortaggi nei <b>Mesi</b>. Da quel momento l'app ti dice cosa fare per le tue piante, settimana per settimana.</p>`}
+  </div>`;
+}
+mostraOrtoHome();
+(function(){
+  const indiceOrto=(()=>{ const m=new Map(), chiaviViste=new Set(); MESI.forEach(me=>me.piante.forEach(p=>{ if(!m.has(p[0])){ m.set(p[0],norm(p[0])); chiaviViste.add(chiaveMia(p[0])); } })); Object.entries(SCHEDE).forEach(([k,S])=>{ if(!chiaviViste.has(k) && !m.has(S.nome)) m.set(S.nome,norm(S.nome)); }); return [...m.entries()]; })();
+  document.addEventListener("input",e=>{
+    if(e.target.id!=="orto-cerca") return;
+    const box=$("#orto-risultati"), q=norm(e.target.value.trim());
+    if(q.length<2){ box.hidden=true; box.innerHTML=""; return; }
+    const tr=indiceOrto.filter(([n,nn])=>nn.includes(q)).sort((a,b)=>(a[1].startsWith(q)?0:1)-(b[1].startsWith(q)?0:1)||a[0].length-b[0].length).slice(0,6);
+    box.innerHTML= tr.length ? tr.map(([n])=>`<div class="orto-riga" data-pianta="${esc(n)}"><b>${esc(n)}</b><button class="stella" data-stella="${esc(n)}" aria-pressed="${eMia(n)?"true":"false"}" aria-label="Metti ${esc(n)} nel mio orto"><svg viewBox="0 0 24 24"><path d="M12 2.8l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.7l-5.9 3.1 1.2-6.5L2.5 9.7l6.6-.9z"/></svg></button></div>`).join("") : `<div class="cerca-vuoto">Nessuna pianta con questo nome.</div>`;
+    box.hidden=false;
+  });
+  document.addEventListener("click",e=>{
+    const t=e.target.closest("[data-orto-togli]"); if(t){ e.stopPropagation(); MIE.delete(t.dataset.ortoTogli); salvaMie(); aggiornaMieOvunque(); return; }
+    const ap=e.target.closest("[data-orto-apri]"); if(ap){ apriPianta(ap.dataset.ortoApri); return; }
+    if(!e.target.closest(".cerca-orto")){ const b=$("#orto-risultati"); if(b){ b.hidden=true; } }
+  });
+})();
+/* ---- torna su nelle pagine lunghe ---- */
+(function(){
+  const b=document.createElement("button"); b.id="torna-su"; b.className="torna-su"; b.hidden=true; b.setAttribute("aria-label","Torna all'inizio"); b.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20"><path d="M12 19V6M6 12l6-6 6 6"/></svg>';
+  document.body.appendChild(b);
+  b.onclick=()=>{ try{ window.scrollTo({top:0,behavior:"smooth"}); }catch(e){ window.scrollTo(0,0); } };
+  window.addEventListener("scroll",()=>{ b.hidden = window.scrollY < 700; },{passive:true});
+})();

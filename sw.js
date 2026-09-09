@@ -1,5 +1,5 @@
 /* Orto — funziona anche senza campo. Pagine e codice: prima la rete, poi la copia salvata. Foto e dati: prima la copia salvata. */
-const VERSIONE = "orto-2026-09-09c";
+const VERSIONE = "orto-2026-09-09d";
 const BASE = [ "./", "index.html", "css/stile.css", "js/mesi.js", "js/consigli.js", "js/schede.js", "js/clima.js", "js/semina.js", "js/schede-extra.js", "js/ricette.js", "js/allevare.js", "js/coltivare.js", "js/app.js", "manifest.json", "dati/italia.json", "img/icona-192.jpg", "img/icona-512.jpg" ];
 self.addEventListener("install", e=>{ e.waitUntil(caches.open(VERSIONE).then(c=>c.addAll(BASE)).then(()=>self.skipWaiting())); });
 self.addEventListener("activate", e=>{ e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==VERSIONE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())); });

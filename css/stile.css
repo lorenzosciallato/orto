@@ -539,3 +539,77 @@ h2 span{font-family:Manrope,sans-serif;font-weight:500;color:var(--muto);font-si
   .piante li .tag{justify-self:start;margin-top:.15rem}
   .mese-nav button{font-size:1.1rem;padding:.8rem .85rem}
 }
+
+/* ===================== Home ===================== */
+.home-testa{display:flex;justify-content:space-between;align-items:flex-end;padding:.9rem 0 1rem}
+.home-data{font-family:Fraunces,serif;font-size:1.7rem;font-weight:600;letter-spacing:-.02em;line-height:1.1}
+.home-data::first-letter{text-transform:uppercase}
+.home-luogo{color:var(--muto);font-weight:500;margin-top:.15rem}
+.oggi{padding-top:0;gap:1.5rem}
+.mappa-meteo{position:relative;background:var(--scheda);border:1px solid var(--riga);border-radius:var(--raggio);box-shadow:0 1px 2px var(--ombra);overflow:hidden}
+.mappa-meteo .mappa{margin:0;border:0;box-shadow:none;background:none;padding:.6rem .6rem 0}
+.mappa-meteo .mappa svg{max-height:380px}
+.mappa-meteo .meteo{position:absolute;top:.9rem;right:.9rem;width:min(56%,300px);background:color-mix(in srgb,var(--scheda) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid var(--riga);border-radius:14px;padding:.85rem .95rem;box-shadow:0 10px 30px var(--ombra2)}
+.meteo .ora{display:flex;align-items:center;gap:.6rem;flex-wrap:nowrap}
+.meteo .temp{font-size:2.4rem;color:var(--inchiostro)}
+.meteo .desc{display:flex;flex-direction:column;line-height:1.2}
+.meteo .desc b{font-size:.95rem}
+.meteo .desc span{color:var(--muto);font-size:.78rem}
+.ico-meteo{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--zucca);flex:none}
+.meteo .dett{grid-template-columns:1fr 1fr;gap:.35rem .6rem;margin-top:.7rem;font-size:.8rem}
+.meteo .dett span{font-size:.7rem}
+.meteo .sette{display:grid;grid-template-columns:repeat(7,1fr);gap:.15rem;margin-top:.7rem;text-align:center}
+.meteo .sette div{display:flex;flex-direction:column;align-items:center;gap:.1rem;font-size:.75rem;padding:.3rem 0;border-radius:8px}
+.meteo .sette div small{color:var(--muto);font-size:.66rem}
+.meteo .sette div b{font-size:.8rem}
+.meteo .sette div.gelo{background:color-mix(in srgb,#5b8fd8 18%,transparent)}
+.meteo .sette .ico-meteo{width:18px;height:18px;color:var(--muto)}
+@media (max-width:640px){
+  .mappa-meteo .meteo{position:static;width:auto;margin:.2rem .6rem .6rem;backdrop-filter:none}
+  .mappa-meteo .mappa svg{max-height:260px}
+}
+/* segmenti settimana / oggi */
+.da-fare{background:var(--scheda);border:1px solid var(--riga);border-radius:var(--raggio);padding:1rem 1.1rem;box-shadow:0 1px 2px var(--ombra);margin-bottom:1.2rem}
+.segmenti{display:grid;grid-template-columns:1fr 1fr;background:var(--carta);border-radius:12px;padding:.25rem;gap:.25rem;margin-bottom:.6rem}
+.segmenti button{border:0;background:none;border-radius:10px;padding:.55rem .6rem;font-weight:700;font-size:.9rem;color:var(--muto);transition:all .15s ease}
+.segmenti button[aria-selected="true"]{background:var(--scheda);color:var(--inchiostro);box-shadow:0 1px 3px var(--ombra2)}
+.da-fare .piante li{padding:.6rem 0}
+.consiglio-oggi{border-radius:12px;margin:.5rem 0}
+/* il mio orto in Home */
+.orto-box{margin-top:1.2rem;background:var(--scheda);border:1px solid var(--riga);border-radius:var(--raggio);padding:1rem 1.1rem 1.1rem;box-shadow:0 1px 2px var(--ombra)}
+.orto-testa h2{font-size:1.35rem;margin-bottom:.5rem}
+.cerca-orto{position:relative}
+.cerca-orto input{width:100%;font:inherit;font-size:1rem;padding:.7rem .95rem;border-radius:12px;border:1.5px solid var(--riga);background:var(--carta);color:var(--inchiostro)}
+.cerca-orto input:focus{outline:0;border-color:var(--zucca);box-shadow:0 0 0 4px color-mix(in srgb,var(--zucca) 16%,transparent)}
+.orto-risultati{position:absolute;left:0;right:0;top:100%;z-index:40;background:var(--scheda);border:1px solid var(--riga);border-radius:12px;box-shadow:0 12px 34px var(--ombra2);margin-top:.35rem;overflow:hidden}
+.orto-riga{display:flex;align-items:center;justify-content:space-between;gap:.6rem;padding:.55rem .5rem .55rem .9rem;border-bottom:1px solid var(--riga)}
+.orto-riga:last-child{border-bottom:0}
+.orto-chip{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.8rem}
+.chip-pianta{display:inline-flex;align-items:center;gap:.4rem;border:1px solid color-mix(in srgb,var(--zucca) 40%,var(--riga));background:color-mix(in srgb,var(--zucca) 10%,var(--scheda));border-radius:999px;padding:.35rem .5rem .35rem .8rem;font-weight:600;font-size:.86rem;color:var(--inchiostro)}
+.chip-pianta i{font-style:normal;width:1.35rem;height:1.35rem;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--zucca) 25%,transparent);color:var(--inchiostro);font-size:.9rem}
+.orto-vuoto{color:var(--muto);margin:.8rem 0 0;font-size:.92rem;line-height:1.5}
+/* accenti nei mesi: raccolta, lavori a bloc-notes, ricette */
+.raccolta{background:color-mix(in srgb,var(--zucca) 12%,var(--scheda));border-color:color-mix(in srgb,var(--zucca) 35%,var(--riga))}
+.raccolta b{display:block;font-family:Fraunces,serif;font-size:1.15rem;margin-bottom:.35rem;color:var(--terra)}
+.lavori{background:var(--scheda);border:1px solid var(--riga);border-radius:var(--raggio);padding:.4rem 1rem .4rem 1.1rem;box-shadow:0 1px 2px var(--ombra);background-image:repeating-linear-gradient(to bottom,transparent 0 2.45rem,var(--riga) 2.45rem calc(2.45rem + 1px));border-left:4px solid var(--zucca)}
+.lavori li{padding:.6rem 0;min-height:2.45rem;border-bottom:0}
+.rdm{padding:1rem 1.1rem;border-radius:var(--raggio)}
+.rdm-testa{display:flex;align-items:center;gap:.5rem;margin-bottom:.3rem}
+.rdm-testa svg{fill:none;stroke:var(--zucca);stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.rdm-testa b{font-family:Fraunces,serif;font-size:1.1rem}
+.rdm-testa small{color:var(--muto);margin-left:auto}
+/* legenda in colonna */
+.legenda{display:grid;grid-template-columns:1fr 1fr;gap:.3rem .9rem}
+@media (max-width:640px){.legenda{grid-template-columns:1fr}}
+/* stella nelle card di Piante e nella scheda */
+.pianta-card{position:relative}
+.pianta-card .pc-apri{display:block;width:100%;padding:0;border:0;background:none;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.pc-stella{position:absolute;top:.4rem;right:.4rem;background:color-mix(in srgb,var(--scheda) 85%,transparent);backdrop-filter:blur(4px);border-radius:999px;padding:.35rem;margin:0}
+.pc-stella svg{width:20px;height:20px}
+.mp-stella{margin-left:auto;padding:.3rem}
+.mp-stella svg{width:26px;height:26px}
+/* torna su */
+.torna-su{position:fixed;right:1rem;bottom:calc(5.2rem + env(safe-area-inset-bottom));z-index:29;width:2.9rem;height:2.9rem;border-radius:50%;border:1px solid var(--riga);background:var(--scheda);color:var(--inchiostro);box-shadow:0 8px 24px var(--ombra2);display:grid;place-items:center;animation:entra .2s ease-out}
+.torna-su svg{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.torna-su[hidden]{display:none}
+.calendario{display:none}
